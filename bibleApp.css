@@ -346,6 +346,10 @@ code {
     height: 100%;
 }
 
+#togglenavbtn::before {
+    content: '\2261';
+}
+
 #forreference,
 #forwordsearch,
 #titlebar_show_searchsettings {
@@ -1245,7 +1249,7 @@ span.vmultiple.noted code #verse_notes_button {
 
 @media screen and (max-device-width: 300px) {
     #togglenavbtn {
-        width: 110px !important;
+        /* width: 110px !important; */
         min-width: 42px;
     }
     #ref_search_versions_holder #refdiv,
