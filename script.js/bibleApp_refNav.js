@@ -69,12 +69,12 @@ var currentBookValue = null;
 // var strgsInVerseSpan;
 
 //CLICKING ON BOOK-NAME AND CHAPTER-NUMBER
-refnav.addEventListener("click", function (e) {
+refnav.addEventListener("click", function(e) {
     clickedElm = e.target;
     if (e.target.matches("button")) {
         clickedElm.classList.toggle("active_button")
-    } else if (elmAhasElmOfClassBasAncestor(e.target,'button')) {
-        clickedElm = elmAhasElmOfClassBasAncestor(e.target,'button');
+    } else if (elmAhasElmOfClassBasAncestor(e.target, 'button')) {
+        clickedElm = elmAhasElmOfClassBasAncestor(e.target, 'button');
         clickedElm.classList.toggle("active_button")
     }
     //To populate book chapter numbers refnav pane
@@ -97,7 +97,7 @@ refnav.addEventListener("click", function (e) {
         getTextOfChapter(clickedElm, null, null, true, true);
         indicateBooknChapterInNav(null, clickedElm)
         currentChapterValue = clickedElm.getAttribute('value')
-        // setItemInLocalStorage('lastBookandChapter', currentBookValue + ',' + currentChapterValue);
+            // setItemInLocalStorage('lastBookandChapter', currentBookValue + ',' + currentChapterValue);
     }
 })
 
@@ -158,49 +158,71 @@ function hideRightClickContextMenu() {
         context_menu.classList.remove('rightclicked')
         hideRefNav('hide', context_menu);
         newStrongsDef = '';
-        if(toolTipON==true){toolTipOnOff();}
+        if (toolTipON == true) { toolTipOnOff(); }
     }
 }
-document.addEventListener('keydown', function (event) {
+document.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
-        if(bible_nav.matches('.slidein')){hideRefNav('hide',bible_nav);}
+        if (bible_nav.matches('.slidein')) { hideRefNav('hide', bible_nav); }
         // else if(context_menu.matches('.slidein')){hideRightClickContextMenu();}
-        else if(refnav.matches('.slidein')){hideRefNav('hide',refnav);}
+        else if (refnav.matches('.slidein')) { hideRefNav('hide', refnav); }
     }
 });
 
 function toggleNav() {
     hideRefNav()
-    // realine();
+        // realine();
 }
 
 // FUNCTION TO SHOW OR HIDE REF_NAV
+// hideRefNav(null, searchPreviewWindowFixed)
 function hideRefNav(hORs, elm2HideShow, runfunc) {
     let elHS;
+
+    function toShowOnlyOneAtaTime() {
+        //To show only one at a time
+        if (context_menu == undefined || elm2HideShow != context_menu) {
+            let otherActiveButtonsToHide = app_settings.querySelectorAll('.active_button')
+            otherActiveButtonsToHide.forEach(o_btns => { o_btns.click() })
+        }
+    }
     if (elm2HideShow) {
         elHS = elm2HideShow
     } else {
         elHS = refnav
     }
     if (hORs == 'hide') {
-        if(elHS == bible_nav){biblenavigation.classList.remove('active_button')}
+        if (elHS == bible_nav) { biblenavigation.classList.remove('active_button') }
         elHS.classList.remove('slidein');
         elHS.classList.add('slideout');
     } else if (hORs == 'show') {
+        toShowOnlyOneAtaTime()
+
+        if (elHS.id == 'searchPreviewWindowFixed') { elHS.classList.add('flex');
+            searchsettings.classList.add('active_button') }
         elHS.classList.remove('slideout');
         elHS.classList.add('slidein');
     } else {
         if (elHS.classList.contains('slideout')) {
+            toShowOnlyOneAtaTime()
+            if (elHS == searchPreviewWindowFixed) {
+                elHS.classList.add('flex');
+                searchsettings.classList.remove('active_button');
+            }
             elHS.classList.remove('slideout');
             elHS.classList.add('slidein');
             // TO SCROLL BOOK AND CHAPTER INTO VIEW
-            if(elHS == bible_nav){
+            if (elHS == bible_nav) {
                 let higlightedBknChpt = bible_nav.querySelectorAll('.ref_hlt');
                 higlightedBknChpt.forEach(refHlt => {
                     refHlt.scrollIntoView(false);
                 });
-            }            
+            }
         } else {
+            if (elHS == searchPreviewWindowFixed) {
+                elHS.classList.remove('flex');
+                searchsettings.classList.add('active_button');
+            }
             elHS.classList.remove('slidein');
             elHS.classList.add('slideout');
         }

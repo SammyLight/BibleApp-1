@@ -88,7 +88,8 @@ function getTextOfChapter(xxx, oneChptAtaTime = 1, prependORnot, freshClick = fa
             showTransliteration(storedStrnum)
         });
     }
-    indicateThatVerseHasNote();//This indicates verses with notes in the database
+    indicateThatVerseHasNoteInJSONnotes_file() //This indicates verses with notes in the database
+        // indicateThatVerseHasNoteInIndxDB();
 }
 
 // function clickCurrentBook(xxx) {

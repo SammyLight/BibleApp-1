@@ -3,10 +3,11 @@ function isObject(objValue) {
     return objValue && typeof objValue === 'object' && objValue.constructor === Object;
 }
 
+/* Ensure doublick does not run click eventListner */
 function debounce(func, timeout = 300) {
     // function func will only run if it is not clicked twice within 300ms
     var ttt;
-    return function () {
+    return function() {
         if (ttt) {
             console.log('clearing Timeout')
             clearTimeout(ttt)
@@ -36,44 +37,34 @@ function removeItemFromArray(n, array) {
     return array;
 }
 
+/* Remove single string or array of strings from a string */
+function removeCharacterFromString(xh, str) {
+    if (typeof xh === 'string' || xh instanceof String) { return str.split(xh).join('') }
+    //An array of characters to remove from the string,
+    // e.g., "['.',',','lk']"
+    else if (Array.isArray(xh)) {
+        xh.forEach(xh_i => { str.split(xh_i).join('') });
+        return str
+    }
+}
+
+/* ***************************** */
+/*       DOM MANIPULATIONS       */
+/* ***************************** */
+
 function elmAhasElmOfClassBasAncestor(a, ancestorsClass, limit = 'BODY') {
-    while (a.parentNode && a.parentNode.tagName.toUpperCase() != limit) {
-        if (a.parentNode.classList.contains(ancestorsClass) || a.parentNode.matches(ancestorsClass)) {
+    while (a.parentElement && a.parentElement.tagName.toUpperCase() != limit) {
+        if (a.parentElement.classList.contains(ancestorsClass) || a.parentElement.matches(ancestorsClass)) {
             return a.parentNode
         }
-        a = a.parentNode;
+        a = a.parentElement;
     }
     return false
-}
 
-function hideORshowClass(hideOrShow, cls) {
-    if (hideOrShow.toUpperCase() == 'HIDE') {
-        var class2hide = document.querySelectorAll('.' + cls);
-        class2hide.forEach(el => {
-            el.style.display = 'none'
-        });
-    } else if (hideOrShow.toUpperCase() == 'SHOW') {
-        var class2show = document.querySelectorAll('.' + cls);
-        class2show.forEach(el => {
-            el.style.display = ''
-        });
-    }
-}
-
-function disableButton(cls, disableValue) {
-    var class2toggleAttribute = document.querySelectorAll('.' + cls);
-    class2toggleAttribute.forEach(el => {
-        el.disabled = disableValue;
-        if (disableValue) {
-            el.style.pointerEvents = 'none';
-            el.style.color = 'grey';
-            el.style.fontStyle = 'italic';
-        } else if (!disableValue) {
-            el.style.pointerEvents = '';
-            el.style.color = '';
-            el.style.fontStyle = '';
-        }
-    });
+    //The :has() pseudo selector will do this quite easily, but,
+    // First: elmA will have to be represented as a css selector, e.g., 'div>.a', and
+    // Second: It is not yet supported in Mozilla FireFox
+    // E.g: if(querySelector('.ancestorsClass:has(div>.a)'){return true})
 }
 
 function hideORshowID(hideOrShow, id) {
@@ -99,12 +90,65 @@ function hideORshowID(hideOrShow, id) {
     }
 }
 
-function insertElmAbeforeElmB(newNode, existingNode) {
-    existingNode.parentNode.insertBefore(newNode, existingNode);
+function hideORshowClass(hideOrShow, cls) {
+    if (hideOrShow.toUpperCase() == 'HIDE') {
+        var class2hide = document.querySelectorAll('.' + cls);
+        class2hide.forEach(el => {
+            el.style.display = 'none'
+        });
+    } else if (hideOrShow.toUpperCase() == 'SHOW') {
+        var class2show = document.querySelectorAll('.' + cls);
+        class2show.forEach(el => {
+            el.style.display = ''
+        });
+    }
 }
 
-function removeCharacterFromString(xh, str) {
-    return str.split(xh).join('')
+function hideElement(el) {
+    el.classList.add("displaynone")
+}
+
+function showElement(el) {
+    el.classList.remove("displaynone")
+}
+
+function toggleClassAndActiveButton(elm, cls, originElm) {
+    elm.classList.toggle(cls)
+    originElm.classList.toggle('active_button');
+}
+
+function disableButton(cls, disableValue) {
+    var class2toggleAttribute = document.querySelectorAll('.' + cls);
+    class2toggleAttribute.forEach(el => {
+        el.disabled = disableValue;
+        if (disableValue) {
+            el.style.pointerEvents = 'none';
+            el.style.color = 'grey';
+            el.style.fontStyle = 'italic';
+        } else if (!disableValue) {
+            el.style.pointerEvents = '';
+            el.style.color = '';
+            el.style.fontStyle = '';
+        }
+    });
+    // Or just create a css style for class, e.g., 'button_disabled',
+    // and then add the class to buttons to be disabled
+}
+
+// Check or uncheck radio/checkbox input
+function checkUncheck(x) {
+    let arrOfCheckBoxes;
+    if (Array.isArray(x) == false) { arrOfCheckBoxes = [x] } else { arrOfCheckBoxes = x }
+
+    arrOfCheckBoxes.forEach(rcbx => {
+        if (rcbx.type == 'input') { rcbx.click(); } else {
+            if (rcbx.checked == true) { rcbx.checked = false } else { rcbx.checked = true }
+        }
+    });
+}
+
+function insertElmAbeforeElmB(newNode, existingNode) {
+    existingNode.parentNode.insertBefore(newNode, existingNode);
 }
 
 function relocateElmTo(elm, moveHere) {
@@ -112,6 +156,17 @@ function relocateElmTo(elm, moveHere) {
     elm.remove();
     moveHere.append(elmCopy)
 }
+
+// GET FIRST SHADOW COLOR
+function getBoxShadowColor(elm) {
+    // Even if element has more than one box-shadow color, it will only get the first one
+    let boxShadowOfElem = window.getComputedStyle(elm, null).getPropertyValue("box-shadow");
+    return boxShadowOfElem.split('px')[0].replace(/^.*(rgba?\([^)]+\)).*/, '$1')
+}
+
+/* ****************************** */
+/*        DOM EXPLORATIONS        */
+/* ****************************** */
 
 function X_hasNoSibling_Y_b4_Z(x, y, z) {
     let a = x,
@@ -151,25 +206,6 @@ function X_hasNoSibling_Y_b4_Z(x, y, z) {
 }
 
 function getSibling_Y_of_X_b4_Z(x, y, z) {}
-
-/* LIGHTCITY BIBLE APP SPECIFIC HELPER FUNCTIONS */
-function codeELmRefClick(e) {
-    if (e.target.tagName == "CODE") {
-        let codeElm = e.target;
-        gotoRef(codeElm.getAttribute('ref'))
-        e.preventDefault();
-    }
-}
-
-// function getFUllBookName(shortBkNm) {
-//     bible.Data.books.forEach((ref_, ref_indx) => {
-//         if (ref_.includes(shortBkNm.toUpperCase())) {
-//             let fullname = bible.Data.bookNamesByLanguage.en[ref_indx]
-//             return fullname;
-//         }
-//     });
-// }
-/* Ensure doublick does not run click eventListner */
 
 function arrayOfNodesBetween(a, b) {
     //first check if they have the same parent
@@ -281,6 +317,25 @@ function arrayOfElementsBetween(a, b) {
     }
 }
 
+/* ********************************************* */
+/* LIGHTCITY BIBLE APP SPECIFIC HELPER FUNCTIONS */
+/* ********************************************* */
+function codeELmRefClick(e) {
+    if (e.target.tagName == "CODE") {
+        let codeElm = e.target;
+        gotoRef(codeElm.getAttribute('ref'))
+        e.preventDefault();
+    }
+}
+// function getFUllBookName(shortBkNm) {
+//     bible.Data.books.forEach((ref_, ref_indx) => {
+//         if (ref_.includes(shortBkNm.toUpperCase())) {
+//             let fullname = bible.Data.bookNamesByLanguage.en[ref_indx]
+//             return fullname;
+//         }
+//     });
+// }
+
 /* DIV RESIZER - DRAGGING TO RESIZE */
 const BORDER_SIZE = 10;
 const panel = document.getElementById("strongsdefinitionwindow");
@@ -294,25 +349,28 @@ let hasBeenClicked = false;
 
 function resizeDiv(e) {
     const dx = e.x - m_pos;
-        //   const dx = m_pos - e.x;
-        if (dx > 0) {
-            let increased_width = old_width + dx;
-            panel.style.maxWidth = increased_width + "px";
-            panel.style.minWidth = increased_width + "px";
-        } else if (dx < 0) {
-            let decreased_width = old_width + dx;
-            panel.style.maxWidth = decreased_width + "px";
-            panel.style.minWidth = decreased_width + "px";
-        }
-        if(parseInt(getComputedStyle(panel, '').width)<200){
-            panel.style.maxWidth = "200px";
-            panel.style.minWidth = "200px";
+    //   const dx = m_pos - e.x;
+    if (dx > 0) {
+        let increased_width = old_width + dx;
+        panel.style.maxWidth = increased_width + "px";
+        panel.style.minWidth = increased_width + "px";
+    } else if (dx < 0) {
+        let decreased_width = old_width + dx;
+        panel.style.maxWidth = decreased_width + "px";
+        panel.style.minWidth = decreased_width + "px";
+    }
+    if (parseInt(getComputedStyle(panel, '').width) < 200) {
+        panel.style.maxWidth = "200px";
+        panel.style.minWidth = "200px";
     }
 }
-function handleSelectAttempt(event) {if (window.event) {
+
+function handleSelectAttempt(event) {
+    if (window.event) {
         event.returnValue = false;
-        }
+    }
 }
+
 function resizeStrongsDefinitionWindow(e) {
     if (e.target.matches('#resizerdiv') && hasBeenClicked == false && e.offsetX < BORDER_SIZE) {
         m_pos = e.x;
@@ -323,6 +381,7 @@ function resizeStrongsDefinitionWindow(e) {
         document.addEventListener("mouseup", remove_resizer_funcs, false);
     }
 }
+
 function remove_resizer_funcs() {
     console.log('JESJSUS')
     document.removeEventListener("mousemove", resizeDiv, false);
@@ -330,20 +389,102 @@ function remove_resizer_funcs() {
     hasBeenClicked = false;
 }
 
+/* SORT OBJECTS */
+// function sortObj(obj) {
+//     return Object.keys(obj).sort().reduce(function (result, key) {
+//         result[key] = obj[key];
+//         return result;
+//     }, {});
+// }
 
-/* CHECK UNCHECK RADIO/CHECKBOX INPUT */
-function checkUncheck(x){
-    let arrOfCheckBoxes;
-    if(Array.isArray(x)==false){arrOfCheckBoxes=[x]}
-    else{arrOfCheckBoxes=x}
+//Random Color Generator
+function randomColor(brightness) {
+    function randomChannel(brightness) {
+        var r = 255 - brightness;
+        var n = 0 | ((Math.random() * r) + brightness);
+        var s = n.toString(16);
+        return (s.length == 1) ? '0' + s : s;
+    }
+    return '#' + randomChannel(brightness) + randomChannel(brightness) + randomChannel(brightness);
+}
 
-    arrOfCheckBoxes.forEach(rcbx => {
-        if(rcbx.type=='input'){rcbx.click();}
-        else{if(rcbx.checked==true){rcbx.checked=false}
-        else{rcbx.checked=true}}
-    });
+function isAsubArrayofB(a, b) {
+    let aL = a.length;
+    let bL = b.length;
+    //b cannot contain a if a is longer
+    if (bL >= aL) {
+        // start comparison where at the last possible starting point of a in b.
+        // E.g., if aL is 3 and bL is 5, then the last possible starting point of a in b is 2
+        let lastPossibleStartIndex = bL - aL;
+        let lind = lastPossibleStartIndex;
+        while (lind >= 0) {
+            let i = 0,
+                j = lind;
+            while (a[i] == b[j]) {
+                if (i == aL - 1) {
+                    return true
+                }
+                i++;
+                j++;
+            }
+            lind--; //move backwards in b array from last possible index to the start of b
+        }
+        return false
+    }
+    return false
 }
-function toggleClassAndActiveButton(elm, cls,originElm){
-    elm.classList.toggle(cls)
-    originElm.classList.toggle('active_button');
+
+function areAllitemsOfAinB(a, b) {
+    if (a.every(elem => b.indexOf(elem) > -1)) {
+        return true
+    } else {
+        return false
+    }
 }
+
+
+/* WATCH FOR INACTIVITY IN ELM AND RUN FUNCTION AFTER SET-TIME */
+// https://www.brcline.com/blog/detecting-inactivity-in-javascript
+function runFuncAfterSetTimeInactivityInElm(elm2Watch, timeoutInMiliseconds = 60000, func2run) {
+    var timeoutId;
+
+    function resetTimer() {
+        window.clearTimeout(timeoutId)
+        startTimer();
+    }
+
+    function startTimer() {
+        // window.setTimeout returns an Id that can be used to start and stop a timer
+        timeoutId = window.setTimeout(doInactive, timeoutInMiliseconds)
+    }
+
+    function doInactive() {
+        // Clear the eventListeners
+        elm2Watch.removeEventListener("mousemove", resetTimer, false);
+        elm2Watch.removeEventListener("mousedown", resetTimer, false);
+        elm2Watch.removeEventListener("keypress", resetTimer, false);
+        elm2Watch.removeEventListener("touchmove", resetTimer, false);
+        // if(searchsettings.classList.contains('active_button')){searchsettings.click()}
+        // totalfound.innerHTML='Search Cleared';
+        func2run()
+    }
+
+    // function setupTimers () {
+    elm2Watch.addEventListener("mousemove", resetTimer, false);
+    elm2Watch.addEventListener("mousedown", resetTimer, false);
+    elm2Watch.addEventListener("keypress", resetTimer, false);
+    elm2Watch.addEventListener("touchmove", resetTimer, false);
+
+    startTimer();
+    // }
+}
+
+/* CHECK IF DEVICE IS A MOBILE DEVICE */
+// window.addEventListener("load", () => {
+//     // (A) CHECK FOR MOBILE
+//     isMobile = navigator.userAgent.toLowerCase().match(/mobile/i);
+
+//     // (B) DO SOMETHING...
+//     if (isMobile) { console.log("Is mobile device"); }
+//     else { console.log("Not mobile device"); }
+//   });

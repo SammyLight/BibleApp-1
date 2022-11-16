@@ -62,7 +62,7 @@ function addRemoveRuleFromStyleSheet(CS_rule, ruleSelector, targetStyleSheet) {
 //get a variables value
 let documentROOT = document.querySelector(':root');
 let rootStyles = getComputedStyle(documentROOT)
-// rootStyles.getPropertyValue('--buttons')
+    // rootStyles.getPropertyValue('--buttons')
 function changeFontFamily() {
     //change value of variable
     documentROOT.style.setProperty('--main-font', fontchange.value);
@@ -123,7 +123,7 @@ function darkLightMode() {
     }span.verse span{
         color:white;
     }`
-    // let dcol= 'rgba(0, 50, 112, 0.918)';
+        // let dcol= 'rgba(0, 50, 112, 0.918)';
     let dcol = 'rgba(0, 120, 112, 0.918)';
     if (document.getElementsByTagName('head')[0].querySelector('#darkmode')) {
         darkmode.remove();
@@ -136,10 +136,11 @@ function darkLightMode() {
         documentROOT.style.setProperty('--verse-hover', dcol);
     }
 }
-let saved_highlightStrongsSheet
+
+let saved_highlightStrongsSheet;
 
 function hide_strongshighlight() {
-    saved_highlightStrongsSheet = highlightstrongs;
+    saved_highlightStrongsSheet = highlightstrongs; //to be used to restore all the strongsHighlight (not yet implimented)
     highlightstrongs.remove()
 }
 

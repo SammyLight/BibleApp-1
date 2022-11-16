@@ -1,5 +1,5 @@
-ppp.addEventListener("click", showVerseNote);
-ppp.addEventListener("click", save_verse_note_to_indexedDB);
+ppp.addEventListener("click", showVerseNote); //For '#verse_notes_button' && '.note_edit_button'
+ppp.addEventListener("click", save_verse_note_to_indexedDB); //For '#note_save_button'
 
 function showVerseNote(e, x) {
     if (e) {
@@ -16,13 +16,7 @@ function showVerseNote(e, x) {
 }
 
 function appendVerseNote(e) {
-    let eTarget;
-    // if (e.target.matches('#verse_notes_button')) {
-    eTarget = e.target
-    // } else
-    if (e.target.matches('#verse_notes_button a')) {
-        eTarget = e.target.parentNode;
-    }
+    let eTarget = e.target;
     clickedVerseRef = elmAhasElmOfClassBasAncestor(eTarget, '[ref]').getAttribute('ref');
     let siblingVersenote;
     let masterVerseHolder = elmAhasElmOfClassBasAncestor(e.target, '.vmultiple');
@@ -37,18 +31,21 @@ function appendVerseNote(e) {
     if (!masterVerseHolder.classList.contains('showing_versenote')) {
         let noteID = 'note' + masterVerseHolder.id.replaceAll(".", "_");
         let chapterHolder = elmAhasElmOfClassBasAncestor(masterVerseHolder, '.chptverses');
-        
+
         //GET CURRENT BOOK NAME (NEEDED FOR INDEXED-DB))
         let clickedVerseRefObj = breakDownClickedVerseRef();
         let bN = clickedVerseRefObj.bN;
+        let bC = clickedVerseRefObj.bC;
+        let cV = clickedVerseRefObj.cV;
         let bCnCv = clickedVerseRefObj.bCnCv;
+        bookName = bN, chapternumber = bC, verseNumber = cV;
         bibleBook_IDB = bN;
 
         if (vnt = chapterHolder.querySelector('#' + noteID)) {
-        vnt.style.display = '';
-        vnt.classList.remove('slideup');
-        masterVerseHolder.classList.add('showing_versenote');
-    } else {
+            vnt.style.display = '';
+            vnt.classList.remove('slideup');
+            masterVerseHolder.classList.add('showing_versenote');
+        } else {
             let verseNoteDiv = new DocumentFragment();
 
             let newVerseNote = verse_note.cloneNode(true);
@@ -65,7 +62,7 @@ function appendVerseNote(e) {
             editBtn.setAttribute('b_cv', bCnCv);
 
             //OPEN DATABASE IF NOT OPEN
-            function ifNoteAppend() {
+            /* function ifNoteAppend() {
                 //if verse already has note, get it
                 if(db){
                     clearInterval(dbBuildTimer_1);//Since db has been created, clear the setinterval timer
@@ -81,10 +78,9 @@ function appendVerseNote(e) {
                 var dbBuildTimer_1 = setInterval(ifNoteAppend, 300);// If db available get the verse not if available
             } else {
                 ifNoteAppend()
-            }
-
+            } */
+            let appendHere = newVerseNote.querySelector('.text_content');
             verseNoteDiv.append(newVerseNote);
-
             whereTOappend.parentNode.insertBefore(verseNoteDiv, whereTOappend.nextSibling);
             masterVerseHolder.classList.add('showing_versenote');
             // eTarget.querySelector('a').setAttribute('href', '#' + noteID);
@@ -92,6 +88,7 @@ function appendVerseNote(e) {
             setTimeout(() => {
                 siblingVersenote.classList.remove('slideup');
             }, 1);
+            readFromVerseNotesFiles(bN, bC, cV, appendHere);
 
         }
     } else {
@@ -118,17 +115,17 @@ function editVerseNote(eTarget, e, saveBtn) {
             oldeditbtn_note.contentEditable = 'false';
             oldeditbtn.style.backgroundColor = '';
             oldeditbtn.classList.remove('active');
+            // if (oldeditbtn != e.target) {
+            noteEditingTarget.id = '';
+            // }
             disableCKEditor()
-            if (oldeditbtn != e.target) {
-                noteEditingTarget.id = '';
-            }
         }
 
         saveBtn.disabled = false; //enable save verse note button
 
         eTargets_note.contentEditable = 'true';
         eTargets_note.id = 'noteEditingTarget';
-        eTarget.style.backgroundColor = 'pink';
+        // eTarget.style.backgroundColor = 'orange';
         eTarget.classList.add('active');
 
         enableCKEditor('noteEditingTarget', eTarget)
@@ -138,8 +135,8 @@ function editVerseNote(eTarget, e, saveBtn) {
         eTargets_note.contentEditable = 'false';
         eTarget.style.backgroundColor = '';
         eTarget.classList.remove('active');
+        eTargets_note.id = '';
         disableCKEditor()
-        noteEditingTarget.id = '';
     }
 }
 

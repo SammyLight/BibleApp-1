@@ -1,10 +1,21 @@
 /* RIGHT-CLICK MENU */
 let timer1, timer2;
-
+let rightClickedElm = null;
+// let context_menu = document.querySelector('#context_menu');
 function add_tooltipContextMenu(e) {
     e.preventDefault();
-    let currentEt = e.target;
-    // FOR SHOWING AND HIDING THE RIGHTCLICK MENU
+    if (!document.querySelector('#context_menu')) {
+        // <div id="context_menu" class="context_menu slideout"></div>
+        let context_menu_replacement = document.createElement('div');
+        context_menu_replacement.id = 'context_menu';
+        context_menu_replacement.classList.add('context_menu');
+        context_menu_replacement.classList.add('slideout');
+        main.prepend(context_menu_replacement);
+        context_menu.addEventListener("click", codeELmRefClick);
+    }
+    rightClickedElm = e.target;
+    firstShadowColorOfElem = getBoxShadowColor(rightClickedElm)
+        // FOR SHOWING AND HIDING THE RIGHTCLICK MENU
     var menusX = e.x;
     if (e.target.matches('.translated, .strnum, .crossrefs>span') /* && (!e.target.matches('#context_menu')&&!elmAhasElmOfClassBasAncestor(e.target,'#context_menu')) */ ) {
         getCurrentStrongsDef(e);
@@ -18,11 +29,11 @@ function add_tooltipContextMenu(e) {
             clearTimeout(timer1);
 
             if ((!currentEt.matches('.strnum') && context_menu.getAttribute('strnum') != currentEt.getAttribute('strnum'))) {
-                timer1 = setTimeout(function () {
+                timer1 = setTimeout(function() {
                     timedFUNC();
                 }, 300)
             } else if (!currentEt.matches('.strnum')) {
-                timer1 = setTimeout(function () {
+                timer1 = setTimeout(function() {
                     timedFUNC();
                 }, 300)
             }
@@ -48,14 +59,19 @@ function add_tooltipContextMenu(e) {
                 if (eParent.offsetLeft != 0) {
                     extraLeft = eParent.offsetLeft;
                 }
+                //if the #context_menu is not in #main, then it must be in #searchPreviewFixed
                 if (!eParent.querySelector('#context_menu')) {
+                    //move the #context_menu from #searchPreviewFixed to #main
                     let clonedContextMenu = searchPreviewFixed.querySelector('#context_menu').cloneNode(true);
                     searchPreviewFixed.querySelector('#context_menu').remove()
                     main.append(clonedContextMenu)
                 }
-            } else if (elmAhasElmOfClassBasAncestor(e.target, '#searchPreviewFixed')) {
+            }
+            //if the #context_menu is not in #searchPreviewFixed, then it must be in #main 
+            else if (elmAhasElmOfClassBasAncestor(e.target, '#searchPreviewFixed')) {
                 eParent = document.querySelector('#searchPreviewFixed');
                 if (!eParent.querySelector('#context_menu')) {
+                    //move the #context_menu from #main to #searchPreviewFixed
                     let clonedContextMenu = main.querySelector('#context_menu').cloneNode(true);
                     main.querySelector('#context_menu').remove()
                     searchPreviewFixed.append(clonedContextMenu)
@@ -155,7 +171,7 @@ function add_tooltipContextMenu(e) {
         }
         // if (e.type == 'mouseover') {
         // timer2 = setTimeout(function () {
-            removeContextMenu();
+        removeContextMenu();
         // }, 10)
         // } else {
         // removeContextMenu()
@@ -187,12 +203,12 @@ ppp.addEventListener('contextmenu', add_tooltipContextMenu, false);
 searchPreviewFixed.addEventListener('contextmenu', add_tooltipContextMenu, false);
 searchPreviewFixed.addEventListener('mousedown', add_tooltipContextMenu_preventDoublick, false);
 
-ppp.addEventListener('mouseout', function (e) {
+ppp.addEventListener('mouseout', function(e) {
     if (e.target.matches('.translated, .strnum, .crossrefs>span')) {
         clearTimeout(timer1)
     }
 });
-main.addEventListener('mouseover', function (e) {
+main.addEventListener('mouseover', function(e) {
     if (e.target.matches('.translated')) {
         e.preventDefault()
     }
@@ -246,8 +262,8 @@ function toolTipOnOff(x) {
     }
 }
 //Hide ContextMenu on clicking outside of main window
-document.addEventListener('click', function (e) {
-    if ((!e.target.matches('[strnum]') && !e.target.matches('.context_menu') && !elmAhasElmOfClassBasAncestor(e.target, '.context_menu'))) {
+document.addEventListener('click', function(e) {
+    if (document.querySelector('.context_menu') && (!e.target.matches('[strnum]') && !e.target.matches('.context_menu') && !elmAhasElmOfClassBasAncestor(e.target, '.context_menu'))) {
         hideRightClickContextMenu()
     }
 })
@@ -281,14 +297,15 @@ context_menu.addEventListener("click", codeELmRefClick);
 
 /* FOR SHOWING CROSSREFS AND VERSES NOTES */
 ppp.addEventListener("mouseover", codeButtons);
+
 function codeButtons(e) {
-    if(document.getElementById('show_crossref_comments')==null){ //It may get removed on loading new reference
+    if (document.getElementById('show_crossref_comments') == null) { //It may get removed on loading new reference
         let newElm = document.createElement('div');
         newElm.classList.add('slideout');
-        newElm.id='show_crossref_comments';
-        newElm.innerHTML=`<button class="buttons verse_crossref_button" id="verse_crossref_button"><a>TSK</a></button><button class="buttons verse_notes_button" id="verse_notes_button"><a>Note</a></button>`;
+        newElm.id = 'show_crossref_comments';
+        newElm.innerHTML = `<button class="buttons verse_crossref_button" id="verse_crossref_button"><a>TSK</a></button><button class="buttons verse_notes_button" id="verse_notes_button"><a>Note</a></button>`;
         ppp.append(newElm);
-    } else if(show_crossref_comments){
+    } else if (show_crossref_comments) {
         if (e.target.matches('.verse code') && (e.type == 'mouseover')) {
             relocateElmTo(show_crossref_comments, e.target);
             show_crossref_comments.classList.remove('slideout');

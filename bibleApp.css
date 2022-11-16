@@ -12,12 +12,12 @@
     --ref-img: url(images/R.jpg);
     --ref-img: #ffffc8;
     --ref-img: url(images/background.jpg);
-    --shadow-color: rgb(81, 81, 81);
     --ref-paper: url(images/4rKVgAQ.jpg);
     --ref-paper: url(images/IyEMTp.jpg);
     --verse-higlight: #ffff92;
     --verse-higlight: #fffb001b;
-    --vmultiple-hover: rgb(225, 241, 239);
+    --vmultiple-hover: rgb(255, 243, 155);
+    --vmultiple2-hover: rgba(255, 213, 0, 0.527);
     --nav-bg-color: #fbfbfb;
     --vhlt-border: #8080809c;
     --vhlt: #ffffc4;
@@ -26,14 +26,13 @@
     --strongword-hover: rgb(237, 213, 222);
     --strongword-hover: rgb(216, 255, 137);
     --strongword-hover: rgb(199, 255, 194);
-    --strongword-hover: rgb(255, 250, 163);
+    --strongword-hover: rgb(255, 243, 148);
+    --strongword-hover: rgba(255, 223, 117, 0.662);
+    --shadow-color: rgb(81, 81, 81);
+    --shadow-orange: rgb(188, 133, 13);
     --chpt: rgb(238, 227, 202);
     --verse-hover: rgb(248, 246, 241);
-    /* --verse-hover: rgba(192, 176, 98, 0.858);
-    --verse-hover: rgba(230, 183, 72, 0.5);
-    --verse-hover: rgba(255, 252, 165, 0.78); */
     --main-font: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    /* --top-bar-bground-color: #427d7f; */
     --top-bar-bground-color: #212121;
     --darkmode-bg1color: #212121;
     --scroll-track-bg-color: #878787;
@@ -42,7 +41,6 @@
     --scroll-thumb-hover-border: #939cff;
     --scroll-thumb-hover-bg-color: #555;
     --buttons: #f8f8f8;
-    /* --buttons: #FCFCFC 110.00000000000001%; */
     --buttons-border: 0.25px solid #70707072;
 }
 
@@ -53,23 +51,8 @@
 html {
     padding: 0;
     font-size: var(--fontsize-main);
-    /* background-color: var(--nav-bg-color); */
-    /* background: var(--verse-higlight); */
-    /* background-color: var(--ref-img); */
-    /* background-color: #ffffc8; */
     background: var(--ref-img);
     font-family: var(--main-font);
-}
-
-.text_content {
-    width: 100% !important;
-    margin-left: 0;
-    margin-right: 0;
-    border: 1px solid grey!important;
-    min-height: 50px;
-    max-height: 200px;
-    overflow: auto;
-    resize: vertical;
 }
 
 .text_content:empty::before {
@@ -83,21 +66,29 @@ body>svg {
 }
 
 body {
+    position: relative;
     margin: 0;
     overflow-y: hidden;
     /* don't add color to the body, it will hide the svg */
 }
 
+body * {
+    box-sizing: border-box;
+}
+
+.verse {
+    z-index: 0;
+}
+
 #pagemaster {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
     height: 100vh;
-    /* border: 2px solid red; */
     display: grid;
-    /* grid-template-columns: repeat(auto-fill, minmax(min(auto, 100%), 1fr)); */
     grid-template-columns: auto 1fr;
     grid-template-rows: auto 1fr;
     row-gap: 0;
-    /* overflow-y:scroll; */
 }
 
 #ppp code,
@@ -156,7 +147,8 @@ code {
 
 .showing_crossref #verse_crossref_button,
 .showing_versenote #verse_notes_button {
-    background: rgb(203, 255, 125)!important;
+    background: rgb(203, 255, 125);
+    font-style: italic;
 }
 
 .crossrefs,
@@ -184,23 +176,35 @@ code {
 .verse_note {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    /* position: relative; */
+    align-items: flex-start;
     transition: all 0.15s ease-in-out;
     padding: 5px;
-    background: #fff;
     overflow: hidden;
     min-height: 10px;
-    max-height: 300px;
+    max-height: 80vh;
     margin-bottom: 5px;
     line-height: auto;
     opacity: 1;
+    background-color: whitesmoke;
+    font-size: 1.2em;
+    box-shadow: 0 4.5px 10px 3px var(--shadow-color);
+    z-index: 1;
+}
+
+.text_content {
+    width: 100% !important;
+    margin-left: 0;
+    margin-right: 0;
+    border: 1px solid grey!important;
+    min-height: 50px;
+    max-height: 80vh;
+    overflow: auto;
+    resize: vertical;
+    /* margin: 0.25em 0.25em;
+    padding: 0.25em 0.25em; */
 }
 
 .save_edit_btns_holder {
-    /* position: absolute;
-    bottom: 0;
-    right: 0; */
     display: flex;
     align-content: space-between;
     justify-content: center;
@@ -209,10 +213,18 @@ code {
     align-items: center;
 }
 
+.save_edit_btns_holder button {
+    font-size: large;
+    font-weight: bold;
+}
+
 .note_edit_button {
     background: none;
-    /* box-shadow: 1px 0px 2px 1.5px var(--shadow-color); */
     cursor: pointer;
+}
+
+.note_edit_button.active {
+    background: rgb(255, 232, 215);
 }
 
 .note_edit_button:active {
@@ -225,9 +237,7 @@ code {
     pointer-events: none;
 }
 
-.note_save_button {
-    /* float: left; */
-}
+.note_save_button {}
 
 .note_save_button::before {
     content: 'Save';
@@ -235,9 +245,7 @@ code {
     pointer-events: none;
 }
 
-#singleverse_compare_menu {
-    /* display: inline-flex; */
-}
+#singleverse_compare_menu {}
 
 #singleverse_compare_menu button {
     font-size: var(--fontsize-ref);
@@ -271,27 +279,21 @@ code {
 
 #refnav #app_settings {
     border-right: 5px solid grey;
-    /* background-color: var(--top-bar-bground-color); */
     background-image: var(--ref-img);
     overflow: hidden;
-    /* width: 35px; */
 }
 
 #refnav #app_settings * {
-    box-sizing: border-box;
     display: block;
 }
 
 #refnav #app_settings img {
-    box-sizing: border-box;
     margin-left: 1px;
     margin-right: 1px;
     width: var(--width-sidebuttons);
 }
 
 #refnav #app_settings>button {
-    box-sizing: border-box;
-    /* min-width: var(--width-sidebuttons); */
     width: auto;
     min-width: 36px;
     padding-left: 2px;
@@ -305,24 +307,18 @@ code {
 
 #bibleversions_btns input {
     width: 6px;
-    /* margin: 0; */
     pointer-events: none;
 }
 
 #bibleversions_btns button {
-    /* width: var(--width-sidebuttons);; */
     float: left;
-    /* font-size: var(--width-sidebuttons) !important; */
-    /* display: block;
-    padding: 0;
-    */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 #bible_nav {
-    font-size: var(--fontsize-scripture-nav);
+    font-size: var(--fontsize-scripture-nav)!important;
 }
 
 .refnav .bible_nav {
@@ -334,18 +330,14 @@ code {
 }
 
 #refnav .bible_nav * {
-    /* font-size: 0.75em; */
     cursor: pointer;
 }
 
 #refnav .bible_nav *:hover {
     background-color: var(--ref-hlt);
-    /* font-style: italic; */
-    /* background: var(--ref-img); */
 }
 
 #refnav .bible_nav *:active {
-    /* background-color: var(--verse-higlight); */
     background: var(--ref-img);
 }
 
@@ -386,13 +378,10 @@ code {
 }
 
 #bible_verses>option {
-    /* display: none; */
     width: 20px;
 }
 
-.show_verses {
-    /* display: block !important; */
-}
+.show_verses {}
 
 button {
     cursor: pointer;
@@ -406,7 +395,6 @@ button {
     grid-row-start: 1;
     grid-row-end: 2;
     border-bottom: 2px solid grey;
-    /* z-index: 10; */
     display: flex;
     flex-wrap: wrap;
 }
@@ -428,22 +416,18 @@ button {
 }
 
 #context_menu {
-    box-sizing: border-box;
     position: absolute;
-    /* display: block; */
     background: var(--ref-img);
+    background: whitesmoke;
     border: 1px solid grey;
-    /* border-top: 5px solid grey; */
-    /* border-left: 5px solid grey; */
-    /* border-bottom: 5px solid grey; */
     min-width: 50px;
     max-width: 300px;
     max-height: 400px;
     overflow-y: scroll;
     padding: 5px;
-    -webkit-box-shadow: 3px 3px 3.5px 0px rgba(67, 67, 67, 0.87);
-    -moz-box-shadow: 3px 3px 3.5px 0px rgba(67, 67, 67, 0.87);
-    box-shadow: 3px 3px 3.5px 0px rgba(67, 67, 67, 0.87);
+    -webkit-box-shadow: 3px 3px 3.5px 0px rgba(67, 67, 67, 0.87), 0 5px 5px 2px rgba(172, 160, 160, 0.87);
+    -moz-box-shadow: 3px 3px 3.5px 0px rgba(67, 67, 67, 0.87), 0 5px 5px 2px rgba(172, 160, 160, 0.87);
+    box-shadow: 3px 3px 3.5px 0px rgba(67, 67, 67, 0.87), 0 5px 5px 2px rgba(172, 160, 160, 0.87);
     z-index: 10;
     font-size: var(--fontsize-strongstooltip);
     overflow-x: hidden;
@@ -478,20 +462,13 @@ button {
     z-index: 2;
 }
 
-#tool_tip {
-    /* float:left; */
-    /* position: fixed;
-    right: 0; */
-}
+#tool_tip {}
 
 #context_menu .cmtitlebar {
     position: sticky;
     top: 0;
     right: inherit;
     background: var(--ref-img);
-    /* -webkit-box-shadow: 0px -6px 0 0px whitesmoke;
-    -moz-box-shadow: 0px -6px 0 0px whitesmoke;
-    box-shadow: 0px -6px 0 0px whitesmoke; */
     font-size: small;
     font-weight: bold;
 }
@@ -526,7 +503,6 @@ button {
 }
 
 #context_menu:hover {
-    /* border: 1px solid #878787; */
     -webkit-box-shadow: 1px 1px 3px 0px rgba(20, 2, 67, 0.87);
     -moz-box-shadow: 1px 1px 3px 0px rgba(20, 2, 67, 0.87);
     box-shadow: 1px 1px 3px 0px rgba(20, 2, 67, 0.87);
@@ -535,7 +511,6 @@ button {
 .buttons>button,
 .buttons>#searchdiv button,
 .buttons>#refdiv button {
-    /* width: var(--width-sidebuttons); */
     font-size: var(--width-mainbutton);
     padding: 0;
     height: 0px;
@@ -581,16 +556,13 @@ span.red span {
 }
 
 span:not(.red) span[strnum^=H],
-span:not(.red) span[strnum^=G] {
-    /* color: black; */
-}
+span:not(.red) span[strnum^=G] {}
 
 [strnum]:empty {
     display: none !important;
 }
 
 #main {
-    /* border: 3px solid orange; */
     max-width: 100%;
     grid-column-start: 2;
     grid-column-end: 3;
@@ -605,12 +577,9 @@ span:not(.red) span[strnum^=G] {
     padding-left: 5px;
 }
 
-#ppp {
-    /* background-image: var(--ref-paper); */
-}
+#ppp {}
 
 #search_section {
-    /* max-width:100px; */
     grid-column-start: 4;
     grid-column-end: 5;
     grid-row-start: 1;
@@ -619,7 +588,6 @@ span:not(.red) span[strnum^=G] {
 }
 
 #ppp>span.verse:last-child {
-    /* margin-bottom: 20px; */
     padding-bottom: 20px;
 }
 
@@ -633,9 +601,7 @@ span.vmultiple:hover {
 }
 
 span.verse:hover:not(.vhlt) {
-    /* box-sizing:border-box!important; */
     background-color: var(--verse-hover);
-    /* box-shadow: 0 0 2px 0 rgb(30, 30, 30)*/
     cursor: pointer;
 }
 
@@ -663,18 +629,14 @@ sup {
     font-weight: bold;
 }
 
-main span {
-    /* font-size: x-small; */
-}
+main span {}
 
 .translated[trans] {
-    /* font-size: xx-small; */
     font-weight: 600;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 #wordsearch {
-    /* cursor: pointer; */
     background-color: var(--buttons);
     border: var(--buttons-border);
     width: -webkit-fill-available;
@@ -707,9 +669,6 @@ main span {
     color: whitesmoke;
 }
 
-
-/* .strnum:before {content: " " attr(data-xlit) " ";} */
-
 .eng2grk {
     text-indent: -9999px;
 }
@@ -739,7 +698,6 @@ main span {
     min-height: 55px;
     text-transform: lowercase;
     font-weight: bold;
-    /* font-size: medium!important; */
 }
 
 .strnum:after {
@@ -747,33 +705,23 @@ main span {
     font-style: italic;
 }
 
-*/ #searchresultwindow {
+#searchresultwindow {
     position: absolute;
     top: 12px;
     right: 5px;
-    height: 100%;
-    width: 150px;
+    max-height: 70%;
+    width: 450px;
+    background: white;
+    overflow: scroll;
+    z-index: 99;
 }
 
 .relative {
     position: relative;
-    /* margin-top: 100px; */
-    /* width: 100%;*/
     height: 100%;
 }
 
-#searchPreview {
-    position: absolute;
-    top: 5px;
-    right: 0;
-    width: 150px;
-    padding: 5px 0 5px 0;
-    background-color: white;
-    border: 0.5px solid black;
-    min-height: 0px;
-    max-height: 90%;
-    overflow-y: scroll;
-}
+#searchPreview {}
 
 #searchPreview>* {
     display: block;
@@ -786,33 +734,17 @@ main span {
     border: 2px solid gray;
 }
 
-#searchboxtitlebar {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 12px;
-    border: 0.5px solid whitesmoke;
-    background-color: whitesmoke;
-    cursor: pointer;
-    z-index: 2;
-}
+#searchboxtitlebar {}
 
 #searchrelative {
     display: flex;
 }
 
 #searchclose {
-    /* position: absolute;
-    top: 0px;
-    right: 0px; */
-    /* height: 5px; */
     padding: 0 2px;
     font-size: 10px;
     font-weight: bold;
     border-left: 0.5px solid black;
-    /* color:white;
-    background-color: rgb(158, 42, 0); */
 }
 
 #searchclose:active,
@@ -829,10 +761,6 @@ main span {
 }
 
 #searchminimize {
-    /* position: absolute;
-    top: 0px;
-    right: 22px; */
-    /* height: 5px; */
     padding: 0 2px;
     font-size: 10px;
     font-weight: bold;
@@ -868,7 +796,6 @@ main span {
 #bibleapp_cache .settingssectionheadings {
     border-bottom: 1px solid var(--scroll-track-bg-color);
     border-top: 1px solid var(--scroll-track-bg-color);
-    /* width: 96%; */
     margin: 0;
     box-shadow: 0 0.5px 0 rgb(58, 58, 58);
     background-color: whitesmoke;
@@ -888,7 +815,6 @@ main span {
 }
 
 #bibleapp_cache *:not(.settingssectionheadings) {
-    /* display: inline-flex; */
     font-size: var(--fontsize-main);
 }
 
@@ -903,7 +829,6 @@ main span {
 #searchPreviewWindowFixed,
 #strongsdefinitionwindow,
 #bibleapp_cache {
-    box-sizing: border-box;
     max-width: 300px;
     height: 100%;
     border-right: 2px solid grey;
@@ -932,7 +857,6 @@ main span {
     width: 100%;
     display: table!important;
     border-collapse: collapse;
-    box-sizing: border-box;
 }
 
 #cache_table td {
@@ -1000,7 +924,13 @@ main span {
     margin-bottom: 10px;
 }
 
+#searchPreviewWindowFixed.slidein {
+    display: flex!important;
+    ;
+}
+
 #searchPreviewWindowFixed {
+    flex-direction: column;
     overflow-y: hidden;
     font-size: var(--fontsize-scripture);
 }
@@ -1033,11 +963,11 @@ main span {
 }
 
 #searchPreviewFixed {
-    display: table-row;
-    height: 92%;
-    float: left;
-    width: 100%;
-    overflow-y: scroll;
+    /* display: table-row; */
+    /* height: 92%; */
+    /* float: left; */
+    /* width: 100%; */
+    overflow-y: auto;
 }
 
 #searchPreviewFixed>* {
@@ -1057,26 +987,13 @@ main span {
     margin-top: 5px;
 }
 
-
-/* SCROLL BAR */
-
-
-/* width */
-
 ::-webkit-scrollbar {
     width: 7.5px;
 }
 
-
-/* Track */
-
 ::-webkit-scrollbar-track {
-    /* background: #f1f1f1; */
     background: var(--scroll-track-bg-color);
 }
-
-
-/* Handle */
 
 ::-webkit-scrollbar-thumb {
     background: var(--scroll-thumb-bgcolor);
@@ -1084,17 +1001,11 @@ main span {
     border-bottom: 2px solid var(--scroll-thumb-border-color);
 }
 
-
-/* Handle on hover */
-
 ::-webkit-scrollbar-thumb:hover {
     background: var(--scroll-thumb-hover-bg-color);
     border-top: 2px solid var(--scroll-thumb-hover-border);
     border-bottom: 2px solid var(--scroll-thumb-hover-border);
 }
-
-
-/* BEREAN BIBLE */
 
 .section_headings {
     display: none;
@@ -1103,7 +1014,6 @@ main span {
 .vmultiple {
     display: flex !important;
     flex-wrap: wrap;
-    /* max-width: 900px; */
 }
 
 .vmultiple>span {
@@ -1117,8 +1027,18 @@ span.vmultiple:hover span.vhlt {
     background: yellow;
 }
 
+span.vmultiple.noted code {
+    box-sizing: border-box;
+    font-weight: bolder;
+    font-style: italic;
+    border-bottom: 3px solid orangered;
+    text-decoration: none!important;
+}
 
-/* ANIMATIONS CLASSES */
+span.vmultiple.noted code #verse_notes_button {
+    background: white;
+    color: green;
+}
 
 .slideup {
     display: none;
@@ -1180,7 +1100,7 @@ span.vmultiple:hover span.vhlt {
 }
 
 .vhlt {
-    background-color: var(--vhlt);
+    background-color: var(--vhlt2)!important;
     border-top: 0.25px solid var(--vhlt-border);
     border-left: 0.25px solid var(--vhlt-border);
     border-right: 0.25px solid var(--vhlt-border);
@@ -1268,14 +1188,14 @@ span.vmultiple:hover span.vhlt {
     background-color: var(--vhlt2);
 }
 
-
-/* MEDIA QUERIES */
-
 #mobilebuttons {
     display: none;
 }
 
 @media screen and (max-device-width: 500px) {
+    #pagemaster {
+        height: calc(100vh - 57px);
+    }
      :root {
         --fontsize-main: 17px;
         --fontsize-scripture: 17px;
@@ -1299,26 +1219,35 @@ span.vmultiple:hover span.vhlt {
         flex-grow: 1;
     }
     #togglenavbtn {
-        width: 120px !important;
+        width: 115px !important;
+        min-width: 52px;
+    }
+    #forreference,
+    #forwordsearch,
+    #titlebar_show_searchsettings {
+        display: flex;
+        padding: 5px;
     }
 }
 
 @media screen and (max-device-width: 400px) {
      :root {
         --fontsize-title: 16px;
-        /* --width-sidebuttons: 27px;
-        --width-mainbutton: 35px; */
     }
     #forreference,
     #forwordsearch,
     #titlebar_show_searchsettings {
         display: flex;
-        min-width: 45px;
-        padding: 4px;
+        min-width: 40px;
+        padding: 3px;
     }
 }
 
 @media screen and (max-device-width: 300px) {
+    #togglenavbtn {
+        width: 110px !important;
+        min-width: 42px;
+    }
     #ref_search_versions_holder #refdiv,
     #ref_search_versions_holder #searchdiv {
         display: flex;
@@ -1327,5 +1256,19 @@ span.vmultiple:hover span.vhlt {
     #refdiv input,
     #searchdiv input {
         flex-grow: 1;
+    }
+    #forreference,
+    #forwordsearch,
+    #titlebar_show_searchsettings {
+        min-width: 30px;
+    }
+     :root {
+        --fontsize-title: 14px;
+        --width-mainbutton: 35px;
+        --width-sidebuttons: 27px;
+    }
+    #refnav #app_settings>button {
+        font-size: 22.5px;
+        width: 40px!important;
     }
 }
