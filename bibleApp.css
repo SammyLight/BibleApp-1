@@ -1219,7 +1219,7 @@ span.vmultiple.noted code #verse_notes_button {
         flex-grow: 1;
     }
     #togglenavbtn {
-        width: 115px !important;
+        /* width: 115px !important; */
         min-width: 52px;
     }
     #forreference,
