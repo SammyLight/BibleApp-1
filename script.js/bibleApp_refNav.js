@@ -161,12 +161,23 @@ function hideRightClickContextMenu() {
         if (toolTipON == true) { toolTipOnOff(); }
     }
 }
-document.addEventListener('keydown', function(event) {
-    if (event.key === "Escape") {
+document.addEventListener('keydown', function(e) {
+    // let e = e || window.event;//Get event
+    if (e.key === "Escape") {
         if (bible_nav.matches('.slidein')) { hideRefNav('hide', bible_nav); }
         // else if(context_menu.matches('.slidein')){hideRightClickContextMenu();}
         else if (refnav.matches('.slidein')) { hideRefNav('hide', refnav); }
     }
+    /* else if (e.ctrlKey && document.activeElement.matches('#noteEditingTarget')) {
+           var code = e.key;
+           switch (code) {
+           case 's'://Block Ctrl+S
+           e.preventDefault();
+           e.stopPropagation();
+           break;
+          }
+          writeToVerseNotesFiles()
+       } */
 });
 
 function toggleNav() {

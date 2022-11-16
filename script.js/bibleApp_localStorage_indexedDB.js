@@ -44,7 +44,7 @@ function createDB(dbVersionNum, fromPopulateIDB) {
 
     // The database did not previously exist, so create object stores and indexes.
     request.onupgradeneeded = function() {
-        console.log(bibleBook_IDB);
+        // console.log(bibleBook_IDB);
         let db = request.result;
 
         /*
@@ -82,10 +82,10 @@ function createDB(dbVersionNum, fromPopulateIDB) {
         // If the book does not exist, then create it
         // For this, the onupgradeneeded has to be triggered and this can only happen if the version number is higher than the current version number
         // Therefore, we get the current version number and increase it
-        console.log(db.objectStoreNames.contains(bibleBook_IDB))
+        // console.log(db.objectStoreNames.contains(bibleBook_IDB))
         if (!db.objectStoreNames.contains(bibleBook_IDB)) {
             let newDBversionNum = db.version + 1;
-            console.log(newDBversionNum);
+            // console.log(newDBversionNum);
             db.close();
             // setTimeout(() => {createDB(newDBversionNum)}, 1000);
             createDB(newDBversionNum);
@@ -105,9 +105,9 @@ function populateDB(_bCbV, verseNote) {
         bCbV: Number(_bCbV),
         verse_note: verseNote,
     };
-    console.log(bibleBook_IDB)
+    // console.log(bibleBook_IDB)
     if (db.objectStoreNames.contains(bibleBook_IDB)) {
-        console.log('populate> !YES')
+        // console.log('populate> !YES')
         let tx = db.transaction(bibleBook_IDB, "readwrite");
         let store = tx.objectStore(bibleBook_IDB);
 
@@ -123,7 +123,7 @@ function populateDB(_bCbV, verseNote) {
         };
     } else {
         // If the ObjectStore does not exist, create it (it can only be created in indexedDB.open...)
-        console.log('populate? !No')
+        // console.log('populate? !No')
         createDB(null, [_bCbV, verseNote])
     }
 }
@@ -131,7 +131,7 @@ function populateDB(_bCbV, verseNote) {
 // Look up a single book in the database by title using an index.
 function lookUpBookbyCVref(bCbV) {
     function lookUp() {
-        console.log('looking up')
+        // console.log('looking up')
         let tx = db.transaction(bibleBook_IDB, "readonly");
         let store = tx.objectStore(bibleBook_IDB);
         let index = store.index("by_ref");
@@ -142,11 +142,11 @@ function lookUpBookbyCVref(bCbV) {
             let matching = request.result;
             if (matching !== undefined) {
                 // A match was found.
-                console.log(matching.id, matching.verse_note);
+                // console.log(matching.id, matching.verse_note);
                 return matching.verse_note
             } else {
                 // No match was found.
-                console.log('No match was found');
+                // console.log('No match was found');
                 return null
             }
         };
@@ -154,7 +154,7 @@ function lookUpBookbyCVref(bCbV) {
     if (db) {
         lookUp()
     } else {
-        console.log(db)
+        // console.log(db)
         return false
     }
 
@@ -191,7 +191,7 @@ function lookupBookbyIndxnCursor() {
 function save_verse_note_to_indexedDB(e) {
     if (e.target.matches('.note_save_button')) {
         bibleBook_IDB = e.target.getAttribute('bk');
-        console.log(bibleBook_IDB)
+        // console.log(bibleBook_IDB)
         let _bCbV = e.target.getAttribute('b_cv');
 
         let verseNote = elmAhasElmOfClassBasAncestor(e.target, '.verse_note').querySelector('.text_content');
@@ -199,7 +199,7 @@ function save_verse_note_to_indexedDB(e) {
         let verseNoteInnerHTML = verseNote.innerHTML;
         let verseNoteInnerText = verseNote.innerText;
 
-        console.log(verseNoteInnerText)
+        // console.log(verseNoteInnerText)
 
         if (verseNoteInnerText.trim() != '') {
             populateDB(_bCbV, verseNoteInnerHTML)
@@ -231,7 +231,7 @@ function getNoteFromIDBifAvailable(bN, _bCbV, whereTOappend) {
             let matching = request.result;
             if (matching !== undefined) {
                 // A match was found.
-                console.log(matching.verse_note)
+                // console.log(matching.verse_note)
                 if (whereTOappend) {
                     whereTOappend.innerHTML = matching.verse_note;
                 } else {
@@ -245,7 +245,7 @@ function getNoteFromIDBifAvailable(bN, _bCbV, whereTOappend) {
             }
         };
     } else {
-        console.log('::IndexedDB DOES NOT HAVE' + bibleBook_IDB)
+        // console.log('::IndexedDB DOES NOT HAVE' + bibleBook_IDB)
         createDB()
     }
 }
@@ -272,7 +272,7 @@ function getAllItems(storeName, callback) {
     var cursorRequest = store.openCursor();
 
     cursorRequest.onerror = function(error) {
-        console.log(error);
+        // console.log(error);
     };
 
     cursorRequest.onsuccess = function(evt) {

@@ -1,7 +1,5 @@
 ppp.addEventListener("click", appendCrossReferences);
-
 bversionName = 'KJV';
-
 main.addEventListener('mousedown', getCurrentBVN)
 
 function getCurrentBVN(e) {
@@ -28,15 +26,14 @@ function getCurrentBVN(e) {
 }
 
 function appendCrossReferences(e) {
-    if (!e.target.matches('#verse_crossref_button')&&!e.target.parentNode.matches('#verse_crossref_button')) {
+    if (!e.target.matches('#verse_crossref_button') && !e.target.parentNode.matches('#verse_crossref_button')) {
         return
     }
     let eTarget;
-    if(e.target.matches('#verse_crossref_button')){eTarget = e.target.parentNode.parentNode}
-    else if(e.target.matches('#verse_crossref_button a')){eTarget = e.target.parentNode.parentNode.parentNode}
+    if (e.target.matches('#verse_crossref_button')) { eTarget = e.target.parentNode.parentNode } else if (e.target.matches('#verse_crossref_button a')) { eTarget = e.target.parentNode.parentNode.parentNode }
     let masterVerseHolder = elmAhasElmOfClassBasAncestor(e.target, '.vmultiple');
     let siblingCrossREF = masterVerseHolder.nextElementSibling;
-    if (siblingCrossREF==null || !siblingCrossREF.matches('.crossrefs') || siblingCrossREF==undefined) {
+    if (siblingCrossREF == null || !siblingCrossREF.matches('.crossrefs') || siblingCrossREF == undefined) {
         let refCode = null;
         let vHolder = null;
 
@@ -53,6 +50,18 @@ function appendCrossReferences(e) {
             refCode = refCode.replace(/:/g, '.'); //Romans.2:3==>Romans.2.3
             let crossRef = crossReferences_fullName[refCode];
 
+            let narr = []
+            crossRef.forEach(cf => {
+                let cfr = cf.split('.')
+                let cv = cfr[0] + '.' + cfr[1] + '.'
+                cf = cfr[0] + '.' + cfr[1] + '.' + cf.split(cv).join('')
+                cf = cf.replace(/(\w)\.([0-9]+)/g, '$1 $2');
+                cf = cf.replace(/\./g, ':');
+                narr.push(cf)
+            })
+            crossRef = narr;
+            parseCrossRef(crossRef, refCode);
+
             function parseCrossRef(crossRef, refCode) {
                 let crfFrag = new DocumentFragment();
                 crossRef.forEach(crf => {
@@ -67,7 +76,6 @@ function appendCrossReferences(e) {
                 vHolder.parentNode.insertBefore(crfDiv, vHolder.nextSibling);
                 return crfDiv
             }
-            parseCrossRef(crossRef, refCode);
         }
     } else {
         siblingCrossREF.classList.add('slideup')
@@ -79,9 +87,13 @@ function appendCrossReferences(e) {
 }
 
 function getCrossReference(x) {
-    // if(e.target.matches('.crossrefs>span')){
-    // let crf2get = e.target.innerText;
-    let crf2get = x.innerText;
+    let crf2get;
+    if (x.hasAttribute('ref')) {
+        crf2get = x.getAttribute('ref');
+    } else {
+        crf2get = x.innerText;
+    }
+    crf2get = crf2get.split(' ').join('.').split(':').join('.');
     let bk = crf2get.split('.')[0]
     let chp1 = Number(crf2get.split('.')[1]);
     let vrs1 = Number(crf2get.split('.')[2]);
@@ -94,46 +106,78 @@ function getCrossReference(x) {
             return
         }
     });
-    if (crf2get.includes('-')) { //MORE THAN ONE VERSE
-        vrs1 = Number(crf2get.split('-')[0].split('.')[2]);
-        let ref_secondHalf = crf2get.split('-')[1].split('.')
-
-        //e.g., Gen.1.3-Gen.1.6
-        if (ref_secondHalf.length > 1) {
-            chp2 = Number(ref_secondHalf[1]);
-            vrs2 = Number(ref_secondHalf[2]);
-        }
-        //e.g., Gen.1.3-6
-        else {
-            chp2 = chp1;
-            vrs2 = Number(ref_secondHalf[0]);
-        }
-    }
-    let refVrsArr = [];
     let vHolder = new DocumentFragment();
     let br = '';
-    for (i = vrs1; i < vrs2 + 1; i++) {
-        let verseSpan = document.createElement('span');
+    if (crf2get.includes(',')) {
+        let vrsGrpsByCommas = crf2get.split(',');
+        console.log(vrsGrpsByCommas)
+        let grp1 = vrsGrpsByCommas.shift(); // Will contain a full reference, c.g., Gen 2:16-17
+        let vRange1 = verseRange(grp1);
+        getVersesInVerseRange(vRange1);
+        let vRanges = [];
+        vrsGrpsByCommas.forEach(vg => getVranges(vg))
+        vRanges.forEach(vR => {
+            br = '<hr>'
+            getVersesInVerseRange(vR)
+        })
 
-        function vNum() {
-            let verseNum = document.createElement('code');
-            verseNum.setAttribute('ref', bk + ' ' + (chp1) + ':' + i);
-            verseNum.setAttribute('aria-hidden', 'true'); //so that screen readers ignore the verse numbers
-            verseNum.prepend(document.createTextNode(`[${(bk)}.${(chp1)}:${i}]`));
-            verseNum.title = bversionName + ' ' + bookName;
-            verseSpan.prepend(verseNum);
-            // if(br){
-            verseSpan.innerHTML = br + verseSpan.innerHTML;
-            // }
-            // else{verseSpan.innerHTML='<div></div>'+verseSpan.innerHTML;}
+        function getVranges(vg) {
+            if (vg.split('-').length > 1) { // it is a range, e.g., 5-13
+                vRanges.push([Number(vg.split('-')[0]), Number(vg.split('-')[1])])
+            } else { // it is a single number
+                vRanges.push([Number(vg), Number(vg)])
+            }
         }
-        vNum();
-        let vText = window[bversionName][fullBkn][chp1 - 1][i - 1]
-        // console.log(parseVerseText(vText, verseSpan));
-        vHolder.append(parseVerseText(vText, verseSpan));
-        br = '<br>';
+    } else {
+        vRange = verseRange(crf2get);
+        getVersesInVerseRange(vRange);
     }
+
+    function verseRange(crf2get) {
+        if (crf2get.includes('-')) { //MORE THAN ONE VERSE
+            vrs1 = Number(crf2get.split('-')[0].split('.')[2]);
+            let ref_secondHalf = crf2get.split('-')[1].split('.')
+
+            //e.g., Gen.1.3-Gen.1.6
+            if (ref_secondHalf.length > 1) {
+                chp2 = Number(ref_secondHalf[1]);
+                vrs2 = Number(ref_secondHalf[2]);
+            }
+            //e.g., Gen.1.3-6
+            else {
+                chp2 = chp1;
+                vrs2 = Number(ref_secondHalf[0]);
+            }
+        }
+        return [vrs1, vrs2]
+    }
+
+    function getVersesInVerseRange(vRange) {
+        let vrs1 = vRange[0]
+        let vrs2 = vRange[1]
+        for (i = vrs1; i < vrs2 + 1; i++) {
+            let verseSpan = document.createElement('span');
+
+            function vNum() {
+                let verseNum = document.createElement('code');
+                verseNum.setAttribute('ref', bk + ' ' + (chp1) + ':' + i);
+                verseNum.setAttribute('aria-hidden', 'true'); //so that screen readers ignore the verse numbers
+                verseNum.prepend(document.createTextNode(`[${(bk)} ${(chp1)}:${i}]`));
+                verseNum.title = bversionName + ' ' + bookName;
+                verseSpan.prepend(verseNum);
+                // if(br){
+                verseSpan.innerHTML = br + verseSpan.innerHTML;
+                // }
+                // else{verseSpan.innerHTML='<div></div>'+verseSpan.innerHTML;}
+                let vText = window[bversionName][fullBkn][chp1 - 1][i - 1]
+                    // console.log(parseVerseText(vText, verseSpan));
+                vHolder.append(parseVerseText(vText, verseSpan));
+                br = '<br>';
+            }
+            vNum();
+        }
+    }
+    createTransliterationAttr(vHolder)
     return vHolder;
 }
-
 // main.addEventListener("click", searchPreviewRefClick)

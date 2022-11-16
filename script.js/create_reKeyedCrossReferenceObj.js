@@ -6,6 +6,6 @@ for (key in crossReferences) {
     newBkNm = getFUllBookName(shortBkNm);
     newOBJect[newBkNm + '.' + oldRef.splice(1).join('.')] = crossReferences[key]
 }
-console.log(Object.keys(crossReferences).length)
-console.log(Object.keys(newOBJect).length)
-console.log(newOBJect)
+// console.log(Object.keys(crossReferences).length)
+// console.log(Object.keys(newOBJect).length)
+// console.log(newOBJect)

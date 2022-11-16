@@ -7,29 +7,29 @@
     --fontsize-title: 20px;
     --width-sidebuttons: 27px;
     --width-mainbutton: 35px;
-    --ref-hlt: #f8f8f8;
     --ref-hlt: #dde3db;
-    --ref-img: url(images/R.jpg);
-    --ref-img: #ffffc8;
     --ref-img: url(images/background.jpg);
-    --ref-paper: url(images/4rKVgAQ.jpg);
     --ref-paper: url(images/IyEMTp.jpg);
     --verse-higlight: #ffff92;
     --verse-higlight: #fffb001b;
-    --vmultiple-hover: rgb(255, 243, 155);
+    --vhlt-hover: #fff08f99;
+    --vmultiple-hover: #fff39b;
     --vmultiple2-hover: rgba(255, 213, 0, 0.527);
     --nav-bg-color: #fbfbfb;
     --vhlt-border: #8080809c;
     --vhlt: #ffffc4;
     --vhlt2: #ffff99;
-    --redwords: crimson;
-    --strongword-hover: rgb(237, 213, 222);
-    --strongword-hover: rgb(216, 255, 137);
-    --strongword-hover: rgb(199, 255, 194);
-    --strongword-hover: rgb(255, 243, 148);
+    --versenote-contextmenu: white;
+    --noteEdit-active: #ffe8d7;
+    --strgs-num: #403b69;
     --strongword-hover: rgba(255, 223, 117, 0.662);
     --shadow-color: rgb(81, 81, 81);
+    --shadow-color2: rgba(67, 67, 67, 0.87);
+    --shadow-color3: rgba(172, 160, 160, 0.87);
+    --shadow-ctxtmenu-hover: rgba(20, 2, 67, 0.87);
     --shadow-orange: rgb(188, 133, 13);
+    --span-trans-hover: rgb(151, 116, 0);
+    --span-hover: #f6efe3;
     --chpt: rgb(238, 227, 202);
     --verse-hover: rgb(248, 246, 241);
     --main-font: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -42,10 +42,28 @@
     --scroll-thumb-hover-bg-color: #555;
     --buttons: #f8f8f8;
     --buttons-border: 0.25px solid #70707072;
+    --selection: rgba(0, 0, 255, 0.1);
+    --grey: grey;
+    --grey-blue: rgb(216, 216, 216);
+    --green: green;
+    --greenish: #cbff7d;
+    --greenish2: #adffa7;
+    --greenyellow: greenyellow;
+    --white: #ffff;
+    --whitesmoke: whitesmoke;
+    --orangered: orangered;
+    --royalblue: royalblue;
+    --redwords: crimson;
+    --yellow: yellow;
+    --lightpink: lightpink;
+    --greenyellow: greenyellow;
+    --black: black;
+    --blue: blue;
+    --brown: brown;
 }
 
 ::selection {
-    background-color: rgba(0, 0, 255, 0.1);
+    background-color: var(--selection);
 }
 
 html {
@@ -76,6 +94,14 @@ body * {
     box-sizing: border-box;
 }
 
+li li {
+    list-style-type: lower-alpha;
+}
+
+li li li {
+    list-style-type: lower-roman;
+}
+
 .verse {
     z-index: 0;
 }
@@ -98,7 +124,7 @@ body * {
 
 .chptheading {
     background-color: var(--chpt);
-    border-bottom: 0.5px solid grey;
+    border-bottom: 0.5px solid var(--grey);
     font-size: small;
 }
 
@@ -147,18 +173,18 @@ code {
 
 .showing_crossref #verse_crossref_button,
 .showing_versenote #verse_notes_button {
-    background: rgb(203, 255, 125);
+    background: var(--greenish);
     font-style: italic;
 }
 
 .crossrefs,
 .verse_note {
-    box-shadow: 0 2px 2px 0#878787;
+    box-shadow: 0 2px 2px 0var(--scroll-track-bg-color);
 }
 
 .crossrefs {
     padding: 5px 5px 0 5px;
-    background: #ffff;
+    background: var( --white);
     overflow: hidden;
     font-size: var(--fontsize-main);
     transition: max-height .2s ease-in-out;
@@ -171,6 +197,7 @@ code {
 
 #verse_note {
     display: none;
+    position: relative;
 }
 
 .verse_note {
@@ -185,23 +212,51 @@ code {
     margin-bottom: 5px;
     line-height: auto;
     opacity: 1;
-    background-color: whitesmoke;
+    background-color: var(--whitesmoke);
     font-size: 1.2em;
     box-shadow: 0 4.5px 10px 3px var(--shadow-color);
     z-index: 1;
 }
 
+.verse_note #context_menu {
+    background: var(--versenote-contextmenu);
+}
+
+.verse_note #context_menu,
+.verse_note #context_menu .cmtitlebar~span {
+    font-size: inherit!important;
+}
+
 .text_content {
+    position: relative;
     width: 100% !important;
     margin-left: 0;
     margin-right: 0;
-    border: 1px solid grey!important;
+    border: 1px solid var(--grey)!important;
     min-height: 50px;
     max-height: 80vh;
     overflow: auto;
     resize: vertical;
     /* margin: 0.25em 0.25em;
     padding: 0.25em 0.25em; */
+}
+
+.text_content span[ref],
+.text_content span[strnum]:not(#context_menu span[strnum]) {
+    font-weight: bold;
+    border-bottom: var(--black) 1px solid;
+    color: var(--black);
+    cursor: pointer;
+}
+
+.text_content #context_menu {
+    background: var(--ref-img);
+    /* color: var(--white); */
+}
+
+.text_content span[ref]:hover {
+    color: var(--grey);
+    border-radius: 5px;
 }
 
 .save_edit_btns_holder {
@@ -224,7 +279,7 @@ code {
 }
 
 .note_edit_button.active {
-    background: rgb(255, 232, 215);
+    background: var(--noteEdit-active);
 }
 
 .note_edit_button:active {
@@ -237,15 +292,11 @@ code {
     pointer-events: none;
 }
 
-.note_save_button {}
-
 .note_save_button::before {
     content: 'Save';
     font-style: italic;
     pointer-events: none;
 }
-
-#singleverse_compare_menu {}
 
 #singleverse_compare_menu button {
     font-size: var(--fontsize-ref);
@@ -278,8 +329,8 @@ code {
 }
 
 #refnav #app_settings {
-    border-right: 5px solid grey;
-    background-image: var(--ref-img);
+    border-right: 5px solid var(--grey);
+    background: var(--ref-img);
     overflow: hidden;
 }
 
@@ -346,11 +397,6 @@ code {
     height: 100%;
 }
 
-#togglenavbtn::before {
-    content: '\2261';
-    font-size: xxx-large;
-}
-
 #forreference,
 #forwordsearch,
 #titlebar_show_searchsettings {
@@ -362,8 +408,8 @@ code {
     font-style: italic;
     background-color: var(--ref-hlt);
     background: var(--ref-img);
-    border-top: 0.25px solid rgba(128, 128, 128, 0.611);
-    border-bottom: 0.25px solid rgba(128, 128, 128, 0.611);
+    border-top: 0.25px solid var(--vhlt-border);
+    border-bottom: 0.25px solid var(--vhlt-border);
 }
 
 .tmp_hlt {
@@ -386,8 +432,6 @@ code {
     width: 20px;
 }
 
-.show_verses {}
-
 button {
     cursor: pointer;
     background-color: var(--buttons);
@@ -399,18 +443,14 @@ button {
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 2;
-    border-bottom: 2px solid grey;
+    border-bottom: 2px solid var(--grey);
     display: flex;
     flex-wrap: wrap;
 }
 
-#top_horizontal_bar>div {}
-
-#titlebarsearchparameters {}
-
 .buttons {
     background: var(--ref-img);
-    border-bottom: 2px solid grey;
+    border-bottom: 2px solid var(--grey);
     display: flex;
     width: 100%;
 }
@@ -422,20 +462,31 @@ button {
 
 #context_menu {
     position: absolute;
-    background: var(--ref-img);
-    background: whitesmoke;
-    border: 1px solid grey;
+    background: var(--whitesmoke);
+    /* border: 1px solid var(--grey); */
     min-width: 50px;
     max-width: 300px;
     max-height: 400px;
     overflow-y: scroll;
     padding: 5px;
-    -webkit-box-shadow: 3px 3px 3.5px 0px rgba(67, 67, 67, 0.87), 0 5px 5px 2px rgba(172, 160, 160, 0.87);
-    -moz-box-shadow: 3px 3px 3.5px 0px rgba(67, 67, 67, 0.87), 0 5px 5px 2px rgba(172, 160, 160, 0.87);
-    box-shadow: 3px 3px 3.5px 0px rgba(67, 67, 67, 0.87), 0 5px 5px 2px rgba(172, 160, 160, 0.87);
+    -webkit-box-shadow: 3px 3px 3.5px 0px var(--shadow-color2), 0 5px 5px 2px var(--shadow-color3), inset 0px 0.5px 0px 0px var(--grey);
+    -moz-box-shadow: 3px 3px 3.5px 0px var(--shadow-color2), 0 5px 5px 2px var(--shadow-color3), inset 0px 0.5px 0px 0px var(--grey);
+    box-shadow: 3px 3px 3.5px 0px var(--shadow-color2), 0 5px 5px 2px var(--shadow-color3), inset 0px 0.5px 0px 0px var(--grey);
     z-index: 10;
     font-size: var(--fontsize-strongstooltip);
     overflow-x: hidden;
+}
+
+#context_menu:hover {
+    -webkit-box-shadow: 1px 1px 3px 0px var(--shadow-ctxtmenu-hover);
+    -moz-box-shadow: 1px 1px 3px 0px var(--shadow-ctxtmenu-hover);
+    box-shadow: 1px 1px 3px 0px var(--shadow-ctxtmenu-hover);
+}
+
+#context_menu:not([strnum]) {
+    -webkit-box-shadow: 3px 3px 3.5px 0px var(--shadow-color2), 0 5px 5px 2px var(--shadow-color3), inset 0px 23px 0px 0px var(--grey);
+    -moz-box-shadow: 3px 3px 3.5px 0px var(--shadow-color2), 0 5px 5px 2px var(--shadow-color3), inset 0px 23px 0px 0px var(--grey);
+    box-shadow: 3px 3px 3.5px 0px var(--shadow-color2), 0 5px 5px 2px var(--shadow-color3), inset 0px 23px 0px 0px var(--grey);
 }
 
 #context_menu>hr+.strngsdefinition>hr:first-child {
@@ -459,15 +510,13 @@ button {
 .crossrefs>span:hover,
 #context_menu code:hover {
     text-decoration: underline;
-    color: blue;
+    color: var(--blue);
     cursor: pointer;
 }
 
 #context_menu div {
     z-index: 2;
 }
-
-#tool_tip {}
 
 #context_menu .cmtitlebar {
     position: sticky;
@@ -476,6 +525,20 @@ button {
     background: var(--ref-img);
     font-size: small;
     font-weight: bold;
+    width: 100%;
+    /* box-shadow: 21px -10px 0px 11px var(--scroll-track-bg-color),
+    -13px -6px 0px 7px var(--scroll-track-bg-color); */
+}
+
+#context_menu .cmtitlebar::before {
+    position: absolute;
+    content: '';
+    left: -9px;
+    top: -5px;
+    background: var(--ref-img), linear-gradient(to top, var(--shadow-color3), 5%, transparent);
+    width: 150%;
+    height: 23.5px;
+    z-index: -1;
 }
 
 #context_menu .cmtitlebar::after {
@@ -485,32 +548,13 @@ button {
     bottom: -3px;
     border-top: 2px solid var(--scroll-track-bg-color);
     background: var(--ref-img);
-    width: 150%;
-    height: 1px;
-    z-index: -1;
-}
-
-#context_menu .cmtitlebar::before {
-    position: absolute;
-    content: '';
-    left: -10px;
-    top: -10px;
-    border-top: 2px solid var(--scroll-track-bg-color);
-    background: var(--ref-img);
-    background: var(--ref-img), linear-gradient(to top, rgba(225, 225, 225, 0), 5%, transparent);
-    width: 150%;
-    height: 10px;
+    width: 110%;
+    height: 0px;
     z-index: -1;
 }
 
 #context_menu .cmtitlebar~span {
     font-size: var(--fontsize-scripture);
-}
-
-#context_menu:hover {
-    -webkit-box-shadow: 1px 1px 3px 0px rgba(20, 2, 67, 0.87);
-    -moz-box-shadow: 1px 1px 3px 0px rgba(20, 2, 67, 0.87);
-    box-shadow: 1px 1px 3px 0px rgba(20, 2, 67, 0.87);
 }
 
 .buttons>button,
@@ -536,6 +580,9 @@ div.buttons {
     vertical-align: bottom;
     background-color: var(--buttons);
     border: var(--buttons-border);
+    font-weight: bolder;
+    font-size: 2em!important;
+    width: 100%;
 }
 
 button:disabled {
@@ -547,7 +594,7 @@ button:not(:disabled):hover {
 }
 
 .active_button,
-searchsettings.active_button {
+#searchsettings.active_button {
     background-color: var(--chpt) !important;
 }
 
@@ -557,11 +604,8 @@ span.red span {
 }
 
 .strongsnum {
-    color: rgb(64, 59, 105);
+    color: var(--strgs-num);
 }
-
-span:not(.red) span[strnum^=H],
-span:not(.red) span[strnum^=G] {}
 
 [strnum]:empty {
     display: none !important;
@@ -582,14 +626,12 @@ span:not(.red) span[strnum^=G] {}
     padding-left: 5px;
 }
 
-#ppp {}
-
 #search_section {
     grid-column-start: 4;
     grid-column-end: 5;
     grid-row-start: 1;
     grid-row-end: 4;
-    background-color: royalblue;
+    background-color: var(--royalblue);
 }
 
 #ppp>span.verse:last-child {
@@ -619,22 +661,20 @@ span.vmultiple:hover .verse {
 }
 
 span[class^=v_]:hover {
-    background-color: rgb(246, 239, 227)!important;
+    background-color: var(--span-hover)!important;
     background-color: var(--vhlt)!important;
     box-shadow: 1px 5px 5px -2px var(--shadow-color), 3px -2px 2.5px -1px var(--shadow-color), -10px -2px 0px -0px var(--shadow-color)!important;
     z-index: 5;
 }
 
 span.translated:hover {
-    border-bottom: 1px solid rgb(151, 116, 0);
-    color: brown;
+    border-bottom: 1px solid var(--span-trans-hover);
+    color: var(--brown);
 }
 
 sup {
     font-weight: bold;
 }
-
-main span {}
 
 .translated[trans] {
     font-weight: 600;
@@ -671,7 +711,7 @@ main span {}
     display: none;
     font-size: small;
     font-style: italic;
-    color: whitesmoke;
+    color: var(--whitesmoke);
 }
 
 .eng2grk {
@@ -716,7 +756,7 @@ main span {}
     right: 5px;
     max-height: 70%;
     width: 450px;
-    background: white;
+    background: var(--white);
     overflow: scroll;
     z-index: 99;
 }
@@ -726,8 +766,6 @@ main span {}
     height: 100%;
 }
 
-#searchPreview {}
-
 #searchPreview>* {
     display: block;
     padding: 0 5px;
@@ -735,11 +773,9 @@ main span {}
 
 #searchPreview [ref]:hover {
     font-weight: bolder;
-    border-bottom: 1px dashed blue;
-    border: 2px solid gray;
+    border-bottom: 1px dashed var(--blue);
+    border: 2px solid var(--grey);
 }
-
-#searchboxtitlebar {}
 
 #searchrelative {
     display: flex;
@@ -749,7 +785,7 @@ main span {}
     padding: 0 2px;
     font-size: 10px;
     font-weight: bold;
-    border-left: 0.5px solid black;
+    border-left: 0.5px solid var(--black);
 }
 
 #searchclose:active,
@@ -758,18 +794,18 @@ main span {}
 }
 
 #searchclose:hover {
-    background-color: lightpink;
+    background-color: var(--lightpink);
 }
 
 #searchminimize:hover {
-    background-color: greenyellow;
+    background-color: var(--greenyellow);
 }
 
 #searchminimize {
     padding: 0 2px;
     font-size: 10px;
     font-weight: bold;
-    border-left: 0.5px solid black;
+    border-left: 0.5px solid var(--black);
 }
 
 #refnav {
@@ -802,8 +838,8 @@ main span {}
     border-bottom: 1px solid var(--scroll-track-bg-color);
     border-top: 1px solid var(--scroll-track-bg-color);
     margin: 0;
-    box-shadow: 0 0.5px 0 rgb(58, 58, 58);
-    background-color: whitesmoke;
+    box-shadow: 0 0.5px 0 var(--shadow-color);
+    background-color: var(--whitesmoke);
     background-image: var(--ref-img);
     font-style: italic;
     font-weight: bold;
@@ -811,8 +847,8 @@ main span {}
 }
 
 .bible_versions_heading {
-    box-shadow: 0 0.5px 0 rgb(58, 58, 58);
-    background-color: whitesmoke;
+    box-shadow: 0 0.5px 0 var(--shadow-color);
+    background-color: var(--whitesmoke);
     background-image: var(--ref-img);
     font-style: italic;
     font-weight: bold;
@@ -836,7 +872,7 @@ main span {}
 #bibleapp_cache {
     max-width: 300px;
     height: 100%;
-    border-right: 2px solid grey;
+    border-right: 2px solid var(--grey);
     font-size: var(--fontsize-main);
 }
 
@@ -890,7 +926,7 @@ main span {}
 }
 
 #resizerdiv {
-    background-color: grey;
+    background-color: var(--grey);
     float: right;
     width: 2.5px;
     height: 100%;
@@ -899,7 +935,7 @@ main span {}
 
 #resizerdiv:hover,
 #resizerdiv:active {
-    background-color: greenyellow;
+    background-color: var(--greenyellow);
 }
 
 #strongsdefinitionwindow>*:not(hr),
@@ -945,7 +981,7 @@ main span {}
     background-color: var(--verse-higlight);
     background-image: var(--ref-img);
     border-top: 1.5px solid var(--scroll-track-bg-color);
-    box-shadow: 0 2px 0 grey;
+    box-shadow: 0 2px 0 var(--grey);
 }
 
 #searchparameters #where2display {
@@ -958,7 +994,7 @@ main span {}
     margin-top: -2px;
     float: right;
     border: 1px solid var(--scroll-track-bg-color);
-    background-color: white;
+    background-color: var(--white);
     cursor: pointer;
     height: 15px;
 }
@@ -1023,26 +1059,26 @@ main span {}
 
 .vmultiple>span {
     padding: 5px 5px;
-    border-bottom: 1px solid rgb(216, 216, 216);
+    border-bottom: 1px solid var(--grey-blue);
     flex-basis: 50px;
     flex-grow: 1;
 }
 
 span.vmultiple:hover span.vhlt {
-    background: yellow;
+    background: var(--yellow);
 }
 
 span.vmultiple.noted code {
     box-sizing: border-box;
     font-weight: bolder;
     font-style: italic;
-    border-bottom: 3px solid orangered;
+    border-bottom: 3px solid var(--orangered);
     text-decoration: none!important;
 }
 
 span.vmultiple.noted code #verse_notes_button {
-    background: white;
-    color: green;
+    background: var(--white);
+    color: var(--green);
 }
 
 .slideup {
@@ -1087,23 +1123,6 @@ span.vmultiple.noted code #verse_notes_button {
     display: block !important;
 }
 
-@keyframes blink {
-    0% {
-        background-color: beige;
-    }
-    75% {
-        background-color: rgb(255, 170, 80);
-    }
-    100% {
-        background-color: beige;
-    }
-}
-
-.vglow {
-    animation: blink 3s 2;
-    animation-direction: alternate;
-}
-
 .vhlt {
     background-color: var(--vhlt2)!important;
     border-top: 0.25px solid var(--vhlt-border);
@@ -1111,82 +1130,21 @@ span.vmultiple.noted code #verse_notes_button {
     border-right: 0.25px solid var(--vhlt-border);
     border-radius: 2px;
     z-index: 1;
-    -webkit-box-shadow: 1px 1px 2px 0px rgba(67, 67, 67, 0.87);
-    -moz-box-shadow: 1px 1px 2px 0px rgba(67, 67, 67, 0.87);
-    box-shadow: 1px 1px 2px 0px rgba(67, 67, 67, 0.87);
+    -webkit-box-shadow: 1px 1px 2px 0px var(--shadow-color2);
+    -moz-box-shadow: 1px 1px 2px 0px var(--shadow-color2);
+    box-shadow: 1px 1px 2px 0px var(--shadow-color2);
 }
 
 .vhlt:hover {
-    background-color: #fff08f99;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(67, 67, 67, 0.87);
-    -moz-box-shadow: 1px 1px 1px 0px rgba(67, 67, 67, 0.87);
-    box-shadow: 1px 1px 1px 0px rgba(67, 67, 67, 0.87);
+    background-color: var(--vhlt-hover);
+    -webkit-box-shadow: 1px 1px 1px 0px var(--shadow-color2);
+    -moz-box-shadow: 1px 1px 1px 0px var(--shadow-color2);
+    box-shadow: 1px 1px 1px 0px var(--shadow-color2);
 }
 
 .vhlt+.vhlt {
     border-top: 0;
     padding-bottom: 3px;
-}
-
-.flashit {
-    -webkit-animation: flash linear 1.5s;
-    animation: flash linear 1.5s;
-}
-
-@-webkit-keyframes flash {
-    0% {
-        opacity: 1;
-        background-color: #f5f1c6;
-        font-weight: 1000;
-    }
-    20% {
-        opacity: 1;
-        background-color: #ffff92;
-        font-weight: 200;
-    }
-    80% {
-        opacity: 1;
-        background-color: #f5f1c6;
-        font-weight: 200;
-    }
-    95% {
-        opacity: 1;
-        background-color: #f5f1c6;
-        font-weight: 400;
-    }
-    100% {
-        opacity: 1;
-        background-color: transparent;
-        font-weight: 100;
-    }
-}
-
-@-keyframes flash {
-    0% {
-        opacity: 1;
-        background-color: #f5f1c6;
-        font-weight: 100;
-    }
-    20% {
-        opacity: .1;
-        background-color: #ffff92;
-        font-weight: 200;
-    }
-    80% {
-        opacity: .8;
-        background-color: #f5f1c6;
-        font-weight: 500;
-    }
-    95% {
-        opacity: 1;
-        background-color: #f5f1c6;
-        font-weight: 700;
-    }
-    100% {
-        opacity: 1;
-        background-color: transparent;
-        font-weight: 700;
-    }
 }
 
 [class^=v_].vhlt {
@@ -1198,9 +1156,6 @@ span.vmultiple.noted code #verse_notes_button {
 }
 
 @media screen and (max-device-width: 500px) {
-    #pagemaster {
-        height: calc(100vh - 57px);
-    }
      :root {
         --fontsize-main: 17px;
         --fontsize-scripture: 17px;
@@ -1232,6 +1187,9 @@ span.vmultiple.noted code #verse_notes_button {
     #titlebar_show_searchsettings {
         display: flex;
         padding: 5px;
+    }
+    #reference {
+        font-size: 1.7em!important;
     }
 }
 
@@ -1276,4 +1234,14 @@ span.vmultiple.noted code #verse_notes_button {
         font-size: 22.5px;
         width: 40px!important;
     }
+}
+
+#togglenavbtn::before {
+    content: '\2261';
+    font-size: xxx-large;
+    font-weight: 400;
+}
+
+button {
+    font-weight: bolder!important;
 }

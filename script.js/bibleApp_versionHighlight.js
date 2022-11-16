@@ -1,34 +1,41 @@
-hl_hoveredversion.addEventListener('click', () => {
-    versionHighlight_ON_OFF();
-    versionHighlight_ON = hl_hversion_check.checked;
-});
-
-let versionHighlight_ON = hl_hversion_check.checked; //Is modified by escape or alt + h
-document.addEventListener('keydown', evt => {
-    if (evt.key === 'h' && evt.altKey) {
-        versionHighlight_ON_OFF();
-        versionHighlight_ON = hl_hversion_check.checked;
-    }
-});
-
-function versionHighlight_ON_OFF(x) {
-    if (x == false || hl_hversion_check.checked) {
-        hl_hversion_check.checked = false;
-        setItemInLocalStorage('versionHighlightingOnHover', false)
-        hl_hoveredversion.classList.remove("active_button");
+function versionHighlighting_ON_OFF(x) {
+    //Turn off versions_highlighting
+    if (x == false || x == 'false') {
+        // console.log(localStorage.getItem(x))
         hoveredVersionHiglighting(false)
-    } else {
-        hl_hversion_check.checked = true;
-        setItemInLocalStorage('versionHighlightingOnHover', true)
-        hl_hoveredversion.classList.add("active_button");
+    } else if (hl_hversion_check.checked == true) {
+        hoveredVersionHiglighting(false)
+    }
+    //Turn on versions_highlighting
+    else {
         hoveredVersionHiglighting(true)
     }
 }
 
+hl_hoveredversion.addEventListener('click', () => {
+    versionHighlighting_ON_OFF();
+});
+//Is modified by escape or alt + h
+document.addEventListener('keydown', evt => {
+    if ((evt.key === 'h' || evt.key === 'H') && evt.altKey) {
+        versionHighlighting_ON_OFF();
+    }
+    if ((evt.key === 'd' || evt.key === 'D') && evt.altKey) {
+        evt.preventDefault()
+        darkLightMode();
+    }
+});
+
 function hoveredVersionHiglighting(oo_off) {
     if (oo_off == true) {
+        setItemInLocalStorage('versionHighlightingOnHover', true)
+        hl_hversion_check.checked = true;
+        hl_hoveredversion.classList.add("active_button");
         main.addEventListener('mouseover', versionHiglightingOnHover, false)
     } else if (oo_off == false) {
+        setItemInLocalStorage('versionHighlightingOnHover', false)
+        hl_hversion_check.checked = false;
+        hl_hoveredversion.classList.remove("active_button");
         main.removeEventListener('mouseover', versionHiglightingOnHover, false)
             // remove the style sheet for it if present
         if (vvH = document.getElementById('version_verses_highlightall')) {

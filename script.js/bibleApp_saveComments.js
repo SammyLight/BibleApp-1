@@ -106,6 +106,7 @@ function readFromVerseNotesFiles(bookName, chapternumber, verseNumber, appendHer
                 noteForCurrentlyEditedVerse = bible_book.notes[chapternumber - 1]['_' + verseNumber];
                 // console.log(bible_book.notes[chapternumber - 1].length);
                 // console.log(noteForCurrentlyEditedVerse);
+                noteForCurrentlyEditedVerse = generateRefsInNote(noteForCurrentlyEditedVerse);
                 appendHere.innerHTML = noteForCurrentlyEditedVerse;
                 return noteForCurrentlyEditedVerse
             }
@@ -140,6 +141,7 @@ function writeToVerseNotesFiles(bookName, chapternumber, verseNumber) {
                 newNote = "";
                 return
             }
+            newNote = modifyQuotationMarks(newNote);
             /* make copy of all the notes */
             let copyOfAllVerseNotesInCurrentBook = {...b_bk.notes };
             let originalVerseNotes = copyOfAllVerseNotesInCurrentBook[chapternumber - 1];
@@ -177,7 +179,8 @@ function writeToVerseNotesFiles(bookName, chapternumber, verseNumber) {
 }
 /* ******************************************************************* */
 
-ppp.addEventListener("click", saveJSONFileToLocalDrive); //For '#note_save_button'
+// ppp.addEventListener("click", saveJSONFileToLocalDrive);//For '#note_save_button'
+// eventListener above moved to "bibleApp_verseNotes.js" file.
 
 function saveJSONFileToLocalDrive(e) {
     if (e.target.matches('.note_save_button')) {
@@ -211,9 +214,10 @@ function indicateThatVerseHasNoteInJSONnotes_file() {
                     // // console.log(stringOfversesWithNotes)
                     // refsWithVerseNoteStyleRule = `${stringOfversesWithNotes}{box-sizing:border-box; font-weight:bolder; font-style:italic; color: maroon;box-shadow: 0 5px 5px -3px var(--shadow-color), 0 -5px 0 0 rgb(255, 243, 148)inset; text-decoration:none!important}`;
                     // createNewStyleSheetandRule('refs_with_versenotes',refsWithVerseNoteStyleRule);
-
-                    document.getElementById(`${bkIndx}.${Number(items[i].split(':')[0])-1}.${Number(items[i].split(':')[1])-1}`).classList.add('noted')
-
+                    let refCodeToMarkAsHavingNote = document.getElementById(`${bkIndx}.${Number(items[i].split(':')[0])-1}.${Number(items[i].split(':')[1])-1}`);
+                    if (refCodeToMarkAsHavingNote) {
+                        refCodeToMarkAsHavingNote.classList.add('noted')
+                    }
                 }
             });
         }

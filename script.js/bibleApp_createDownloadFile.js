@@ -3,7 +3,7 @@ function downloadFile(text_data, name = "myData", format = "json") {
     // const blob = new Blob([JSON.stringify(obj, null, 2)], {
     //     type: "application/json",
     //   });
-    console.log(name)
+    // console.log(name)
     const blob = new Blob([text_data], {
         type: "application/octet-stream",
     });
@@ -65,8 +65,8 @@ function readFromVerseNotesFiles(bookName, chapternumber, verseNumber) {
             if (bible_book.notes[chapternumber - 1]['_' + verseNumber]) {
                 //Check for verse number
                 noteForCurrentlyEditedVerse = bible_book.notes[chapternumber - 1]['_' + verseNumber];
-                console.log(bible_book.notes[chapternumber - 1].length);
-                console.log(noteForCurrentlyEditedVerse);
+                // console.log(bible_book.notes[chapternumber - 1].length);
+                // console.log(noteForCurrentlyEditedVerse);
                 return noteForCurrentlyEditedVerse
             }
         }
@@ -100,12 +100,12 @@ function writeToVerseNotesFiles(bookName, chapternumber, verseNumber) {
             // let copyOfAllVerseNotesInCurrentBook=b_bk.notes.slice();
             let copyOfAllVerseNotesInCurrentBook = {...b_bk.notes };
             let originalVerseNotes = copyOfAllVerseNotesInCurrentBook[chapternumber - 1];
-            console.log(Object.keys(b_bk.notes).length != 0 && b_bk.notes.constructor != Object)
+            // console.log(Object.keys(b_bk.notes).length != 0 && b_bk.notes.constructor != Object)
 
             // let copyOfVerseNotes={...originalVerseNotes};
             // copyOfVerseNotes['_' + verseNumber] = newNote;
             originalVerseNotes['_' + verseNumber] = newNote;
-            console.log(newNote.constructor)
+            // console.log(newNote.constructor)
 
             /* FUNCTION TO SORT THE VERSE NOTES */
             function sortVnotesObj(obj) {
@@ -121,9 +121,9 @@ function writeToVerseNotesFiles(bookName, chapternumber, verseNumber) {
             }
 
             /* REPLACE THE PREVIOUS VERSE NOTES FOR THE CHAPTER WITH THE MODIFIED VERSE NOTES */
-            console.log(originalVerseNotes['_' + verseNumber])
-            console.log(copyOfAllVerseNotesInCurrentBook[chapternumber - 1] = sortVnotesObj(originalVerseNotes))
-            console.log(copyOfAllVerseNotesInCurrentBook)
+            // console.log(originalVerseNotes['_' + verseNumber])
+            // console.log(copyOfAllVerseNotesInCurrentBook[chapternumber-1] = sortVnotesObj(originalVerseNotes))
+            // console.log(copyOfAllVerseNotesInCurrentBook)
             b_bk['notes'] = copyOfAllVerseNotesInCurrentBook
             downloadFile(JSON.stringify(b_bk), 'notes_' + bookName)
         }

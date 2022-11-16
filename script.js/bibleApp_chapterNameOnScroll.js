@@ -158,3 +158,16 @@ function checkVisible(elm) {
     var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
     return !(rect.bottom < 0 || rect.top - viewHeight >= -10);
 }
+
+// SHOW MOUSEDOVER VERSE REFERENCE IN REFERENCE INPUT
+main.addEventListener('mouseover', function(e) {
+    if (!document.activeElement.matches('#reference')) {
+        let hoveredRef;
+        if (e.target.matches('.verse')) {
+            hoveredRef = e.target.querySelector('code').getAttribute('ref');
+        } else if (et = elmAhasElmOfClassBasAncestor(e.target, '.verse')) {
+            hoveredRef = et.querySelector('code').getAttribute('ref');
+        }
+        if (hoveredRef) { reference.value = hoveredRef; }
+    }
+});

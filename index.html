@@ -40,24 +40,24 @@
                 <button onclick="checkUncheck([search_phrase,t_search_phrase])"><input type="radio" id="t_search_phrase" name="t_phraseornot" value="t_search_phrase">Search for Phrase</button><button onclick="checkUncheck([search_all_words,t_search_all_words])"><input type="radio" id="t_search_all_words" name="t_phraseornot" value="t_search_all_words" checked>All Words-Not Phrase</button>
 
                 <select id="biblebooksgroup">
-          <option value="allbks" selected>ALL BOOKS</option>
-          <option value="ot">OT</option>
-          <optgroup label="Old Testament">
-            <option value="pentateuch">Pentateuch [Gen-Deut]</option>
-            <option value="history">History [Jos-Est]</option>
-            <option value="wisdom">Wisdom [Job-SOS]</option>
-            <option value="majorProphets">Major Prophets [Isa-Dan]</option>
-            <option value="minorProphets">Minor Prophets [Hos-Mal]</option>
-          </optgroup>
-          <option value="nt">NT</option>
-          <optgroup label="New Testament">
-            <option value="nt_narrative">Gospels [Mat-Act]</option>
-            <option value="pauline">Pauline [Rom-Heb]</option>
-            <option value="generalEpistles">General Epistles [Jam-Jud]</option>
-            <option value="revelation">Revelation [Rev]</option>
-          </optgroup>
-          <option value="currentbk">Current Book</option>
-          <select></select>
+            <option value="allbks" selected>ALL BOOKS</option>
+            <option value="ot">OT</option>
+            <optgroup label="Old Testament">
+              <option value="pentateuch">Pentateuch [Gen-Deut]</option>
+              <option value="history">History [Jos-Est]</option>
+              <option value="wisdom">Wisdom [Job-SOS]</option>
+              <option value="majorProphets">Major Prophets [Isa-Dan]</option>
+              <option value="minorProphets">Minor Prophets [Hos-Mal]</option>
+            </optgroup>
+            <option value="nt">NT</option>
+            <optgroup label="New Testament">
+              <option value="nt_narrative">Gospels [Mat-Act]</option>
+              <option value="pauline">Pauline [Rom-Heb]</option>
+              <option value="generalEpistles">General Epistles [Jam-Jud]</option>
+              <option value="revelation">Revelation [Rev]</option>
+            </optgroup>
+            <option value="currentbk">Current Book</option>
+            <select></select>
                 <select></select>
                 </select>
             </div>
@@ -68,8 +68,8 @@
             <div class="refnav" name="settings" id="app_settings" multiple>
                 <button id="biblenavigation" onclick="hideRefNav(null, bible_nav)" title="Bible Navigation"><img src="images\books-stack-svgrepo-com.svg" alt="☰" ></button>
                 <button id="bibles" onclick="hideRefNav(null, bible_versions)" title="Bible Versions">
-          <!-- <img src="images\knowledge-base-svgrepo-com.svg" alt="&#128218;" > -->
-          &#128218;</button>
+            <!-- <img src="images\knowledge-base-svgrepo-com.svg" alt="&#128218;" > -->
+            &#128218;</button>
                 <!-- <button id="versealignment" onclick="changeVerseAlignment()" title="verses alignment">V</button> -->
                 <button id="searchsettings" onclick="hideRefNav(null, searchPreviewWindowFixed)" title="word(s) search"><img src="images\search-svgrepo-com(2).svg" alt="search" ></button>
                 </button>
@@ -101,11 +101,11 @@
                     <button class="search_param_btns" onclick="checkUncheck([search_all_words,t_search_all_words])"><input type="radio" id="search_all_words" name="phraseornot" value="search_all_words" checked>All Words-Not Phrase</button>
 
                     <span id="where2display">
-            <input type="checkbox" id="searchresultdisplay" name="searchresultdisplay" value="searchresultdisplay"
-              checked><label for="searchresultdisplay">Show search results in this window only</label><br>
-            <input type="checkbox" id="showreturnedverses" name="showreturnedverses" value="showreturnedverses"
-              checked><label for="showreturnedverses">Show all verses</label>
-          </span>
+              <input type="checkbox" id="searchresultdisplay" name="searchresultdisplay" value="searchresultdisplay"
+                checked><label for="searchresultdisplay">Show search results in this window only</label><br>
+              <input type="checkbox" id="showreturnedverses" name="showreturnedverses" value="showreturnedverses"
+                checked><label for="showreturnedverses">Show all verses</label>
+            </span>
                     <div id="totalfound"></div>
                 </div>
                 <div id="searchPreviewFixed"></div>
@@ -142,21 +142,21 @@
                 </div>
                 <div class="settingssectionheadings">Change Font</div>
                 <select id="fontchange" onchange="changeFontFamily()">
-          <option value="Arial, 'Arial Narrow', sans-serif">Arial</option>
-          <option value="Calibri, sans-serif">Calibri</option>
-          <option value="Cambria, Cochin, Times, 'Times New Roman', serif">Cambria</option>
-          <option value="'Courier New',monospace">Courier New</option>
-          <option value="'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Franklin Gothic Medium</option>
-          <option value="Garamond, sans-serif">Garamond</option>
-          <option value="Georgia, sans-serif">Georgia</option>
-          <option value="Helvetica,Verdana, sans-serif">Helvetica</option>
-          <option value="Perpetua, sans-serif">Perpetua</option>
-          <option
-            value="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
-            System-ui</option>
-          <option value="'Times New Roman', serif">Times New Roman</option>
-          <option value="Verdana, sans-serif">Verdana</option>
-        </select>
+            <option value="Arial, 'Arial Narrow', sans-serif">Arial</option>
+            <option value="Calibri, sans-serif">Calibri</option>
+            <option value="Cambria, Cochin, Times, 'Times New Roman', serif">Cambria</option>
+            <option value="'Courier New',monospace">Courier New</option>
+            <option value="'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Franklin Gothic Medium</option>
+            <option value="Garamond, sans-serif">Garamond</option>
+            <option value="Georgia, sans-serif">Georgia</option>
+            <option value="Helvetica,Verdana, sans-serif">Helvetica</option>
+            <option value="Perpetua, sans-serif">Perpetua</option>
+            <option
+              value="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+              System-ui</option>
+            <option value="'Times New Roman', serif">Times New Roman</option>
+            <option value="Verdana, sans-serif">Verdana</option>
+          </select>
                 <div class="" id="change_fontsize">
                     <div class="settingssectionheadings">Change Font Sizes</div>
                     <table id="cache_table">
@@ -207,15 +207,19 @@
                         </tr>
                     </table>
                 </div>
-                <div class="settingssectionheadings">Modify Cache</div>
-                <input type="checkbox" id="cache_strongs" name="cache_strongs" value="cache_strongs"><label for="cache_strongs" title="Clear transliterated words cache">Forget Transliterated Words</label><br>
-                <input type="checkbox" id="cache_higlights" name="cache_higlights" value="cache_higlights"><label for="cache_higlights" title="Clear highlighted words cache">Forget Highlited Words</label>
+
                 <div class="settingssectionheadings">DARK/LIGHT MODE</div>
                 <div for="darkmodebtn"><button id="darkmodebtn" onclick="darkLightMode()">L</button>Toggle Dark/Light Mode: </div>
                 <div for="hidestrongshighlight"><button id="hidestrongshighlight" onclick="hide_strongshighlight()">hl</button>Hide/Show Highlights: </div>
                 <br>
                 <div><input type="color" style="width: 100px;height: 25px;padding:0;border:0"></input>
                 </div>
+
+                <!-- <div class="settingssectionheadings">Modify Cache</div>
+          <input type="checkbox" id="cache_strongs" name="cache_strongs" value="cache_strongs"><label for="cache_strongs"
+            title="Clear transliterated words cache">Forget Transliterated Words</label><br>
+          <input type="checkbox" id="cache_higlights" name="cache_higlights" value="cache_higlights"><label
+            for="cache_higlights" title="Clear highlighted words cache">Forget Highlited Words</label> -->
             </div>
             <div id="strongsdefinitionwindow" class="slideout">
             </div>
@@ -288,6 +292,7 @@
 <script src="script.js/bibleApp_localStorage_indexedDB.js" charset="utf-8"></script>
 <script src="script.js/bibleApp_saveComments.js" charset="utf-8"></script>
 <script src="script.js/bibleApp_verseNotes.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_newWindow.js" charset="utf-8"></script>
 <!-- <script src="script.js/bibleApp_createDownloadFile.js" charset="utf-8"></script> -->
 <script>
     tool_tip.click();

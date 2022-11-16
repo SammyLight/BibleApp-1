@@ -117,23 +117,43 @@ let lcol = rootStyles.getPropertyValue('--verse-hover');
 
 function darkLightMode() {
     let dark_mode = 'darkmode';
-    let darkmodeCSS = `span.verse{
-        background-color:rgb(38, 38, 38);
-        color:white!important;
-    }span.verse span{
-        color:white;
-    }`
-        // let dcol= 'rgba(0, 50, 112, 0.918)';
-    let dcol = 'rgba(0, 120, 112, 0.918)';
+    let darkmodeCSS = `
+    span.verse{background:black; color:white!important;}
+    span.verse span, .verse_note span[ref] {color:white;}
+    span.verse:hover, span.vmultiple:hover {background: rgb(18, 18, 18);}
+    input{background:rgb(18, 18, 18)!important; color:whitesmoke;}
+    button.active_button{color:black!important;}
+    .buttons {background:rgb(18, 18, 18)}
+    button {background:rgb(115,115,90);}
+    #refnav #app_settings {border-right: 1px solid var(--grey); background:rgb(18, 18, 18)}
+    #bible_versions, #searchPreviewWindowFixed, #strongsdefinitionwindow, #bibleapp_cache {background-color: rgb(18, 18, 18);color:whitesmoke}
+    #searchparameters div:first-of-type+div, #bibleapp_cache div:first-of-type, #bibleapp_cache .settingssectionheadings {background:none;}
+    #bible_nav {font-size: var(--fontsize-scripture-nav)!important; background:black; color: whitesmoke;}
+    #bible_nav option:hover, #searchPreviewFixed>.chptheading, .bible_versions_heading {color: black;}
+    #searchparameters, .verse_note {background: rgb(5,10,15); color:white}
+    #main button {background:whitesmoke}
+    #bibleapp_cache *:not(.settingssectionheadings) {font-size: var(--fontsize-main);background: black; color: whitesmoke;}
+    `
+    let dcol = 'transparent';
     if (document.getElementsByTagName('head')[0].querySelector('#darkmode')) {
         darkmode.remove();
-        console.log(this);
+        // console.log(this);
         darkmodebtn.innerText = 'L'
         documentROOT.style.setProperty('--verse-hover', lcol);
+        documentROOT.style.setProperty('--vmultiple-hover', '#fff39b');
+        documentROOT.style.setProperty('--vhlt', '#ffffc4');
+        documentROOT.style.setProperty('--ref-img', 'url(images/background.jpg)');
+        documentROOT.style.setProperty('--selection', 'rgba(0, 0, 255, 0.1)');
+        documentROOT.style.setProperty('--vhlt2', '#ffff99');
     } else {
         createNewStyleSheetandRule(dark_mode, darkmodeCSS);
         darkmodebtn.innerText = 'D';
         documentROOT.style.setProperty('--verse-hover', dcol);
+        documentROOT.style.setProperty('--vmultiple-hover', 'rgb(0, 13, 13)');
+        documentROOT.style.setProperty('--vhlt', 'rgb(0, 21, 21)');
+        documentROOT.style.setProperty('--vhlt2', 'rgb(0, 39, 39)');
+        documentROOT.style.setProperty('--ref-img', 'rgb(38, 38, 38)');
+        documentROOT.style.setProperty('--selection', 'rgba(0, 255, 0, 0.6)');
     }
 }
 
@@ -145,16 +165,16 @@ function hide_strongshighlight() {
 }
 
 function showEnglishTranslationOfHGtransliteration(evt) {
-    if (evt && evt.key === 'r' && evt.altKey) {
+    if (evt && (evt.key === 'r' || evt.key === 'R') && evt.altKey) {
         engnXlit_supscript('eng')
     }
-    if (evt && evt.key === 't' && evt.altKey) {
+    if (evt && (evt.key === 't' || evt.key === 'T') && evt.altKey) {
         engnXlit_supscript('hebgrk')
     }
 }
 
 function engnXlit_supscript(x) {
-    console.log(x)
+    // console.log(x)
     if (x == 'eng') {
         let eng2grk_style = `.verse:not(.v_accented) .eng2grk::after{
             content: attr(translation);

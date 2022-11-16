@@ -32,7 +32,7 @@ function createTransliterationAttr(x, l) {
             // CHECK STRONGS DICTIONARY
             for (abc = 0; abc < strongsJSONresponse.length; abc++) {
                 if (strongsJSONresponse[abc].number == wStrnum) {
-                    strNumElm.classList.add(wStrnum)
+                    strNumElm.classList.add(wStrnum);
                     let str_xlit = strongsJSONresponse[abc].xlit;
                     let str_lemma = strongsJSONresponse[abc].lemma;
                     strNumElm.setAttribute("data-xlit", strNumElm.getAttribute("data-xlit") + divider + str_xlit);
@@ -51,6 +51,7 @@ function createTransliterationAttr(x, l) {
         // strNumElm.setAttribute('data-title', '(' + strNumElm.getAttribute("translation") + ')' + strNum_Title);
         strNumElm.setAttribute('data-title', strNum_Title);
     });
+    return x
 }
 let currentStrongsDef = null;
 
@@ -136,7 +137,6 @@ function hideTransliteration(stn) {
 function highlightAllStrongs(x) {
     cs = `span[strnum="${x}"]{background-color:transparent;box-shadow:0 -1.05em 0px 0px ${randomColor(200)} inset;border-radius:2px;color:black!important;
     transition: box-shadow .1s ease-in;`;
-    // cs = `span[strnum="${x}"]{background-color:${randomColor(200)};border-radius:2px;color:black!important;`
     //CREATE THE INNER-STYLE WITH ID #highlightstrongs IN THE HEAD IF IT DOESN'T EXIST
     if (!document.querySelector('style#highlightstrongs')) {
         createNewStyleSheetandRule('highlightstrongs', cs)
@@ -175,7 +175,7 @@ function strongsHighlighting(e) {
         }
     }
     //IF IT IS THE STRONGS WORD ITSELF
-    else if (e.target.parentElement.classList.contains('translated')) {
+    else if (!e.target.matches('#singleverse_compare_menu') && e.target.parentElement.classList.contains('translated')) {
         clickedElm = e.target.parentElement;
         let stn = clickedElm.getAttribute('strnum');
         if (!clickeElmArray.includes(stn)) {
@@ -235,15 +235,21 @@ main.addEventListener('mouseover', function(e) {
     }
     //For context_menu when it is serving a strong's number
     else {
-        if (e.target.matches('#context_menu[strnum]') || elmAhasElmOfClassBasAncestor(e.target, '#context_menu[strnum]')) {
+        let strElm = null;
+        if (e.target.matches('#context_menu[strnum]') || (strElm = elmAhasElmOfClassBasAncestor(e.target, '#context_menu[strnum]'))) {
             // 'rightClickedElm' & 'firstShadowColorOfElem' are gotten from the rightclickmenu function
-            strAtt = rightClickedElm.getAttribute('strnum');
-            highlightColor = firstShadowColorOfElem;
+            if (firstShadowColorOfElem) {
+                if (strElm) {
+                    strAtt = strElm.getAttribute('strnum');
+                } else {
+                    strAtt = rightClickedElm.getAttribute('strnum');
+                }
+                highlightColor = firstShadowColorOfElem;
+            }
         } else if (elmAhasElmOfClassBasAncestor(e.target, '[strnum]')) {
             strElm = elmAhasElmOfClassBasAncestor(e.target, '[strnum]');
             strAtt = strElm.getAttribute('strnum');
             highlightColor = getBoxShadowColor(e.target);
-            // highlightColor = getBoxShadowColor(main.querySelector(`.verse .${strAtt}`));
         }
     }
     if (strAtt) {
@@ -269,7 +275,7 @@ main.addEventListener('mouseover', function(e) {
             box-shadow:0 -1.07em 0px 0px ${highlightColor} inset,
             0 5px 5px -2px var(--shadow-orange)!important;
             border-radius:5px;
-            border-bottom:3px dashed maroon !important;
+            border-bottom:3px solid maroon !important;
             color:black!important;
             transition: box-shadow .1s ease-in;
             `;
@@ -278,7 +284,7 @@ main.addEventListener('mouseover', function(e) {
     }
 })
 main.addEventListener('mouseout', function(e) {
-    if (e.target.hasAttribute('strnum')) {
+    if (e.target.hasAttribute('strnum') && document.getElementById('highlightall')) {
         highlightall.remove();
     }
 })

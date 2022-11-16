@@ -1,14 +1,14 @@
 //Settings under refnav.
-cache_strongs.addEventListener('change', function() {
-    if (this.checked) {
-        localStorage.removeItem('transliteratedWords')
-    }
-});
-cache_higlights.addEventListener('change', function() {
-    if (this.checked) {
-        localStorage.removeItem('strongsHighlightStyleSheet')
-    }
-});
+// cache_strongs.addEventListener('change', function () {
+//     if (this.checked) {
+//         localStorage.removeItem('transliteratedWords')
+//     }
+// });
+// cache_higlights.addEventListener('change', function () {
+//     if (this.checked) {
+//         localStorage.removeItem('strongsHighlightStyleSheet')
+//     }
+// });
 let defaultReference; //For browser history
 versionsToShow = ['KJV'];
 
@@ -64,10 +64,11 @@ function cacheFunctions() {
         });
     }
     if (localStorage.getItem('versionHighlightingOnHover')) {
-        versionHighlight_ON_OFF(localStorage.getItem('versionHighlightingOnHover'))
+        // console.log(localStorage.getItem('versionHighlightingOnHover')) 
+        versionHighlighting_ON_OFF(localStorage.getItem('versionHighlightingOnHover'))
     } else {
         //for the first time the app is run on a browser (it will turn it on)
-        versionHighlight_ON_OFF(true)
+        versionHighlighting_ON_OFF(true)
     }
     //For showing original english translation beside Hebrew/Greek transliteration
     // This really has nothing to do with the cache
@@ -100,9 +101,11 @@ function cacheFunctions2() {
 }
 
 function setItemInLocalStorage(name, nValue) {
-    if (name == 'transliteratedWords' && !cache_strongs.checked) { //check if in the settings saving to cache for the transliteration words is selected
+    let cache_strongs = document.querySelector('#cache_strongs');
+    let cache_higlights = document.querySelector('#cache_higlights');
+    if (name == 'transliteratedWords' && (!cache_strongs || !cache_strongs.checked)) { //check if in the settings saving to cache for the transliteration words is selected
         localStorage.setItem(name, nValue);
-    } else if (name == 'strongsHighlightStyleSheet' && !cache_higlights.checked) {
+    } else if (name == 'strongsHighlightStyleSheet' && (!cache_higlights || !cache_higlights.checked)) {
         localStorage.setItem(name, nValue);
     } else {
         localStorage.setItem(name, nValue);
