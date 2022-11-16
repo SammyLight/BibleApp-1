@@ -348,6 +348,7 @@ code {
 
 #togglenavbtn::before {
     content: '\2261';
+    font-size: xxx-large;
 }
 
 #forreference,
