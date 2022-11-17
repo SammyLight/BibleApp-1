@@ -27,15 +27,6 @@
     min-width: 53px;
 }
 
-#reference {
-    width: -webkit-fill-available;
-    vertical-align: bottom;
-    background-color: var(--buttons);
-    border: var(--buttons-border);
-    font-weight: bolder;
-    font-size: 2em!important;
-}
-
 #refnav #app_settings>button {
     width: auto;
     min-width: 40px;
