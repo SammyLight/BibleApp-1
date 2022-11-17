@@ -1160,51 +1160,6 @@ span.vmultiple.noted code #verse_notes_button {
     display: none;
 }
 
-@media screen and (max-device-width: 540px) {
-    #ref_search_versions_holder #refdiv,
-    #ref_search_versions_holder #searchdiv {
-        display: flex;
-        width: 100%;
-    }
-    #refdiv input,
-    #searchdiv input {
-        flex-grow: 1;
-    }
-    #forreference,
-    #forwordsearch,
-    #titlebar_show_searchsettings {
-        display: flex;
-        padding: 5px;
-    }
-}
-
-@media screen and (max-device-width: 400px) {
-    #forreference,
-    #forwordsearch,
-    #titlebar_show_searchsettings {
-        display: flex;
-        min-width: 40px;
-        padding: 3px;
-    }
-}
-
-@media screen and (max-device-width: 300px) {
-    #ref_search_versions_holder #refdiv,
-    #ref_search_versions_holder #searchdiv {
-        display: flex;
-        width: 100%;
-    }
-    #refdiv input,
-    #searchdiv input {
-        flex-grow: 1;
-    }
-    #forreference,
-    #forwordsearch,
-    #titlebar_show_searchsettings {
-        min-width: 30px;
-    }
-}
-
 button {
     font-weight: bolder!important;
 }
