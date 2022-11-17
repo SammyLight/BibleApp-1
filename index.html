@@ -21,7 +21,7 @@
     <div id="pagemaster">
 
         <!-- TOP HORIZONTAL BAR -->
-        <div id="top_horizontal_bar">
+        <div id="top_horizontal_bar" class="desktop_topbar">
             <div class="buttons" id="top_horizontal_bar_buttons">
                 <button onclick="toggleNav()" class="togglenav" id="togglenavbtn" title="Toggle Nav"></button>
                 <div id="ref_search_versions_holder">
@@ -32,9 +32,9 @@
                         <button id="titlebar_show_searchsettings" onclick="toggleClassAndActiveButton(titlebarsearchparameters, 'slideup',this)"><img src="images/settings-gear-svgrepo-com.svg" alt="⚙"></button><input class="footersection" id="wordsearch"
                             title="What to search for" placeholder="Type Words to Search For"><button onclick="runWordSearch()" class="footersection" id="forwordsearch" title="Run Search" disabled><img src="images/search-svgrepo-com (2).svg" alt="..."></button>
                     </div>
-                    <div id="bibleversions_btns">
-                    </div>
                 </div>
+            </div>
+            <div id="bibleversions_btns">
             </div>
             <div id="titlebarsearchparameters" class="slideup">
                 <button onclick="checkUncheck([case_sensitive,t_case_sensitive])"><input id="t_case_sensitive" name="t_case_sensitive" type="checkbox">Case Sensitivity</button><button onclick="checkUncheck([whole_word,t_whole_word])"><input type="checkbox" id="t_whole_word" name="t_whole_word" value="t_whole_word">Whole Words</button>
