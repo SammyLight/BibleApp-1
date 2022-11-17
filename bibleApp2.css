@@ -6,12 +6,25 @@
 }
 
 #bibleversions_btns {
-    display: block;
+    display: contents;
+}
+
+#bibleversions_btns button {
+    float: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #togglenavbtn {
     min-width: 40.5px;
     height: 100%;
+}
+
+#forreference,
+#forwordsearch,
+#titlebar_show_searchsettings {
+    min-width: 53px;
 }
 
 #refnav #app_settings>button {
@@ -52,6 +65,13 @@
         padding: 8px 2px;
     }
 }
+
+
+/* @media screen and (max-device-width: 790px) {
+    #bibleversions_btns button {
+        height: auto;
+    }
+} */
 
 @media screen and (max-device-width: 540px) {
      :root {
