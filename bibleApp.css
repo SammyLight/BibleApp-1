@@ -329,7 +329,8 @@ code {
 }
 
 #refnav #app_settings {
-    border-right: 5px solid var(--grey);
+    border-right: 0px solid var(--grey);
+    border-right: var(--buttons-border);
     background: var(--ref-img);
     overflow: hidden;
 }
@@ -350,6 +351,9 @@ code {
     padding-left: 2px;
     padding-right: 2px;
     font-size: 22.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #bibleversions_btns {
@@ -927,8 +931,9 @@ sup {
 
 #resizerdiv {
     background-color: var(--grey);
+    /* background-color: #70707072; */
     float: right;
-    width: 2.5px;
+    width: 1px;
     height: 100%;
     cursor: ew-resize;
 }
@@ -1155,20 +1160,7 @@ span.vmultiple.noted code #verse_notes_button {
     display: none;
 }
 
-@media screen and (max-device-width: 500px) {
-     :root {
-        --fontsize-main: 17px;
-        --fontsize-scripture: 17px;
-        --fontsize-ref: 12px;
-        --fontsize-strongstooltip: 17px;
-        --width-sidebuttons: 40px;
-        --width-mainbutton: 45px;
-    }
-    #refnav #app_settings>button {
-        font-size: 32.5px;
-        overflow: hidden;
-        width: 50px!important;
-    }
+@media screen and (max-device-width: 540px) {
     #ref_search_versions_holder #refdiv,
     #ref_search_versions_holder #searchdiv {
         display: flex;
@@ -1178,25 +1170,15 @@ span.vmultiple.noted code #verse_notes_button {
     #searchdiv input {
         flex-grow: 1;
     }
-    #togglenavbtn {
-        /* width: 115px !important; */
-        min-width: 52px;
-    }
     #forreference,
     #forwordsearch,
     #titlebar_show_searchsettings {
         display: flex;
         padding: 5px;
     }
-    #reference {
-        font-size: 1.7em!important;
-    }
 }
 
 @media screen and (max-device-width: 400px) {
-     :root {
-        --fontsize-title: 16px;
-    }
     #forreference,
     #forwordsearch,
     #titlebar_show_searchsettings {
@@ -1207,10 +1189,6 @@ span.vmultiple.noted code #verse_notes_button {
 }
 
 @media screen and (max-device-width: 300px) {
-    #togglenavbtn {
-        /* width: 110px !important; */
-        min-width: 42px;
-    }
     #ref_search_versions_holder #refdiv,
     #ref_search_versions_holder #searchdiv {
         display: flex;
@@ -1225,21 +1203,6 @@ span.vmultiple.noted code #verse_notes_button {
     #titlebar_show_searchsettings {
         min-width: 30px;
     }
-     :root {
-        --fontsize-title: 14px;
-        --width-mainbutton: 35px;
-        --width-sidebuttons: 27px;
-    }
-    #refnav #app_settings>button {
-        font-size: 22.5px;
-        width: 40px!important;
-    }
-}
-
-#togglenavbtn::before {
-    content: '\2261';
-    font-size: xxx-large;
-    font-weight: 400;
 }
 
 button {
