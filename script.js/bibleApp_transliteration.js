@@ -26,7 +26,7 @@ function createTransliterationAttr(x, l) {
                 divider = ''
             }
             //For Greek/Hebrew Bibles
-            if (l == 'original') {
+            if (l == 'original'||l == 'gr') {
                 strNumElm.setAttribute("data-true-xlit", keyValueReplacer(strNumElm.innerText));
             }
             // CHECK STRONGS DICTIONARY
@@ -82,7 +82,12 @@ function getsStrongsDefinition(x) {
 var transliteratedWords_Array = [];
 
 function showTransliteration(stn) {
-    let allSimilarWords = pagemaster.querySelectorAll('.' + stn);
+    let allSimilarWords;
+    if(/G|H\d+/i.test(stn)&&stn!=='G*'){
+        allSimilarWords = pagemaster.querySelectorAll('.' + stn);
+    } else {return}
+    // allSimilarWords = pagemaster.querySelectorAll('.' + stn);
+    // let allSimilarWords = document.getElementsByClassName(stn);
     allSimilarWords.forEach(elm => {
         elm.innerHTML = '';
         let xlitFragment = new DocumentFragment();
@@ -200,7 +205,9 @@ pagemaster.addEventListener("dblclick", function (e) {
                 /* ADD THE WORD TO THE transliteratedWords_Array */
                 transliteratedWords_Array.push(stn);
             }
-            showTransliteration(stn)
+            if(/G|H\d+/i.test(stn)){
+                showTransliteration(stn)
+            }
         })
     } else if (hoverElm.classList.contains('strnum')) {
         let allstn = hoverElm.parentElement.getAttribute('strnum').split(' ');

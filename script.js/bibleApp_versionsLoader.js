@@ -22,7 +22,7 @@ let availableVersions = {
     // 'original': {name: 'Original', language: 'original'},
     'accented': {name: 'Accented original',language: 'original'},
 	'ABP-en': { name: 'Apostolic Bible Polyglot-en', language: 'en' },
-	'ABP-gr': { name: 'Apostolic Bible Polyglot-gr', language: 'original' },
+	'ABP-gr': { name: 'Apostolic Bible Polyglot-gr', language: 'gr' },
     'KJV': {name: 'King James Version',language: 'en'},
     'WEB': {name: 'World English Bible',language: 'en'},
     'ESV': {name: 'English Standard Version',language: 'en'},

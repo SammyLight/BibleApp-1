@@ -95,7 +95,9 @@ function cacheFunctions2() {
     if (localStorage.getItem('transliteratedWords')) {
         transliteratedWords_Array = localStorage.getItem('transliteratedWords').split(',');
         transliteratedWords_Array.forEach(storedStrnum => {
-            showTransliteration(storedStrnum)
+            if(/G|H\d+/i.test(storedStrnum)){
+                showTransliteration(storedStrnum)
+            }
         });
     }
 }

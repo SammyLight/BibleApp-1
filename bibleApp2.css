@@ -4,35 +4,29 @@
     display: flex;
     width: auto;
 }
-
 #bibleversions_btns {
     display: contents;
 }
-
 #bibleversions_btns button {
     float: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 #togglenavbtn {
     min-width: 40.5px;
     height: 100%;
 }
-
 #forreference,
 #forwordsearch,
 #titlebar_show_searchsettings {
     min-width: 53px;
 }
-
 #refnav #app_settings {
     border-right: 0.25px solid var(--grey);
     background: var(--ref-img);
     overflow: hidden;
 }
-
 #refnav #app_settings>button {
     width: auto;
     min-width: 40px;
@@ -42,7 +36,6 @@
     justify-content: center;
     align-items: center;
 }
-
 #resizerdiv {
     background-color: var(--grey);
     /* background-color: #70707072; */
@@ -51,7 +44,6 @@
     height: 100%;
     cursor: ew-resize;
 }
-
 #ppp {
     border: var(--buttons-border);
 }
@@ -71,13 +63,6 @@
         padding: 8px 2px;
     }
 }
-
-
-/* @media screen and (max-device-width: 790px) {
-    #bibleversions_btns button {
-        height: auto;
-    }
-} */
 
 @media screen and (max-device-width: 540px) {
      :root {
@@ -120,7 +105,6 @@
         font-size: 1.5em!important;
     }
 }
-
 @media screen and (max-device-width: 400px) {
      :root {
         --fontsize-title: 16px;
@@ -140,7 +124,6 @@
         padding: 3px;
     }
 }
-
 @media screen and (max-device-width: 300px) {
     #togglenavbtn {
         min-width: 42.3px;
@@ -165,7 +148,6 @@
         font-size: 1em!important;
     }
 }
-
 #togglenavbtn::before {
     content: '\2261';
     font-size: xxx-large;
