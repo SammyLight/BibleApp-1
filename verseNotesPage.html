@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Notes</title>
+</head>
+
+<body>
+    <button onclick="openNewWindow()">LC Bible App</button>
+    <p>Then, click the below buttons:</p>
+    <strong>Change background color:</strong>
+    <strong>lightgreen:</strong><input type="radio" name="R1" value="V4" onclick="win2bgColor('lightgreen')">
+    <strong>lightyellow:</strong><input type="radio" name="R1" value="V5" onclick="win2bgColor('lightyellow')">
+    <strong>pink:</strong><input type="radio" name="R1" value="V6" onclick="win2bgColor('pink')">
+    
+    <div><input id="word2find" type="text"></input><button onclick="window2.find(word2find.value); window2.focus()">find</button></div>
+
+</body>
+<script>
+    let window2;
+    function openNewWindow(){
+        // window2 = open('page2.html','winname','width=200,height=200');
+        window2 = open('page2.html','winname','location=1');
+        window2.resizeTo(200, screen.height);
+        window2.moveTo(screen.width-265, 0);
+    }
+    function win2bgColor(cl){
+        if(!window2){return}
+        window2.document.bgColor=cl;
+        window2.focus()
+    }
+</script>
+
+</html>

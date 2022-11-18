@@ -83,6 +83,10 @@ body>svg {
     width: 100% !important;
 }
 
+svg {
+    filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+}
+
 body {
     position: relative;
     margin: 0;
@@ -92,6 +96,16 @@ body {
 
 body * {
     box-sizing: border-box;
+}
+
+.em {
+    font-style: italic;
+    font-weight: bold;
+    font-size: 0.75em;
+}
+
+sup {
+    font-size: 0.6em;
 }
 
 li li {
@@ -329,8 +343,7 @@ code {
 }
 
 #refnav #app_settings {
-    border-right: 0px solid var(--grey);
-    border-right: var(--buttons-border);
+    border-right: 5px solid var(--grey);
     background: var(--ref-img);
     overflow: hidden;
 }
@@ -351,9 +364,6 @@ code {
     padding-left: 2px;
     padding-right: 2px;
     font-size: 22.5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 #bibleversions_btns {
@@ -479,6 +489,7 @@ button {
     z-index: 10;
     font-size: var(--fontsize-strongstooltip);
     overflow-x: hidden;
+    resize: both;
 }
 
 #context_menu:hover {
@@ -931,9 +942,8 @@ sup {
 
 #resizerdiv {
     background-color: var(--grey);
-    /* background-color: #70707072; */
     float: right;
-    width: 1px;
+    width: 2.5px;
     height: 100%;
     cursor: ew-resize;
 }
