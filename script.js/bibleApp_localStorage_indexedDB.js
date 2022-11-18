@@ -28,7 +28,7 @@ justOpentheIndxDB()
 
 function justOpentheIndxDB() {
     request = indexedDB.open(nameOfDataBase);
-    request.onsuccess = function() {
+    request.onsuccess = function () {
         db = request.result;
     }
 }
@@ -43,7 +43,7 @@ function createDB(dbVersionNum, fromPopulateIDB) {
     }
 
     // The database did not previously exist, so create object stores and indexes.
-    request.onupgradeneeded = function() {
+    request.onupgradeneeded = function () {
         // console.log(bibleBook_IDB);
         let db = request.result;
 
@@ -77,7 +77,7 @@ function createDB(dbVersionNum, fromPopulateIDB) {
             });
         }
     };
-    request.onsuccess = function() {
+    request.onsuccess = function () {
         db = request.result;
         // If the book does not exist, then create it
         // For this, the onupgradeneeded has to be triggered and this can only happen if the version number is higher than the current version number
@@ -92,7 +92,7 @@ function createDB(dbVersionNum, fromPopulateIDB) {
             return
         }
     };
-    request.onblocked = function() {
+    request.onblocked = function () {
         alert("You need to refresh the page, then try to add notes for the non-canonical book.")
     };
 }
@@ -118,7 +118,7 @@ function populateDB(_bCbV, verseNote) {
         //     isbn: 234567
         // });
 
-        tx.oncomplete = function() {
+        tx.oncomplete = function () {
             // All requests have succeeded and the transaction has committed.
         };
     } else {
@@ -138,7 +138,7 @@ function lookUpBookbyCVref(bCbV) {
 
         // let request = index.get("Bedrock Nights");
         let request = index.get(bCbV);
-        request.onsuccess = function() {
+        request.onsuccess = function () {
             let matching = request.result;
             if (matching !== undefined) {
                 // A match was found.
@@ -168,7 +168,7 @@ function lookupBookbyIndxnCursor() {
     let index = store.index("by_author");
 
     let request = index.openCursor(IDBKeyRange.only("Fred"));
-    request.onsuccess = function() {
+    request.onsuccess = function () {
         let cursor = request.result;
         if (cursor) {
             // Called for each matching record.
@@ -193,17 +193,17 @@ function save_verse_note_to_indexedDB(e) {
         bibleBook_IDB = e.target.getAttribute('bk');
         // console.log(bibleBook_IDB)
         let _bCbV = e.target.getAttribute('b_cv');
-
+        
         let verseNote = elmAhasElmOfClassBasAncestor(e.target, '.verse_note').querySelector('.text_content');
-
+        
         let verseNoteInnerHTML = verseNote.innerHTML;
         let verseNoteInnerText = verseNote.innerText;
-
+        
         // console.log(verseNoteInnerText)
-
-        if (verseNoteInnerText.trim() != '') {
+        
+        if(verseNoteInnerText.trim()!=''){
             populateDB(_bCbV, verseNoteInnerHTML)
-                /* IF verse note exists in indXDB, modify it */
+            /* IF verse note exists in indXDB, modify it */
             indicateThatVerseHasNoteInJSONnotes_file();
             // indicateThatVerseHasNoteInIndxDB();
         }
@@ -227,7 +227,7 @@ function getNoteFromIDBifAvailable(bN, _bCbV, whereTOappend) {
 
         // let request = index.get("Bedrock Nights");
         let request = index.get(Number(_bCbV));
-        request.onsuccess = function() {
+        request.onsuccess = function () {
             let matching = request.result;
             if (matching !== undefined) {
                 // A match was found.
@@ -260,22 +260,22 @@ function getNoteFromIDBifAvailable(bN, _bCbV, whereTOappend) {
 
 /* GET ALL RECORDS IN AN OBJECT STORE */
 //https://dzone.com/articles/getting-all-stored-items
-function getAllItems(storeName, callback) {
+function getAllItems(storeName,callback) {
     var trans = db.transaction(storeName, IDBTransaction.READ_ONLY);
     var store = trans.objectStore(storeName);
     var items = [];
-
-    trans.oncomplete = function(evt) {
+ 
+    trans.oncomplete = function(evt) {  
         callback(items);
     };
-
+ 
     var cursorRequest = store.openCursor();
-
+ 
     cursorRequest.onerror = function(error) {
         // console.log(error);
     };
-
-    cursorRequest.onsuccess = function(evt) {
+ 
+    cursorRequest.onsuccess = function(evt) {                    
         var cursor = evt.target.result;
         if (cursor) {
             items.push(cursor.value);

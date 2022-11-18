@@ -1,33 +1,33 @@
 /* FUNCTION FOR SEARCH FOR SCRIPTURES BY WORDS AND PHRASES */
-let booksToSearchIn = [];
+let booksToSearchIn=[];
 let wordsearch = document.getElementById('wordsearch')
-wordsearch.addEventListener("keypress", function(e) {
+wordsearch.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
         runWordSearch()
         e.preventDefault();
     }
 });
-wordsearch.addEventListener('keyup', function() {
-    if (wordsearch.value.trim() != '') { forwordsearch.disabled = false; } else { forwordsearch.disabled = true; }
-});
+wordsearch.addEventListener('keyup', function(){
+    if(wordsearch.value.trim()!=''){forwordsearch.disabled=false;}
+    else{forwordsearch.disabled=true;}
+  });
 if (!searchresultdisplay.checked) {
     searchPreview.addEventListener("click", codeELmRefClick)
 }
 searchPreviewFixed.addEventListener("click", codeELmRefClick);
 let verseCount;
-
 function returnStrippedTextOfVerse(vTxt) {
-    let madePlain_without_strongs, arrayOfStrongs = [];
-    if (Array.isArray(vTxt)) {
-        arrayOfStrongs = vTxt.map(txt => txt[1]);
-        let arrayOfWordsWithoutStrongs = vTxt.map(txt => txt[0]);
+    let madePlain_without_strongs,arrayOfStrongs=[];
+    if(Array.isArray(vTxt)){
+        arrayOfStrongs = vTxt.map(txt=>txt[1]);
+        let arrayOfWordsWithoutStrongs = vTxt.map(txt=>txt[0]);
         // console.log(arrayOfWordsWithoutStrongs);
         // console.log(arrayOfStrongs);
-        madePlain_without_strongs = arrayOfWordsWithoutStrongs.filter(elm => { if (!/^[,.?\-]$/.test(elm)) { return elm } }).join(' ');
+        madePlain_without_strongs = arrayOfWordsWithoutStrongs.filter(elm=>{if(!/^[,.?\-]$/.test(elm)){return elm}}).join(' ');
         // if(verseCount==0){
-        // console.log(vTxt);
-        // console.log(madePlain_without_strongs);
-        // verseCount++
+            // console.log(vTxt);
+            // console.log(madePlain_without_strongs);
+            // verseCount++
         // }
     } else {
         vTxt = vTxt.toString()
@@ -49,14 +49,13 @@ function returnStrippedTextOfVerse(vTxt) {
     }
     return {
         withOutStrongs: madePlain_without_strongs,
-        arrayOfStrongsNums: arrayOfStrongs
+        arrayOfStrongsNums:arrayOfStrongs
     }
 }
 
 function arrayOfWordsToSearchFor(w) {
-    let caseSensitivity = '';
-    if (!case_sensitive.checked) { w = w.toLowerCase();
-        caseSensitivity = 'i'; }
+    let caseSensitivity='';
+    if(!case_sensitive.checked){w=w.toLowerCase(); caseSensitivity='i';}
     // let hasStrongs = w.replace(/.*[H|G|h|g]\d+.*/ig, 'YesItHasStrongs');
     let hasStrongs = /.*[H|G|h|g]\d+.*/.test(w); //YesItHasStrongs
     w = w.replace(/[(\s\s+),.;:]/g, ' ');
@@ -64,19 +63,18 @@ function arrayOfWordsToSearchFor(w) {
     let wArray = w.split(' ');
     let searchStrongsNumArray = [];
     let non_StrongsNumArray = [];
-    wArray.forEach((x) => {
-        if (new RegExp(/\b[H|G|h|g]\d+.*/).test(x)) {
+    wArray.forEach((x)=>{
+        if(new RegExp(/\b[H|G|h|g]\d+.*/).test(x)){
             searchStrongsNumArray.push(x)
         } else {
             non_StrongsNumArray.push(x)
         }
     })
-
-    function createStyleRuleForSearchedWords() {
+    function createStyleRuleForSearchedWords(){
         let styleID = 'search_returned_words'
         let styleRule = '';
-        searchStrongsNumArray.forEach((x, i) => { styleRule = `${styleRule}#searchPreviewFixed [strnum*="${x}"${caseSensitivity}],` });
-        non_StrongsNumArray.forEach((x, i) => { styleRule = `${styleRule}#searchPreviewFixed [translation*="${x}"${caseSensitivity}],` });
+        searchStrongsNumArray.forEach((x,i)=>{styleRule=`${styleRule}#searchPreviewFixed [strnum*="${x}"${caseSensitivity}],`});
+        non_StrongsNumArray.forEach((x,i)=>{styleRule=`${styleRule}#searchPreviewFixed [translation*="${x}"${caseSensitivity}],`});
         //Remove last comma in "styleRule"
         styleRule = styleRule.substring(0, styleRule.length - 1);
         styleRule = `${styleRule}{
@@ -102,19 +100,18 @@ Search may include Strongs Number
     Search for verses that have all the words in any order
 */
 let runWordSearchCount = 0;
-
 function runWordSearch() {
-    verseCount = 0;
+    verseCount=0;
     if (wordsearch.value.trim() == '' || wordsearch.value.trim().length < 2) {
         return
     }
     runWordSearchCount++;
     let word2find, wordsearchValue;
     wordsearchValue = wordsearch.value;
-    wordsearchValue = wordsearchValue.replace(/’/g, "'");
-    wordsearchValue = wordsearchValue.replace(/”/g, '"');
+    wordsearchValue=wordsearchValue.replace(/’/g, "'");
+    wordsearchValue=wordsearchValue.replace(/”/g, '"');
     //If Case Sensitive Search
-    if (case_sensitive.checked) {
+    if(case_sensitive.checked) {
         word2find = new RegExp(wordsearch.value);
     } else {
         wordsearchValue = wordsearch.value.toLowerCase();
@@ -135,23 +132,23 @@ function runWordSearch() {
 
     let searchFragment = new DocumentFragment()
 
-    function appendVerseToSearchResultWindow(currentBK = null, prevBook = null, bkid, chNumInBk, vNumInChpt, vText, appendHere, bookName) {
+    function appendVerseToSearchResultWindow(currentBK = null, prevBook = null, bkid, chNumInBk, vNumInChpt, vText, appendHere,bookName) {
         if ((prevBook != currentBK) || (prevBook == null)) {
             chapterHeading = document.createElement('h2');
             chapterHeading.classList.add('chptheading');
             chapterHeading.append(currentBK);
             searchFragment.appendChild(chapterHeading)
-                // searchPreview.appendChild(chapterHeading)
+            // searchPreview.appendChild(chapterHeading)
             prevBook = currentBK;
         }
         let verseID = '_' + bkid + '.' + chNumInBk + '.' + vNumInChpt;
         searchResultArr.push(verseID)
-            // console.log(vText)
+        // console.log(vText)
 
-        parseSingleVerse(bkid, Number(chNumInBk) + 1, vNumInChpt, vText, appendHere, bookName, null, true)
+        parseSingleVerse(bkid, Number(chNumInBk)+1, vNumInChpt, vText, appendHere,bookName,null, true)
     }
 
-
+    
     function searchJSON() {
         let prevBook = null;
         let currentBK = null;
@@ -160,16 +157,16 @@ function runWordSearch() {
         let searchForStrongs = returnedOBJofArrayOfWordsToSearchFor.hasStrongsNum;
         let strongsSearchArray = returnedOBJofArrayOfWordsToSearchFor.searchStrongsNumArray;
         // console.log(strongsSearchArray)
-
+        
         function loopThroughBibleBooks() {
             // let booksList = bible.Data.bookNamesByLanguage.en;
             //Books to search in
             let booksToSearchIn = listOfBooksToSearchIn(document.getElementById("biblebooksgroup").value);
             let booksLength = booksToSearchIn.length;
             let bookName = null;
-
+            
             /* LOOP THROUGH SELECTED BOOKS TO SEARCH IN */
-
+        
             // let allBooksWithContentInVersion = KJV;
             let allBooksWithContentInVersion = window[bversionName];
             for (let x = 0; x < booksLength; x++) {
@@ -177,14 +174,14 @@ function runWordSearch() {
                 // bookName = bookNameInVersion;
                 bookName = booksToSearchIn[x];
                 let allChaptersInCurrentBook = allBooksWithContentInVersion[bookName];
-
+        
                 //Loop through Chapters
                 let numberOfChapters = allChaptersInCurrentBook.length;
                 for (y = 0; y < numberOfChapters; y++) {
                     let currentChapter = allChaptersInCurrentBook[y];
                     let allVersesInCurrentChapter = currentChapter;
                     let chapterVersesLength = currentChapter.length;
-
+                   
                     //If there is a strongs num to be searched for, then you cannot search for a phrase. Rather search to see if verse contains all words
                     if (searchForStrongs == true) {
                         let wordsArray = returnedOBJofArrayOfWordsToSearchFor.wordsArray;
@@ -196,7 +193,7 @@ function runWordSearch() {
                             for (let j = 0; j < wordsArray.length; j++) {
                                 // let nreg = new RegExp(wordsArray[j]);
                                 // if (!nreg.test(originalText)) {
-
+                                    
                                 //IT HAS TO INCLUDE ALL THE WORDS (won't work for a search that is for any of the words)
                                 if (!originalText.includes(wordsArray[j].toLowerCase())) {
                                     containsAll = false;
@@ -209,7 +206,7 @@ function runWordSearch() {
                                     }
                                     currentBK = bookName;
                                     // console.log('currentBK')
-                                    appendVerseToSearchResultWindow(currentBK, prevBook, x, y, z + 1, allVersesInCurrentChapter[z], searchFragment, bookName)
+                                    appendVerseToSearchResultWindow(currentBK, prevBook, x, y, z+1, allVersesInCurrentChapter[z], searchFragment,bookName)
                                     findAnything = true;
                                 }
                             }
@@ -223,27 +220,27 @@ function runWordSearch() {
                             let originalText_notString = allVersesInCurrentChapter[z];
                             // let vText=originalText;
                             let madePlain = returnStrippedTextOfVerse(originalText_notString).withOutStrongs
-                                // console.log(madePlain)
+                            // console.log(madePlain)
                             if (!case_sensitive.checked) {
                                 madePlain = madePlain.toLowerCase()
                             }
-
+                            
                             /* PHRASE SEARCH && WHOLE WORD */
                             let arrayOfWordsInVerse = madePlain.split(' ');
-                            if (search_phrase.checked) {
+                            if (search_phrase.checked){
                                 // console.log(madePlain)
                                 // console.log(madePlain.split(' '))
                                 // console.log(arrayOfSearchWords)
-                                if (((whole_word.checked) && (isAsubArrayofB(arrayOfSearchWords, arrayOfWordsInVerse))) ||
-                                    ((!whole_word.checked) && (isAsubArrayofB(arrayOfSearchWords, madePlain.split(' '))))) {
-                                    if ((prevBook != currentBK) || (prevBook == null)) {
-                                        prevBook = currentBK;
-                                    }
-                                    currentBK = bookName;
-                                    appendVerseToSearchResultWindow(currentBK, prevBook, x, y, z + 1, allVersesInCurrentChapter[z], searchFragment, bookName)
-                                        // console.log(madePlain)
-                                    findAnything = true;
-
+                                if(((whole_word.checked) && (isAsubArrayofB(arrayOfSearchWords, arrayOfWordsInVerse))) || 
+                                 ((!whole_word.checked) && (isAsubArrayofB(arrayOfSearchWords, madePlain.split(' '))))) {
+                                if ((prevBook != currentBK) || (prevBook == null)) {
+                                    prevBook = currentBK;
+                                }
+                                currentBK = bookName;
+                                appendVerseToSearchResultWindow(currentBK, prevBook, x, y, z+1, allVersesInCurrentChapter[z], searchFragment,bookName)
+                                // console.log(madePlain)
+                                findAnything = true;
+                            
                                 }
                             }
 
@@ -251,13 +248,13 @@ function runWordSearch() {
                             else if (search_all_words.checked) {
                                 if (((whole_word.checked) && (areAllitemsOfAinB(arrayOfSearchWords, arrayOfWordsInVerse))) ||
                                     ((!whole_word.checked) && (areAllitemsOfAinB(arrayOfSearchWords, madePlain)))) {
-                                    if ((prevBook != currentBK) || (prevBook == null)) {
-                                        prevBook = currentBK;
-                                    }
-                                    currentBK = bookName;
-                                    appendVerseToSearchResultWindow(currentBK, prevBook, x, y, z + 1, allVersesInCurrentChapter[z], searchFragment, bookName)
-                                        // console.log(madePlain)
-                                    findAnything = true;
+                                if ((prevBook != currentBK) || (prevBook == null)) {
+                                    prevBook = currentBK;
+                                }
+                                currentBK = bookName;
+                                appendVerseToSearchResultWindow(currentBK, prevBook, x, y, z+1, allVersesInCurrentChapter[z], searchFragment,bookName)
+                                // console.log(madePlain)
+                                findAnything = true;
                                 }
                             }
                         }
@@ -265,7 +262,7 @@ function runWordSearch() {
                 }
             }
         }
-
+        
         loopThroughBibleBooks();
         searchPreview.innerHTML = '';
         searchPreviewFixed.innerHTML = '';
@@ -304,13 +301,13 @@ function runWordSearch() {
             showElement(searchresultwindow)
         }
         searchPreviewFixed.append(searchFragmentClone);
-        runFuncAfterSetTimeInactivityInElm(searchPreviewWindowFixed, 60000, clearSearchWindow) //To Clear "searchPreviewFixed" Window after given time
+        runFuncAfterSetTimeInactivityInElm(searchPreviewWindowFixed, 60000, clearSearchWindow)//To Clear "searchPreviewFixed" Window after given time
     }
     searchJSON();
     hideRefNav('show');
     hideRefNav('hide', bible_nav);
     hideRefNav('show', searchPreviewWindowFixed);
-
+    
     if (!showreturnedverses.checked) {
         hideAllVerseInSearch()
     }
@@ -333,9 +330,9 @@ function hideAllVerseInSearch() {
     });
     //Add eventListner to h2
     searchPreviewFixed.addEventListener('click', showVersesUnderH2)
-        // console.log(totalVerseReturned)
-        // totalfound.innerText="Total Verses Found: "+totalVerseReturned;
-    totalfound.innerHTML = "Found in <b>" + totalVerseReturned + "</b> verses in the <b>" + bversionName + "</b>";
+    // console.log(totalVerseReturned)
+    // totalfound.innerText="Total Verses Found: "+totalVerseReturned;
+    totalfound.innerHTML = "Found in <b>" + totalVerseReturned + "</b> verses in the <b>" + bversionName + "</b>" ;
 }
 
 function showVersesUnderH2(e) {
@@ -351,14 +348,15 @@ function showVersesUnderH2(e) {
     }
 }
 
-showreturnedverses.addEventListener('change', function() {
+showreturnedverses.addEventListener('change', function () {
     if (this.checked) {
         let versesInFixed = searchPreviewFixed.querySelectorAll('.verse');
         versesInFixed.forEach(elm => {
             elm.classList.remove('displaynone')
         });
         setItemInLocalStorage('showVersesInSearch', 'yes')
-    } else {
+    }
+    else {
         let versesInFixed = searchPreviewFixed.querySelectorAll('.verse');
         versesInFixed.forEach(elm => {
             elm.classList.add('displaynone')
@@ -378,47 +376,47 @@ function minimize(el) {
 }
 
 //Books to search in.
-function listOfBooksToSearchIn(bkGrp) {
-    function findBooksFromA2B(A, B) {
-        let booksToSearchIn = [];
+function listOfBooksToSearchIn(bkGrp){
+    function findBooksFromA2B(A,B){
+        let booksToSearchIn=[];
         let bksArray = bible.Data.allBooks;
         let b = bksArray.indexOf(A);
         booksToSearchIn.push(bksArray[b]);
-        if (B) {
-            for (c = b + 1; c < bksArray.length; c++) {
-                if (bksArray[c] != B) {
+        if(B){
+            for(c=b+1; c<bksArray.length; c++){
+                if(bksArray[c]!=B){
                     booksToSearchIn.push(bksArray[c]);
                 } else {
                     booksToSearchIn.push(bksArray[c]);
                     return booksToSearchIn
                 }
             }
-        } else { return booksToSearchIn }
+        } else {return booksToSearchIn}
     }
     let generalBibleBooksGroups = {
-        'allbks': bible.Data.allBooks,
-        'ot': bible.Data.otBooks,
-        'nt': bible.Data.ntBooks,
-        'pentateuch': findBooksFromA2B('Genesis', 'Deuteronomy'),
-        'history': findBooksFromA2B('Joshua', 'Esther'),
-        'wisdom': findBooksFromA2B('Job', 'Song of Solomon'),
-        'majorProphets': findBooksFromA2B('Isaiah', 'Daniel'),
-        'minorProphets': findBooksFromA2B('Hosea', 'Malachi'),
-        'nt_narrative': findBooksFromA2B('Matthew', 'Acts'),
-        'pauline': findBooksFromA2B('Romans', 'Hebrews'),
-        'generalEpistles': findBooksFromA2B('James', 'Jude'),
-        'revelation': findBooksFromA2B('Revelation'),
-        'currentbk': findBooksFromA2B(`${bookName}`)
+        'allbks' : bible.Data.allBooks,
+        'ot' : bible.Data.otBooks,
+        'nt' : bible.Data.ntBooks,
+        'pentateuch' : findBooksFromA2B('Genesis','Deuteronomy'),
+        'history' : findBooksFromA2B('Joshua','Esther'),
+        'wisdom' : findBooksFromA2B('Job','Song of Solomon'),
+        'majorProphets' : findBooksFromA2B('Isaiah','Daniel'),
+        'minorProphets' : findBooksFromA2B('Hosea','Malachi'),
+        'nt_narrative' : findBooksFromA2B('Matthew','Acts'),
+        'pauline' : findBooksFromA2B('Romans','Hebrews'),
+        'generalEpistles' : findBooksFromA2B('James','Jude'),
+        'revelation' : findBooksFromA2B('Revelation'),
+        'currentbk' : findBooksFromA2B(`${bookName}`)
     }
-    if (typeof bkGrp === 'string' || bkGrp instanceof String) {
+    if (typeof bkGrp === 'string' || bkGrp instanceof String){
         booksToSearchIn = generalBibleBooksGroups[bkGrp];
-    } else if (Array.isArray(bkGrp)) { booksToSearchIn = bkGrp }
+    } else if (Array.isArray(bkGrp)) {booksToSearchIn = bkGrp}
     return booksToSearchIn
 }
 
 /* CLEAR THE SEARCH WINDOW IF IT HAS BEEN INACTIVE AFTER 1min */
-function clearSearchWindow() {
-    searchPreviewFixed.innerHTML = '';
-    if (searchsettings.classList.contains('active_button')) { searchsettings.click() }
-    totalfound.innerHTML = 'Search window was cleared';
+function clearSearchWindow(){
+    searchPreviewFixed.innerHTML='';
+    if(searchsettings.classList.contains('active_button')){searchsettings.click()}
+        totalfound.innerHTML='Search window was cleared';
 }

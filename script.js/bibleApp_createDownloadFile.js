@@ -58,10 +58,9 @@ function readFromVerseNotesFiles(bookName, chapternumber, verseNumber) {
 
     function getVerseNote() {
         fetchBookNotes().then(jsonObject => {
-            bible_book = jsonObject, readNotes()
+            bible_book = jsonObject,readNotes()
         })
-
-        function readNotes() {
+        function readNotes(){
             if (bible_book.notes[chapternumber - 1]['_' + verseNumber]) {
                 //Check for verse number
                 noteForCurrentlyEditedVerse = bible_book.notes[chapternumber - 1]['_' + verseNumber];
@@ -89,19 +88,18 @@ function writeToVerseNotesFiles(bookName, chapternumber, verseNumber) {
 
     function modifyCreateVerseNote() {
         fetchBookNotes().then(jsonObject => {
-            b_bk = jsonObject, writeNote()
+            b_bk = jsonObject,writeNote()
         })
-
-        function writeNote() {
+        function writeNote(){
             // let newNote = "html so so so";
             let newNote = noteEditingTarget.innerHTML;
             /* make copy of all the notes */
             // let copyOfAllVerseNotesInCurrentBook=b_bk.notes;
             // let copyOfAllVerseNotesInCurrentBook=b_bk.notes.slice();
-            let copyOfAllVerseNotesInCurrentBook = {...b_bk.notes };
-            let originalVerseNotes = copyOfAllVerseNotesInCurrentBook[chapternumber - 1];
+            let copyOfAllVerseNotesInCurrentBook={...b_bk.notes};
+            let originalVerseNotes = copyOfAllVerseNotesInCurrentBook[chapternumber-1];
             // console.log(Object.keys(b_bk.notes).length != 0 && b_bk.notes.constructor != Object)
-
+            
             // let copyOfVerseNotes={...originalVerseNotes};
             // copyOfVerseNotes['_' + verseNumber] = newNote;
             originalVerseNotes['_' + verseNumber] = newNote;
@@ -113,8 +111,8 @@ function writeToVerseNotesFiles(bookName, chapternumber, verseNumber) {
                 // Therefore, remove the '_' and
                 // Sort then add back the '_' to the sorted numbers
                 let arrayOfKeysInObj = Object.keys(obj);
-                let sortedArrayOfOjectsKeys = arrayOfKeysInObj.map(ky => Number(ky.substring(1))).sort(function(a, b) { return a - b }).map(ky => "_" + ky)
-                return sortedArrayOfOjectsKeys.reduce(function(result, key) {
+                let sortedArrayOfOjectsKeys = arrayOfKeysInObj.map(ky=>Number(ky.substring(1))).sort(function(a, b){return a-b}).map(ky=>"_"+ky)
+                return sortedArrayOfOjectsKeys.reduce(function (result, key) {
                     result[key] = obj[key];
                     return result;
                 }, {});
@@ -124,8 +122,8 @@ function writeToVerseNotesFiles(bookName, chapternumber, verseNumber) {
             // console.log(originalVerseNotes['_' + verseNumber])
             // console.log(copyOfAllVerseNotesInCurrentBook[chapternumber-1] = sortVnotesObj(originalVerseNotes))
             // console.log(copyOfAllVerseNotesInCurrentBook)
-            b_bk['notes'] = copyOfAllVerseNotesInCurrentBook
-            downloadFile(JSON.stringify(b_bk), 'notes_' + bookName)
+            b_bk['notes']=copyOfAllVerseNotesInCurrentBook
+            downloadFile(JSON.stringify(b_bk), 'notes_'+bookName)
         }
     }
     return modifyCreateVerseNote()

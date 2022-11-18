@@ -62,7 +62,7 @@ function addRemoveRuleFromStyleSheet(CS_rule, ruleSelector, targetStyleSheet) {
 //get a variables value
 let documentROOT = document.querySelector(':root');
 let rootStyles = getComputedStyle(documentROOT)
-    // rootStyles.getPropertyValue('--buttons')
+// rootStyles.getPropertyValue('--buttons')
 function changeFontFamily() {
     //change value of variable
     documentROOT.style.setProperty('--main-font', fontchange.value);
@@ -158,17 +158,16 @@ function darkLightMode() {
 }
 
 let saved_highlightStrongsSheet;
-
 function hide_strongshighlight() {
-    saved_highlightStrongsSheet = highlightstrongs; //to be used to restore all the strongsHighlight (not yet implimented)
+    saved_highlightStrongsSheet = highlightstrongs;//to be used to restore all the strongsHighlight (not yet implimented)
     highlightstrongs.remove()
 }
 
 function showEnglishTranslationOfHGtransliteration(evt) {
-    if (evt && (evt.key === 'r' || evt.key === 'R') && evt.altKey) {
+    if (evt && (evt.key === 'r'||evt.key === 'R') && evt.altKey) {
         engnXlit_supscript('eng')
     }
-    if (evt && (evt.key === 't' || evt.key === 'T') && evt.altKey) {
+    if (evt && (evt.key === 't'||evt.key === 'T') && evt.altKey) {
         engnXlit_supscript('hebgrk')
     }
 }

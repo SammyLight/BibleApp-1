@@ -101,11 +101,11 @@ function cacheFunctions2() {
 }
 
 function setItemInLocalStorage(name, nValue) {
-    let cache_strongs = document.querySelector('#cache_strongs');
-    let cache_higlights = document.querySelector('#cache_higlights');
-    if (name == 'transliteratedWords' && (!cache_strongs || !cache_strongs.checked)) { //check if in the settings saving to cache for the transliteration words is selected
+    let cache_strongs=document.querySelector('#cache_strongs');
+    let cache_higlights=document.querySelector('#cache_higlights');
+    if (name == 'transliteratedWords' && (!cache_strongs||!cache_strongs.checked)) { //check if in the settings saving to cache for the transliteration words is selected
         localStorage.setItem(name, nValue);
-    } else if (name == 'strongsHighlightStyleSheet' && (!cache_higlights || !cache_higlights.checked)) {
+    } else if (name == 'strongsHighlightStyleSheet' && (!cache_higlights||!cache_higlights.checked)) {
         localStorage.setItem(name, nValue);
     } else {
         localStorage.setItem(name, nValue);

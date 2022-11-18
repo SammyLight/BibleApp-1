@@ -1,9 +1,11 @@
+
 function versionHighlighting_ON_OFF(x) {
     //Turn off versions_highlighting
-    if (x == false || x == 'false') {
+    if (x == false||x == 'false') {
         // console.log(localStorage.getItem(x))
         hoveredVersionHiglighting(false)
-    } else if (hl_hversion_check.checked == true) {
+    }
+    else if (hl_hversion_check.checked==true) {
         hoveredVersionHiglighting(false)
     }
     //Turn on versions_highlighting
@@ -17,10 +19,10 @@ hl_hoveredversion.addEventListener('click', () => {
 });
 //Is modified by escape or alt + h
 document.addEventListener('keydown', evt => {
-    if ((evt.key === 'h' || evt.key === 'H') && evt.altKey) {
+    if ((evt.key === 'h'||evt.key === 'H') && evt.altKey) {
         versionHighlighting_ON_OFF();
     }
-    if ((evt.key === 'd' || evt.key === 'D') && evt.altKey) {
+    if ((evt.key === 'd'||evt.key === 'D') && evt.altKey) {
         evt.preventDefault()
         darkLightMode();
     }
@@ -37,13 +39,12 @@ function hoveredVersionHiglighting(oo_off) {
         hl_hversion_check.checked = false;
         hl_hoveredversion.classList.remove("active_button");
         main.removeEventListener('mouseover', versionHiglightingOnHover, false)
-            // remove the style sheet for it if present
+        // remove the style sheet for it if present
         if (vvH = document.getElementById('version_verses_highlightall')) {
             vvH.remove();
         }
     }
 }
-
 function versionHiglightingOnHover(e) {
     // e.preventDefault();
     let currentVversion = null;

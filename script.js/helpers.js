@@ -7,7 +7,7 @@ function isObject(objValue) {
 function debounce(func, timeout = 300) {
     // function func will only run if it is not clicked twice within 300ms
     var ttt;
-    return function() {
+    return function () {
         if (ttt) {
             clearTimeout(ttt)
             ttt = undefined;
@@ -38,11 +38,11 @@ function removeItemFromArray(n, array) {
 
 /* Remove single string or array of strings from a string */
 function removeCharacterFromString(xh, str) {
-    if (typeof xh === 'string' || xh instanceof String) { return str.split(xh).join('') }
+    if (typeof xh === 'string' || xh instanceof String) {return str.split(xh).join('')}
     //An array of characters to remove from the string,
     // e.g., "['.',',','lk']"
-    else if (Array.isArray(xh)) {
-        xh.forEach(xh_i => { str.split(xh_i).join('') });
+    else if (Array.isArray(xh)){
+        xh.forEach(xh_i=>{str.split(xh_i).join('')});
         return str
     }
 }
@@ -59,7 +59,7 @@ function elmAhasElmOfClassBasAncestor(a, ancestorsClass, limit = 'BODY') {
         a = a.parentElement;
     }
     return false
-
+    
     //The :has() pseudo selector will do this quite easily, but,
     // First: elmA will have to be represented as a css selector, e.g., 'div>.a', and
     // Second: It is not yet supported in Mozilla FireFox
@@ -88,7 +88,6 @@ function hideORshowID(hideOrShow, id) {
         }
     }
 }
-
 function hideORshowClass(hideOrShow, cls) {
     if (hideOrShow.toUpperCase() == 'HIDE') {
         var class2hide = document.querySelectorAll('.' + cls);
@@ -106,16 +105,14 @@ function hideORshowClass(hideOrShow, cls) {
 function hideElement(el) {
     el.classList.add("displaynone")
 }
-
 function showElement(el) {
     el.classList.remove("displaynone")
 }
 
-function toggleClassAndActiveButton(elm, cls, originElm) {
+function toggleClassAndActiveButton(elm, cls,originElm){
     elm.classList.toggle(cls)
     originElm.classList.toggle('active_button');
 }
-
 function disableButton(cls, disableValue) {
     var class2toggleAttribute = document.querySelectorAll('.' + cls);
     class2toggleAttribute.forEach(el => {
@@ -135,21 +132,21 @@ function disableButton(cls, disableValue) {
 }
 
 // Check or uncheck radio/checkbox input
-function checkUncheck(x) {
+function checkUncheck(x){
     let arrOfCheckBoxes;
-    if (Array.isArray(x) == false) { arrOfCheckBoxes = [x] } else { arrOfCheckBoxes = x }
+    if(Array.isArray(x)==false){arrOfCheckBoxes=[x]}
+    else{arrOfCheckBoxes=x}
 
     arrOfCheckBoxes.forEach(rcbx => {
-        if (rcbx.type == 'input') { rcbx.click(); } else {
-            if (rcbx.checked == true) { rcbx.checked = false } else { rcbx.checked = true }
-        }
+        if(rcbx.type=='input'){rcbx.click();}
+        else{if(rcbx.checked==true){rcbx.checked=false}
+        else{rcbx.checked=true}}
     });
 }
 
 function insertElmAbeforeElmB(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode);
 }
-
 function relocateElmTo(elm, moveHere) {
     let elmCopy = elm.cloneNode(true);
     elm.remove();
@@ -157,10 +154,10 @@ function relocateElmTo(elm, moveHere) {
 }
 
 // GET FIRST SHADOW COLOR
-function getBoxShadowColor(elm) {
+function getBoxShadowColor(elm){
     // Even if element has more than one box-shadow color, it will only get the first one
     let boxShadowOfElem = window.getComputedStyle(elm, null).getPropertyValue("box-shadow");
-    return boxShadowOfElem.split('px')[0].replace(/^.*(rgba?\([^)]+\)).*/, '$1')
+    return boxShadowOfElem.split('px')[0].replace(/^.*(rgba?\([^)]+\)).*/,'$1')
 }
 
 /* ****************************** */
@@ -203,7 +200,6 @@ function X_hasNoSibling_Y_b4_Z(x, y, z) {
         elmZ: Z
     }
 }
-
 function getSibling_Y_of_X_b4_Z(x, y, z) {}
 
 function arrayOfNodesBetween(a, b) {
@@ -316,7 +312,7 @@ function arrayOfElementsBetween(a, b) {
     }
 }
 
-function windowsSelection() {
+function windowsSelection(){
     const selObj = window.getSelection();
     // return selObj
     const selRange = selObj.getRangeAt(0);
@@ -355,28 +351,25 @@ let hasBeenClicked = false;
 
 function resizeDiv(e) {
     const dx = e.x - m_pos;
-    //   const dx = m_pos - e.x;
-    if (dx > 0) {
-        let increased_width = old_width + dx;
-        panel.style.maxWidth = increased_width + "px";
-        panel.style.minWidth = increased_width + "px";
-    } else if (dx < 0) {
-        let decreased_width = old_width + dx;
-        panel.style.maxWidth = decreased_width + "px";
-        panel.style.minWidth = decreased_width + "px";
-    }
-    if (parseInt(getComputedStyle(panel, '').width) < 200) {
-        panel.style.maxWidth = "200px";
-        panel.style.minWidth = "200px";
+        //   const dx = m_pos - e.x;
+        if (dx > 0) {
+            let increased_width = old_width + dx;
+            panel.style.maxWidth = increased_width + "px";
+            panel.style.minWidth = increased_width + "px";
+        } else if (dx < 0) {
+            let decreased_width = old_width + dx;
+            panel.style.maxWidth = decreased_width + "px";
+            panel.style.minWidth = decreased_width + "px";
+        }
+        if(parseInt(getComputedStyle(panel, '').width)<200){
+            panel.style.maxWidth = "200px";
+            panel.style.minWidth = "200px";
     }
 }
-
-function handleSelectAttempt(event) {
-    if (window.event) {
+function handleSelectAttempt(event) {if (window.event) {
         event.returnValue = false;
-    }
+        }
 }
-
 function resizeStrongsDefinitionWindow(e) {
     if (e.target.matches('#resizerdiv') && hasBeenClicked == false && e.offsetX < BORDER_SIZE) {
         m_pos = e.x;
@@ -387,7 +380,6 @@ function resizeStrongsDefinitionWindow(e) {
         document.addEventListener("mouseup", remove_resizer_funcs, false);
     }
 }
-
 function remove_resizer_funcs() {
     console.log('JESJSUS')
     document.removeEventListener("mousemove", resizeDiv, false);
@@ -409,7 +401,7 @@ function randomColor(brightness) {
         var r = 255 - brightness;
         var n = 0 | ((Math.random() * r) + brightness);
         var s = n.toString(16);
-        return (s.length == 1) ? '0' + s : s;
+    return (s.length == 1) ? '0' + s : s;
     }
     return '#' + randomChannel(brightness) + randomChannel(brightness) + randomChannel(brightness);
 }
@@ -425,7 +417,7 @@ function isAsubArrayofB(a, b) {
         let lind = lastPossibleStartIndex;
         while (lind >= 0) {
             let i = 0,
-                j = lind;
+            j = lind;
             while (a[i] == b[j]) {
                 if (i == aL - 1) {
                     return true
@@ -450,19 +442,19 @@ function areAllitemsOfAinB(a, b) {
 
 /* WATCH FOR INACTIVITY IN ELM AND RUN FUNCTION AFTER SET-TIME */
 // https://www.brcline.com/blog/detecting-inactivity-in-javascript
-function runFuncAfterSetTimeInactivityInElm(elm2Watch, timeoutInMiliseconds = 60000, func2run) {
+function runFuncAfterSetTimeInactivityInElm(elm2Watch, timeoutInMiliseconds = 60000, func2run){
     var timeoutId;
 
-    function resetTimer() {
+    function resetTimer() { 
         window.clearTimeout(timeoutId)
         startTimer();
     }
-
+      
     function startTimer() {
         // window.setTimeout returns an Id that can be used to start and stop a timer
         timeoutId = window.setTimeout(doInactive, timeoutInMiliseconds)
     }
-
+      
     function doInactive() {
         // Clear the eventListeners
         elm2Watch.removeEventListener("mousemove", resetTimer, false);
@@ -473,14 +465,14 @@ function runFuncAfterSetTimeInactivityInElm(elm2Watch, timeoutInMiliseconds = 60
         // totalfound.innerHTML='Search Cleared';
         func2run()
     }
-
+     
     // function setupTimers () {
-    elm2Watch.addEventListener("mousemove", resetTimer, false);
-    elm2Watch.addEventListener("mousedown", resetTimer, false);
-    elm2Watch.addEventListener("keypress", resetTimer, false);
-    elm2Watch.addEventListener("touchmove", resetTimer, false);
-
-    startTimer();
+        elm2Watch.addEventListener("mousemove", resetTimer, false);
+        elm2Watch.addEventListener("mousedown", resetTimer, false);
+        elm2Watch.addEventListener("keypress", resetTimer, false);
+        elm2Watch.addEventListener("touchmove", resetTimer, false);
+         
+        startTimer();
     // }
 }
 
@@ -488,7 +480,7 @@ function runFuncAfterSetTimeInactivityInElm(elm2Watch, timeoutInMiliseconds = 60
 // window.addEventListener("load", () => {
 //     // (A) CHECK FOR MOBILE
 //     isMobile = navigator.userAgent.toLowerCase().match(/mobile/i);
-
+   
 //     // (B) DO SOMETHING...
 //     if (isMobile) { console.log("Is mobile device"); }
 //     else { console.log("Not mobile device"); }
@@ -497,7 +489,7 @@ function runFuncAfterSetTimeInactivityInElm(elm2Watch, timeoutInMiliseconds = 60
 /* ***************************************** */
 /*                   REGEX                   */
 /* ***************************************** */
-function modifyQuotationMarks(txt) {
+function modifyQuotationMarks(txt){
     txt = txt.replace(/&nbsp;/ig, ' ');
     // Modify Opening Quotation Marks
     txt = txt.replace(/(?<!<[^>]*)([\d\w])['‘]([\w…])/ig, '$1’$2');

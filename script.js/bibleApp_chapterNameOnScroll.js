@@ -2,11 +2,10 @@
 main.addEventListener('scroll', getHighestVisibleH2)
 
 function getHighestVisibleH2() {
-    let hH = null;
-
-    function highestElmFromMainTop(distanceFromMainTop = 0) {
+    let hH=null;
+    function highestElmFromMainTop(distanceFromMainTop=0){
         let higestElm = null;
-        while (higestElm == null || (!higestElm.matches('.chptheading') && (!higestElm.matches('.chptverses') || elmAhasElmOfClassBasAncestor(higestElm, 'chptverses')) && distanceFromMainTop < 10)) {
+        while (higestElm == null||(!higestElm.matches('.chptheading')&&(!higestElm.matches('.chptverses')||elmAhasElmOfClassBasAncestor(higestElm, 'chptverses'))&&distanceFromMainTop<10)){
             distanceFromMainTop++;
             higestElm = document.elementFromPoint(main.getBoundingClientRect().x + (main.getBoundingClientRect().width / 2), main.getBoundingClientRect().y + distanceFromMainTop);
         }
@@ -15,14 +14,14 @@ function getHighestVisibleH2() {
     let higestElm = highestElmFromMainTop();
 
     if (higestElm.matches('.chptheading')) {
-        hH = higestElm;
+        hH=higestElm;
     } else if (higestElm.matches('.chptverses')) {
         hH = higestElm.previousElementSibling;
     } else if (elmAhasElmOfClassBasAncestor(higestElm, 'chptverses')) {
         higestElm = elmAhasElmOfClassBasAncestor(higestElm, 'chptverses');
         hH = higestElm.previousElementSibling;
     }
-    if (hH != null && hH.matches('.chptheading') && hH.innerText != reference.value) { showCurrentChapterInHeadnSearchBar(hH) }
+    if(hH!=null&&hH.matches('.chptheading')&&hH.innerText!=reference.value){showCurrentChapterInHeadnSearchBar(hH)}
 
 }
 
@@ -42,7 +41,7 @@ function showCurrentChapterInHeadnSearchBar(h, isH2 = true) {
     let selectedChapter = bible_chapters.querySelector(`[value="bk${hID.split('.')[0].toString()}ch${Number(hID.split('.')[1])}"]`)
     let bkName = bible_books.querySelector(`[bookname="${h.getAttribute('bookname')}"]`);
     indicateBooknChapterInNav(bkName, selectedChapter);
-
+    
     reference.value = derivedReference;
     //Make current chapter page title
     document.querySelector('head>title').innerText = /*'LightCity-' +  */ derivedReference
@@ -70,8 +69,8 @@ function remove_LOWEST_Chapter() {
         let lCidSplit = lowestChapterID.split('.');
         let chapterNum = Number(lCidSplit[1]) + 1;
         let elmToRemove = main.querySelector('[bookname="' + lowestChapterBookName + '"][chapter="' + chapterNum + '"]')
-            //ScrollHeight is affected by removal of chapters
-            //So, making adjustments for it
+        //ScrollHeight is affected by removal of chapters
+        //So, making adjustments for it
         let old_scrollheight = main.scrollHeight;
         lowestChapterHeading.remove();
         elmToRemove.remove();
@@ -88,8 +87,7 @@ function showOnlyLoadedChapters() {
     main.removeEventListener('scroll', loadNewChapterOnScroll)
 }
 moreChaptersOnScroll()
-let prev_bkNumb = null;
-
+let prev_bkNumb=null;
 function loadNewChapterOnScroll() {
     let lastScrollTop = 0;
     var mst = main.scrollTop; // Credits: "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
@@ -160,14 +158,14 @@ function checkVisible(elm) {
 }
 
 // SHOW MOUSEDOVER VERSE REFERENCE IN REFERENCE INPUT
-main.addEventListener('mouseover', function(e) {
-    if (!document.activeElement.matches('#reference')) {
+main.addEventListener('click', function (e) {
+    // if(!document.activeElement.matches('#reference')){
         let hoveredRef;
         if (e.target.matches('.verse')) {
             hoveredRef = e.target.querySelector('code').getAttribute('ref');
-        } else if (et = elmAhasElmOfClassBasAncestor(e.target, '.verse')) {
+        } else if (et=elmAhasElmOfClassBasAncestor(e.target,'.verse')) {
             hoveredRef = et.querySelector('code').getAttribute('ref');
         }
-        if (hoveredRef) { reference.value = hoveredRef; }
-    }
+        if(hoveredRef){reference.value=hoveredRef;}
+    // }
 });

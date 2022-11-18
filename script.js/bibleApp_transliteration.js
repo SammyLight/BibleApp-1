@@ -6,7 +6,7 @@ strongsJSON.responseType = 'json';
 strongsJSON.send();
 
 let strongsJSONresponse, strngsAll;
-strongsJSON.onload = function() {
+strongsJSON.onload = function () {
     strongsJSONresponse = strongsJSON.response;
 }
 
@@ -175,7 +175,7 @@ function strongsHighlighting(e) {
         }
     }
     //IF IT IS THE STRONGS WORD ITSELF
-    else if (!e.target.matches('#singleverse_compare_menu') && e.target.parentElement.classList.contains('translated')) {
+    else if (!e.target.matches('#singleverse_compare_menu')&&e.target.parentElement.classList.contains('translated')) {
         clickedElm = e.target.parentElement;
         let stn = clickedElm.getAttribute('strnum');
         if (!clickeElmArray.includes(stn)) {
@@ -191,7 +191,7 @@ function strongsHighlighting(e) {
 //window.onload = () => cacheFunctions();
 //Moved to after loading of first chapter
 
-pagemaster.addEventListener("dblclick", function(e) {
+pagemaster.addEventListener("dblclick", function (e) {
     hoverElm = e.target;
     if (hoverElm.nodeName == 'SPAN' && hoverElm.classList.contains('translated') && !hoverElm.classList.contains('eng2grk')) {
         let allstn = hoverElm.getAttribute('strnum').split(' '); //Some words are translated from more than one word
@@ -227,28 +227,28 @@ function hideBibleNav() {
 
 /* EVENT LISTENERS FOR THE HIGHLIGHING ALL ELEMENTS WITH THE SAME CLASS NAME BY HOVERING OVER ONE OF THEM */
 /* This is acomplished by modifying the styles in the head */
-main.addEventListener('mouseover', function(e) {
-    let strAtt, highlightColor;
-    if (!e.target.matches('#context_menu') && e.target.getAttribute('strnum')) {
+main.addEventListener('mouseover', function (e) {
+    let strAtt,highlightColor;
+    if (!e.target.matches('#context_menu')&&e.target.getAttribute('strnum')) {
         strAtt = e.target.getAttribute('strnum')
         highlightColor = getBoxShadowColor(e.target);
     }
     //For context_menu when it is serving a strong's number
     else {
         let strElm = null;
-        if (e.target.matches('#context_menu[strnum]') || (strElm = elmAhasElmOfClassBasAncestor(e.target, '#context_menu[strnum]'))) {
+        if (e.target.matches('#context_menu[strnum]')||(strElm=elmAhasElmOfClassBasAncestor(e.target,'#context_menu[strnum]'))) {
             // 'rightClickedElm' & 'firstShadowColorOfElem' are gotten from the rightclickmenu function
-            if (firstShadowColorOfElem) {
-                if (strElm) {
-                    strAtt = strElm.getAttribute('strnum');
-                } else {
-                    strAtt = rightClickedElm.getAttribute('strnum');
+            if(firstShadowColorOfElem){
+                if(strElm){
+                    strAtt=strElm.getAttribute('strnum');
+                } else{
+                    strAtt=rightClickedElm.getAttribute('strnum');
                 }
                 highlightColor = firstShadowColorOfElem;
             }
         } else if (elmAhasElmOfClassBasAncestor(e.target, '[strnum]')) {
-            strElm = elmAhasElmOfClassBasAncestor(e.target, '[strnum]');
-            strAtt = strElm.getAttribute('strnum');
+            strElm=elmAhasElmOfClassBasAncestor(e.target, '[strnum]');
+            strAtt=strElm.getAttribute('strnum');
             highlightColor = getBoxShadowColor(e.target);
         }
     }
@@ -270,7 +270,7 @@ main.addEventListener('mouseover', function(e) {
         });
         newStyleInHead.id = 'highlightall';
         // newStyleInHead.innerHTML = `${transStyleSelector}{background-color:var(--chpt);border-radius:2px;border-bottom: 1px solid rgb(151, 116, 0);color:black!important;`;
-        if (highlightColor == 'none') { highlightColor = 'var(--strongword-hover)' }
+        if(highlightColor=='none'){highlightColor='var(--strongword-hover)'}
         newStyleInHead.innerHTML = `${transStyleSelector}{
             box-shadow:0 -1.07em 0px 0px ${highlightColor} inset,
             0 5px 5px -2px var(--shadow-orange)!important;
@@ -283,8 +283,8 @@ main.addEventListener('mouseover', function(e) {
         headPart.append(newStyleInHead);
     }
 })
-main.addEventListener('mouseout', function(e) {
-    if (e.target.hasAttribute('strnum') && document.getElementById('highlightall')) {
+main.addEventListener('mouseout', function (e) {
+    if (e.target.hasAttribute('strnum')&&document.getElementById('highlightall')) {
         highlightall.remove();
     }
 })
