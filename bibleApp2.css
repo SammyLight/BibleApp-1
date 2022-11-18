@@ -27,6 +27,12 @@
     min-width: 53px;
 }
 
+#refnav #app_settings {
+    border-right: 0.25px solid var(--grey);
+    background: var(--ref-img);
+    overflow: hidden;
+}
+
 #refnav #app_settings>button {
     width: auto;
     min-width: 40px;
