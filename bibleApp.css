@@ -471,7 +471,6 @@ div.buttons{
     font-weight:bolder;
     font-size: 2em!important;
     width: 100%;
-    min-width: max-content;
 }
 button:disabled {
     cursor: default;
