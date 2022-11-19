@@ -47,6 +47,20 @@
 #ppp {
     border: var(--buttons-border);
 }
+@media screen and (min-device-width: 1025px) {
+    #togglenavbtn::before {
+        content: '\2261';
+        font-size: 75px;
+        font-weight: 400;
+    }
+}
+@media screen and (max-device-width: 1024px) {
+    #togglenavbtn::before {
+        content: '\2261';
+        font-size: 50px;
+        font-weight: 400;
+    }
+}
 @media screen and (max-device-width: 912px) {
      :root {
         --width-sidebuttons: 37px;
@@ -103,11 +117,6 @@
     #reference {
         font-size: 1.5em!important;
     }
-    #togglenavbtn::before {
-        content: '\2261';
-        font-size: xxx-large;
-        font-weight: 400;
-    }
 }
 @media screen and (max-device-width: 400px) {
      :root {
@@ -151,14 +160,4 @@
     #reference {
         font-size: 1em!important;
     }
-    #togglenavbtn::before {
-        content: '\2261';
-        font-size: xxx-large;
-        font-weight: 400;
-    }
-}
-#togglenavbtn::before {
-    content: '\2261';
-    font-size: 75px;
-    font-weight: 400;
 }
