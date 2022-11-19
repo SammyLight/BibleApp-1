@@ -122,10 +122,10 @@
         width: 100%;
         font-size: 1.5em!important;
     }
-@media only screen and (max-width: 400px) and (min-width: 374px)  {
+/* @media only screen and (max-width: 400px) and (min-width: 374px)  {
     #reference {
         width: 50px;
-}
+} */
 
 }
 @media screen and (max-device-width: 400px) {
