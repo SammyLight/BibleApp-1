@@ -41,9 +41,9 @@ function cacheFunctions() {
         let headPart = document.getElementsByTagName('head')[0];
         newStyleInHead = document.createElement('style');
         newStyleInHead.id = 'highlightstrongs';
-        newStyleInHead.innerHTML = hlstrngCSS = hlstrngCSS.split(',').join('');
+        newStyleInHead.innerHTML = hlstrngCSS.split(',').join('');
         headPart.append(newStyleInHead);
-        hlstrngCSS = hlstrngCSS.split(',').join('');
+        // hlstrngCSS = hlstrngCSS.split(',').join('');
     }
     if (localStorage.getItem('showVersesInSearch')) {
         let showVerseCheck = localStorage.getItem('showVersesInSearch');

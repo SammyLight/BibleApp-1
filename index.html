@@ -2,45 +2,46 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>LC BibleApp</title>
-    <link rel="shortcut icon" href="images/favicon.ico">
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.ckeditor.com/4.20.0/standard-all/ckeditor.js"></script>
-    <!-- <script src="/ckeditor/ckeditor.js"></script> -->
-    <style id="verse_alignement">
-        .verse {
-            display: block;
-        }
-    </style>
-    <link rel="stylesheet" href="bibleApp.css">
-    <link rel="stylesheet" href="bibleApp2.css">
+  <meta charset="UTF-8">
+  <title>LC BibleApp</title>
+  <meta charset="utf-8" name="viewport" content= "width=device-width, initial-scale=1.0">
+  <script src="https://cdn.ckeditor.com/4.20.0/standard-all/ckeditor.js"></script>
+  <!-- <script src="/ckeditor/ckeditor.js"></script> -->
+<style id="verse_alignement">
+    .verse {
+      display: block;
+    }
+  </style>
+  <link rel="stylesheet" href="bibleApp.css">
+  <link rel="stylesheet" href="bibleApp-2.css">
 </head>
 
 <body>
-    <div id="pagemaster">
+  <div id="pagemaster">
 
-        <!-- TOP HORIZONTAL BAR -->
-        <div id="top_horizontal_bar">
-            <div class="buttons" id="top_horizontal_bar_buttons">
-                <button onclick="toggleNav()" class="togglenav" id="togglenavbtn" title="Toggle Nav"></button>
-                <div id="ref_search_versions_holder">
-                    <div id="refdiv">
-                        <input class="footersection" id="reference" title="Type Bible Reference" placeholder="Type Bible Reference"></input><button onclick="gotoRef()" class="footersection" id="forreference" title="go to reference"><img src="images/scroll-svgrepo-com.svg"></button>
-                    </div>
-                    <div id="searchdiv">
-                        <button id="titlebar_show_searchsettings" onclick="toggleClassAndActiveButton(titlebarsearchparameters, 'slideup',this)"><img src="images/settings-gear-svgrepo-com.svg" alt="⚙"></button><input class="footersection" id="wordsearch"
-                            title="What to search for" placeholder="Type Words to Search For"><button onclick="runWordSearch()" class="footersection" id="forwordsearch" title="Run Search" disabled><img src="images/search-svgrepo-com (2).svg" alt="..."></button>
-                    </div>
-                </div>
+    <!-- TOP HORIZONTAL BAR -->
+    <div id="top_horizontal_bar">
+        <div class="buttons" id="top_horizontal_bar_buttons">
+          <button onclick="toggleNav()" class="togglenav" id="togglenavbtn" title="Toggle Nav"></button>
+          <div id="ref_search_versions_holder">
+            <div id="refdiv">
+              <input class="footersection" id="reference" title="Type Bible Reference"
+                placeholder="Type Bible Reference"></input><button onclick="gotoRef()" class="footersection"
+                id="forreference" title="go to reference"><img src="images/scroll-svgrepo-com.svg"></button>
+            </div>
+            <div id="searchdiv">
+              <button id="titlebar_show_searchsettings" onclick="toggleClassAndActiveButton(titlebarsearchparameters, 'slideup',this)"><img src="images/settings-gear-svgrepo-com.svg" alt="⚙"></button><input class="footersection" id="wordsearch" title="What to search for"
+                placeholder="Type Words to Search For"><button onclick="runWordSearch()" class="footersection"
+                id="forwordsearch" title="Run Search" disabled><img src="images/search-svgrepo-com (2).svg" alt="..."></button>
             </div>
             <div id="bibleversions_btns">
             </div>
-            <div id="titlebarsearchparameters" class="slideup">
-                <button onclick="checkUncheck([case_sensitive,t_case_sensitive])"><input id="t_case_sensitive" name="t_case_sensitive" type="checkbox">Case Sensitivity</button><button onclick="checkUncheck([whole_word,t_whole_word])"><input type="checkbox" id="t_whole_word" name="t_whole_word" value="t_whole_word">Whole Words</button>
-                <button onclick="checkUncheck([search_phrase,t_search_phrase])"><input type="radio" id="t_search_phrase" name="t_phraseornot" value="t_search_phrase">Search for Phrase</button><button onclick="checkUncheck([search_all_words,t_search_all_words])"><input type="radio" id="t_search_all_words" name="t_phraseornot" value="t_search_all_words" checked>All Words-Not Phrase</button>
+          </div>
+        </div>
+      <div id="titlebarsearchparameters" class="slideup">
+        <button onclick="checkUncheck([case_sensitive,t_case_sensitive])"><input id="t_case_sensitive" name="t_case_sensitive" type="checkbox">Case Sensitivity</button><button onclick="checkUncheck([whole_word,t_whole_word])"><input type="checkbox" id="t_whole_word" name="t_whole_word" value="t_whole_word">Whole Words</button><button onclick="checkUncheck([search_phrase,t_search_phrase])"><input type="radio" id="t_search_phrase" name="t_phraseornot" value="t_search_phrase">Search for Phrase</button><button onclick="checkUncheck([search_all_words,t_search_all_words])"><input type="radio" id="t_search_all_words" name="t_phraseornot" value="t_search_all_words" checked>All Words-Not Phrase</button>
 
-                <select id="biblebooksgroup">
+        <select id="biblebooksgroup">
           <option value="allbks" selected>ALL BOOKS</option>
           <option value="ot">OT</option>
           <optgroup label="Old Testament">
@@ -59,90 +60,89 @@
           </optgroup>
           <option value="currentbk">Current Book</option>
           <select></select>
-                <select></select>
-                </select>
-            </div>
-        </div>
+          <select></select>
+        </select>
+      </div>
+    </div>
 
-        <!-- BIBLE REFERENCE SIDE BAR -->
-        <nav id="refnav" class="slideout" style="">
-            <div class="refnav" name="settings" id="app_settings" multiple>
-                <button id="biblenavigation" onclick="hideRefNav(null, bible_nav)" title="Bible Navigation"><img src="images\books-stack-svgrepo-com.svg" alt="☰" ></button>
-                <button id="bibles" onclick="hideRefNav(null, bible_versions)" title="Bible Versions">
+    <!-- BIBLE REFERENCE SIDE BAR -->
+    <nav id="refnav" class="slideout" style="">
+      <div class="refnav" name="settings" id="app_settings" multiple>
+        <button id="biblenavigation" onclick="hideRefNav(null, bible_nav)" title="Bible Navigation"><img src="images\books-stack-svgrepo-com.svg" alt="☰" ></button>
+        <button id="bibles" onclick="hideRefNav(null, bible_versions)" title="Bible Versions">
           <!-- <img src="images\knowledge-base-svgrepo-com.svg" alt="&#128218;" > -->
           &#128218;</button>
-                <!-- <button id="versealignment" onclick="changeVerseAlignment()" title="verses alignment">V</button> -->
-                <button id="searchsettings" onclick="hideRefNav(null, searchPreviewWindowFixed)" title="word(s) search"><img src="images\search-svgrepo-com(2).svg" alt="search"></button>
-                </button>
-                <button id="open_strongsdefinitionwindow" onclick="hideRefNav(null, strongsdefinitionwindow)" title="Show strongs definition window">Str</button>
-                <button id="cachesettings" onclick="hideRefNav(null, bibleapp_cache)" title="cache settings"><img src="images\settings-svgrepo-com.svg" alt="&#9881;" ></button>
-                <!-- &#9881; 🛠-->
-                <button id="sitehome"><a href="https://sammylight.github.io/BibleStudies/" title="Site Home"><img src="images\fireplace-home-svgrepo-com.svg" alt="Site Home"></a></button>
-            </div>
-            <div id="bible_nav" class="slideout">
-                <div class="bible_nav" name="books" id="bible_books" multiple></div>
-                <div class="bible_nav" name="chapters" id="bible_chapters" multiple></div>
-                <!-- <div class="bible_nav" name="verses" id="bible_verses" multiple></div> -->
-            </div>
-            <div id="bible_versions" class="slideout">
-                <div class="bible_versions_heading">Available Bible Versions</div>
-                <!-- <div><input type="checkbox" id="KJV_version" name="KJV_version" value="KJV" checked><label for="KJV_version" abreviation="KJV" title="King James Version">KJV</label></div> -->
-            </div>
+        <!-- <button id="versealignment" onclick="changeVerseAlignment()" title="verses alignment">V</button> -->
+        <button id="searchsettings" onclick="hideRefNav(null, searchPreviewWindowFixed)" title="word(s) search"><img src="images\search-svgrepo-com(2).svg" alt="search"></button>
+        </button>
+        <button id="open_strongsdefinitionwindow" onclick="hideRefNav(null, strongsdefinitionwindow)" title="Show strongs definition window">Str</button>
+        <button id="cachesettings" onclick="hideRefNav(null, bibleapp_cache)" title="cache settings"><img src="images\settings-svgrepo-com.svg" alt="&#9881;" ></button><!-- &#9881; 🛠-->
+        <button id="sitehome"><a href="https://sammylight.github.io/BibleStudies/" title="Site Home"><img src="images\fireplace-home-svgrepo-com.svg" alt="Site Home"></a></button>
+      </div>
+      <div id="bible_nav" class="slideout">
+        <div class="bible_nav" name="books" id="bible_books" multiple></div>
+        <div class="bible_nav" name="chapters" id="bible_chapters" multiple></div>
+        <!-- <div class="bible_nav" name="verses" id="bible_verses" multiple></div> -->
+      </div>
+      <div id="bible_versions" class="slideout">
+        <div class="bible_versions_heading">Available Bible Versions</div>
+        <!-- <div><input type="checkbox" id="KJV_version" name="KJV_version" value="KJV" checked><label for="KJV_version" abreviation="KJV" title="King James Version">KJV</label></div> -->
+      </div>
 
-            <div id="searchPreviewWindowFixed" class="slideout">
-                <div id="searchparameters" class="hidesearchparameters">
-                    <div>
-                        <button id="hidesearchparameters" onclick="hideSearchParameters([case_sensitive,search_phrase,search_all_words,whole_word])">&#9660;</button>
-                    </div>
-                    <div id="searchparametertitlebar" class="settingssectionheadings" onclick="hideSearchParameters([case_sensitive,search_phrase,search_all_words,whole_word])">Search Parameters</div>
+      <div id="searchPreviewWindowFixed" class="slideout">
+        <div id="searchparameters" class="hidesearchparameters">
+          <div>
+            <button id="hidesearchparameters" onclick="hideSearchParameters([case_sensitive,search_phrase,search_all_words,whole_word])">&#9660;</button>
+          </div>
+          <div id="searchparametertitlebar" class="settingssectionheadings" onclick="hideSearchParameters([case_sensitive,search_phrase,search_all_words,whole_word])">Search Parameters</div>
+          
+          <button class="search_param_btns" onclick="checkUncheck([case_sensitive,t_case_sensitive])"><input type="checkbox" id="case_sensitive" name="case_sensitive" value="case_sensitive">Case Sensitivity</button>
+          <button class="search_param_btns" onclick="checkUncheck([whole_word,t_whole_word])"><input type="checkbox" id="whole_word" name="whole_word" value="whole_word">Whole Words</button>
+          <button class="search_param_btns" onclick="checkUncheck([search_phrase,t_search_phrase])"><input type="radio" id="search_phrase" name="phraseornot" value="search_phrase">All Words-Search for Phrase</button>
+          <button class="search_param_btns" onclick="checkUncheck([search_all_words,t_search_all_words])"><input type="radio" id="search_all_words" name="phraseornot" value="search_all_words" checked>All Words-Not Phrase</button>
 
-                    <button class="search_param_btns" onclick="checkUncheck([case_sensitive,t_case_sensitive])"><input type="checkbox" id="case_sensitive" name="case_sensitive" value="case_sensitive">Case Sensitivity</button>
-                    <button class="search_param_btns" onclick="checkUncheck([whole_word,t_whole_word])"><input type="checkbox" id="whole_word" name="whole_word" value="whole_word">Whole Words</button>
-                    <button class="search_param_btns" onclick="checkUncheck([search_phrase,t_search_phrase])"><input type="radio" id="search_phrase" name="phraseornot" value="search_phrase">All Words-Search for Phrase</button>
-                    <button class="search_param_btns" onclick="checkUncheck([search_all_words,t_search_all_words])"><input type="radio" id="search_all_words" name="phraseornot" value="search_all_words" checked>All Words-Not Phrase</button>
-
-                    <span id="where2display">
+          <span id="where2display">
             <input type="checkbox" id="searchresultdisplay" name="searchresultdisplay" value="searchresultdisplay"
               checked><label for="searchresultdisplay">Show search results in this window only</label><br>
             <input type="checkbox" id="showreturnedverses" name="showreturnedverses" value="showreturnedverses"
               checked><label for="showreturnedverses">Show all verses</label>
           </span>
-                    <div id="totalfound"></div>
-                </div>
-                <div id="searchPreviewFixed"></div>
-            </div>
-            <div id="bibleapp_cache" class="slideout">
-                <div class="" id="eng2grk_sup">
-                    <div class="settingssectionheadings">Show Hide Eng/Transliteration</div>
-                    <table id="eng2grk_sup_table">
-                        <tr>
-                            <td>English</td>
-                            <td>
-                                <button id="show_eng_superscript" onclick="engnXlit_supscript('eng')">OFF</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Heb/Grk</td>
-                            <td>
-                                <button id="show_hebgrk_superscript" onclick="engnXlit_supscript('hebgrk')">OFF</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tooltip on Hover</td>
-                            <td>
-                                <button id="tool_tip" title="Tool Tip" class="active_button"><input type="checkbox" id="ttip_check" name="ttip_check" value="ttip_check" checked>Tt</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Highlight Hovered Version</td>
-                            <td>
-                                <button id="hl_hoveredversion" title="highlight hovered version" class="active_button"><input type="checkbox" id="hl_hversion_check" name="hl_hversion_check" value="hl_hversion_check">HLHV</button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="settingssectionheadings">Change Font</div>
-                <select id="fontchange" onchange="changeFontFamily()">
+          <div id="totalfound"></div>
+        </div>
+        <div id="searchPreviewFixed"></div>
+      </div>
+      <div id="bibleapp_cache" class="slideout">
+        <div class="" id="eng2grk_sup">
+          <div class="settingssectionheadings">Show Hide Eng/Transliteration</div>
+          <table id="eng2grk_sup_table">
+            <tr>
+              <td>English</td>
+              <td>
+                <button id="show_eng_superscript" onclick="engnXlit_supscript('eng')">OFF</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Heb/Grk</td>
+              <td>
+                <button id="show_hebgrk_superscript" onclick="engnXlit_supscript('hebgrk')">OFF</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Tooltip on Hover</td>
+              <td>
+                <button id="tool_tip" title="Tool Tip" class="active_button"><input type="checkbox" id="ttip_check" name="ttip_check" value="ttip_check" checked>Tt</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Highlight Hovered Version</td>
+              <td>
+                <button id="hl_hoveredversion" title="highlight hovered version" class="active_button"><input type="checkbox" id="hl_hversion_check" name="hl_hversion_check" value="hl_hversion_check">HLHV</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="settingssectionheadings">Change Font</div>
+        <select id="fontchange" onchange="changeFontFamily()">
           <option value="Arial, 'Arial Narrow', sans-serif">Arial</option>
           <option value="Calibri, sans-serif">Calibri</option>
           <option value="Cambria, Cochin, Times, 'Times New Roman', serif">Cambria</option>
@@ -158,114 +158,116 @@
           <option value="'Times New Roman', serif">Times New Roman</option>
           <option value="Verdana, sans-serif">Verdana</option>
         </select>
-                <div class="" id="change_fontsize">
-                    <div class="settingssectionheadings">Change Font Sizes</div>
-                    <table id="cache_table">
-                        <tr>
-                            <td>Verse Text</td>
-                            <td>
-                                <button id="decrease_fontsize" onclick="changeFontSize('verse_text','minus')">-</button>
-                            </td>
-                            <td>
-                                <button id="increase_fontsize" onclick="changeFontSize('verse_text','plus')">+</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Refrence Text</td>
-                            <td>
-                                <button class="decrease_fontsize" onclick="changeFontSize('ref_text','minus')">-</button>
-                            </td>
-                            <td>
-                                <button class="increase_fontsize" onclick="changeFontSize('ref_text','plus')">+</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Strongs Tool Tip</td>
-                            <td>
-                                <button class="decrease_fontsize" onclick="changeFontSize('strongs_tooltip','minus')">-</button>
-                            </td>
-                            <td>
-                                <button class="increase_fontsize" onclick="changeFontSize('strongs_tooltip','plus')">+</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Bible Nav</td>
-                            <td>
-                                <button class="decrease_fontsize" onclick="changeFontSize('bible_nav','minus')">-</button>
-                            </td>
-                            <td>
-                                <button class="increase_fontsize" onclick="changeFontSize('bible_nav','plus')">+</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Main Font Size</td>
-                            <td>
-                                <button class="decrease_fontsize" onclick="changeFontSize('main_font','minus')">-</button>
-                            </td>
-                            <td>
-                                <button class="increase_fontsize" onclick="changeFontSize('main_font','plus')">+</button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="settingssectionheadings">DARK/LIGHT MODE</div>
-                <div for="darkmodebtn"><button id="darkmodebtn" onclick="darkLightMode()">L</button>Toggle Dark/Light Mode: </div>
-                <div for="hidestrongshighlight"><button id="hidestrongshighlight" onclick="hide_strongshighlight()">hl</button>Hide/Show Highlights: </div>
-                <br>
-                <div><input type="color" style="width: 100px;height: 25px;padding:0;border:0"></input>
-                </div>
-
-                <!-- <div class="settingssectionheadings">Modify Cache</div>
+        <div class="" id="change_fontsize">
+          <div class="settingssectionheadings">Change Font Sizes</div>
+          <table id="cache_table">
+            <tr>
+              <td>Verse Text</td>
+              <td>
+                <button id="decrease_fontsize" onclick="changeFontSize('verse_text','minus')">-</button>
+              </td>
+              <td>
+              <button id="increase_fontsize" onclick="changeFontSize('verse_text','plus')">+</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Refrence Text</td>
+              <td>
+                <button class="decrease_fontsize" onclick="changeFontSize('ref_text','minus')">-</button>
+              </td>
+              <td>
+              <button class="increase_fontsize" onclick="changeFontSize('ref_text','plus')">+</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Strongs Tool Tip</td>
+              <td>
+                <button class="decrease_fontsize" onclick="changeFontSize('strongs_tooltip','minus')">-</button>
+              </td>
+              <td>
+              <button class="increase_fontsize" onclick="changeFontSize('strongs_tooltip','plus')">+</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Bible Nav</td>
+              <td>
+                <button class="decrease_fontsize" onclick="changeFontSize('bible_nav','minus')">-</button>
+              </td>
+              <td>
+              <button class="increase_fontsize" onclick="changeFontSize('bible_nav','plus')">+</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Main Font Size</td>
+              <td>
+                <button class="decrease_fontsize" onclick="changeFontSize('main_font','minus')">-</button>
+              </td>
+              <td>
+              <button class="increase_fontsize" onclick="changeFontSize('main_font','plus')">+</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        
+        <div class="settingssectionheadings">DARK/LIGHT MODE</div>
+        <div for="darkmodebtn"><button id="darkmodebtn" onclick="darkLightMode()">L</button>Toggle Dark/Light Mode: </div>
+        <div for="hidestrongshighlight" ><button id="hidestrongshighlight" onclick="hide_strongshighlight()">hl</button>Hide/Show Highlights: </div>
+        <br>
+        <div>
+          <h3>Change Background</h3>
+          <input type="color" style="width: 100px;height: 25px;padding:0;border:0" onchange="changeBackGround(this.value,'--ref-img')"></input>
+          <button onclick="changeBackGround('url(images/background.jpg)','--ref-img')">Default</button>
+        </div>
+        
+        <!-- <div class="settingssectionheadings">Modify Cache</div>
         <input type="checkbox" id="cache_strongs" name="cache_strongs" value="cache_strongs"><label for="cache_strongs"
           title="Clear transliterated words cache">Forget Transliterated Words</label><br>
         <input type="checkbox" id="cache_higlights" name="cache_higlights" value="cache_higlights"><label
           for="cache_higlights" title="Clear highlighted words cache">Forget Highlited Words</label> -->
-            </div>
-            <div id="strongsdefinitionwindow" class="slideout">
-            </div>
-            <div id="resizerdiv">
-            </div>
-        </nav>
-
-        <main id="main" contenteditable="false">
-            <div id="context_menu" class="context_menu slideout"></div>
-            <div id="show_crossref_comments" class="slideout">
-                <button class="buttons" id="verse_crossref_button">TSK</button>
-                <button class="buttons" id="verse_notes_button">Note</button>
-            </div>
-            <div id="ppp"></div>
-            <!-- <div id="search_section">adfadfadsfasdfadsf</div> -->
-        </main>
-    </div>
-    <div id="searchresultwindow" class="displaynone">
-        <div class="relative">
-            <div id="searchboxtitlebar">
-                <div id="searchrelative">
-                    <div id="searchclose" onclick="hideElement(searchresultwindow)" title="Close search result window">CLOSE
-                    </div>
-                    <div id="searchminimize" onclick="minimize(searchPreview)" title="Minimize search result window">MINIMIZE
-                    </div>
-                </div>
-            </div>
-            <div id="searchPreview">
-            </div>
+      </div>
+      <div id="strongsdefinitionwindow" class="slideout">
+      </div>
+      <div id="resizerdiv">
+      </div>
+    </nav>
+    
+    <main id="main" contenteditable="false">
+      <div id="context_menu" class="context_menu slideout"></div>
+      <div id="show_crossref_comments" class="slideout">
+        <button class="buttons" id="verse_crossref_button">TSK</button>
+        <button class="buttons" id="verse_notes_button">Note</button>
+      </div>
+      <div id="ppp"></div>
+        <!-- <div id="search_section">adfadfadsfasdfadsf</div> -->
+      </main>
+  </div>
+  <div id="searchresultwindow" class="displaynone">
+    <div class="relative">
+      <div id="searchboxtitlebar">
+        <div id="searchrelative">
+          <div id="searchclose" onclick="hideElement(searchresultwindow)" title="Close search result window">CLOSE
+          </div>
+          <div id="searchminimize" onclick="minimize(searchPreview)" title="Minimize search result window">MINIMIZE
+          </div>
         </div>
+      </div>
+      <div id="searchPreview">
+      </div>
     </div>
-    <div id="singleverse_compare_menu" class="slideout"></div>
+  </div>
+  <div id="singleverse_compare_menu" class="slideout"></div>
 
-    <!-- <textarea name="verse_note" id="verse_note" cols="30" rows="10"></textarea> -->
-    <div name="verse_note" id="verse_note" class="verse_note slideup">
-
-        <!--element to edit-->
-        <!--<div id="editor" data-placeholder="Go on, start editing..."></div>-->
-
-        <div class="text_content" contenteditable="false" placeholder="Take down a comment to the verse"></div>
-        <div class="save_edit_btns_holder">
-            <button class="note_save_button" title="click to save verse note" disabled></button><button id="note_edit_button" class="note_edit_button" title="edit verse note"><!-- <img src="images\edit-svgrepo-com.svg" alt="🖉" > --></button>
-        </div>
+  <!-- <textarea name="verse_note" id="verse_note" cols="30" rows="10"></textarea> -->
+  <div name="verse_note" id="verse_note" class="verse_note slideup">
+  
+    <!--element to edit-->
+    <!--<div id="editor" data-placeholder="Go on, start editing..."></div>-->
+  
+    <div class="text_content" contenteditable="false" placeholder="Take down a comment to the verse"></div>
+    <div class="save_edit_btns_holder">
+      <button class="note_save_button" title="click to save verse note" disabled></button><button id="note_edit_button" class="note_edit_button" title="edit verse note"><!-- <img src="images\edit-svgrepo-com.svg" alt="🖉" > --></button>
     </div>
-    </div>
+  </div>
 
 </body>
 <!-- <script src="data/KJV.js"></script> -->
@@ -298,9 +300,9 @@
 <!-- <script src="script.js/bibleApp_createDownloadFile.js" charset="utf-8"></script> -->
 <script>
     tool_tip.click();
-    // window.onload = function() {
-    //   show_eng_superscript.click();
-    // }
+  // window.onload = function() {
+  //   show_eng_superscript.click();
+  // }
 </script>
 
 </html>

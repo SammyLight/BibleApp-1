@@ -1,0 +1,164 @@
+.buttons {
+    background: var(--ref-img);
+    border-bottom: 2px solid #70707072;
+    display: flex;
+    width: auto;
+}
+#bibleversions_btns {
+    display: contents;
+}
+#bibleversions_btns button {
+    float: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#togglenavbtn {
+    min-width: 40.5px;
+    height: 100%;
+}
+#forreference,
+#forwordsearch,
+#titlebar_show_searchsettings {
+    min-width: 53px;
+}
+#refnav #app_settings {
+    border-right: 0.25px solid var(--grey);
+    background: var(--ref-img);
+    overflow: hidden;
+}
+#refnav #app_settings>button {
+    width: auto;
+    min-width: 40px;
+    padding: 6px 2px;
+    font-size: 22.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#resizerdiv {
+    background-color: var(--grey);
+    /* background-color: #70707072; */
+    float: right;
+    width: 1px!important;
+    height: 100%;
+    cursor: ew-resize;
+}
+#ppp {
+    border: var(--buttons-border);
+}
+@media screen and (max-device-width: 912px) {
+     :root {
+        --width-sidebuttons: 37px;
+    }
+    #togglenavbtn {
+        min-width: 60.5px;
+    }
+    #refnav #app_settings>button {
+        font-size: 35.5px;
+        overflow: hidden;
+        width: 60px!important;
+        min-width: 60px;
+        padding: 8px 2px;
+    }
+}
+
+@media screen and (max-device-width: 540px) {
+     :root {
+        --fontsize-main: 17px;
+        --fontsize-scripture: 17px;
+        --fontsize-ref: 12px;
+        --fontsize-strongstooltip: 17px;
+        --width-sidebuttons: 40px;
+        --width-mainbutton: 45px;
+    }
+    #refnav #app_settings>button {
+        font-size: 32.5px;
+        overflow: hidden;
+        width: 50px!important;
+        min-width: 50px;
+        padding: 6px 2px;
+    }
+    #togglenavbtn {
+        min-width: 50.3px;
+    }
+    #ref_search_versions_holder #refdiv,
+    #ref_search_versions_holder #searchdiv {
+        display: flex;
+        width: 100%;
+    }
+    #refdiv input,
+    #searchdiv input {
+        flex-grow: 1;
+    }
+    #forreference,
+    #forwordsearch,
+    #titlebar_show_searchsettings {
+        display: flex;
+        padding: 5px;
+    }
+    #pagemaster {
+        height: calc(100vh - 57px);
+    }
+    #reference {
+        font-size: 1.5em!important;
+    }
+    #togglenavbtn::before {
+        content: '\2261';
+        font-size: xxx-large;
+        font-weight: 400;
+    }
+}
+@media screen and (max-device-width: 400px) {
+     :root {
+        --fontsize-title: 16px;
+    }
+    #togglenavbtn {
+        min-width: 46.3px;
+    }
+    #refnav #app_settings>button {
+        font-size: 28.5px;
+        width: 46px!important;
+        min-width: 46px!important;
+    }
+    #forreference,
+    #forwordsearch,
+    #titlebar_show_searchsettings {
+        min-width: 40px;
+        padding: 3px;
+    }
+}
+@media screen and (max-device-width: 300px) {
+    #togglenavbtn {
+        min-width: 42.3px;
+    }
+     :root {
+        --fontsize-title: 14px;
+        --width-mainbutton: 35px;
+        --width-sidebuttons: 27px;
+    }
+    #refnav #app_settings>button {
+        font-size: 22.5px;
+        width: 42px!important;
+        min-width: 42px!important;
+        padding: 4px 2px;
+    }
+    #forreference,
+    #forwordsearch,
+    #titlebar_show_searchsettings {
+        min-width: 30px;
+    }
+    #reference {
+        font-size: 1em!important;
+    }
+    #togglenavbtn::before {
+        content: '\2261';
+        font-size: xxx-large;
+        font-weight: 400;
+    }
+}
+#togglenavbtn::before {
+    content: '\2261';
+    font-size: 75px;
+    font-weight: 400;
+}

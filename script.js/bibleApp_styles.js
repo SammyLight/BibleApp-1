@@ -100,9 +100,14 @@ function changeFontSize(targetgroup, plusMinus) {
     documentROOT.style.setProperty(targ, currentSize);
     styleLocalstorageSet()
 }
+function changeBackGround(newColor,targetgroup='--ref-img') {
+    documentROOT.style.setProperty(targetgroup, newColor);
+    styleLocalstorageSet()
+}
 
 function styleLocalstorageSet() {
     let variableArray = [
+        ["--ref-img", rootStyles.getPropertyValue('--ref-img')],
         ["--fontsize-scripture", rootStyles.getPropertyValue('--fontsize-scripture')],
         ["--fontsize-ref", rootStyles.getPropertyValue('--fontsize-ref')],
         ["--fontsize-strongstooltip", rootStyles.getPropertyValue('--fontsize-strongstooltip')],
@@ -159,7 +164,8 @@ function darkLightMode() {
 
 let saved_highlightStrongsSheet;
 function hide_strongshighlight() {
-    saved_highlightStrongsSheet = highlightstrongs;//to be used to restore all the strongsHighlight (not yet implimented)
+    //to be used to restore all the strongsHighlight (not yet implimented)
+    saved_highlightStrongsSheet = highlightstrongs;
     highlightstrongs.remove()
 }
 
@@ -223,26 +229,6 @@ function engnXlit_supscript(x) {
         }
     }
 }
-
-// function engnXlit_supscript() {
-//     let eng2grk_style = `.verse:not(.v_accented) .eng2grk::after{
-//         content: attr(translation);
-//         font-size: 75%;
-//         line-height: 0;
-//         position: relative;
-//         vertical-align: baseline;
-//         top: -0.5em;
-//         font-style: italic;
-//         color:crimson;
-//     }`;
-
-//     // Toggle the stylesheet :::: add/remove
-//     if (engofgrknhb = document.querySelector('head').querySelector('#engofgrknhb')) {
-//         engofgrknhb.remove();
-//     } else {
-//         createNewStyleSheetandRule('engofgrknhb', eng2grk_style)
-//     }
-// }
 
 console.log("HELP:: press 'alt+r' to toggle original english translation of transliterated Hebrew or Greek words as a superscript ")
 

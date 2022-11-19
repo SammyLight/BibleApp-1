@@ -227,6 +227,7 @@ function parseVerseText(vT, verseSpan) {
                     wordSpan2.innerHTML = splt_L[1];
                     versespanAppender([wordSpan2]);
                 } else {
+                    // The actual translated text
                     wStringREGEXED = wString[0];
                     
                     if((italicStart==false)&&(/<i>/i.test(wStringREGEXED))){
@@ -244,14 +245,17 @@ function parseVerseText(vT, verseSpan) {
                     wStringREGEXED = wStringREGEXED.replace(/\}/g, '</sup>');
                     wStringREGEXED = wStringREGEXED.replace(/(^"")|(^")/g, '“');
                     wStringREGEXED = wStringREGEXED.replace(/(""$)|"$/g, '”');
-                    if (wString[1] != 'added') {
+                    
+                    // Create its "SPAN" container and set attributes as needed 
+                    if (wString[1] != 'added') {//If it has an actual strongs number
                         wordSpan.classList.add('translated');
                         wordSpan.setAttribute('data-xlit', "");
                         wordSpan.setAttribute('data-lemma', "");
                         wordSpan.setAttribute('strnum', wString[1]);
                         // wordSpan.classList.add(wString[1]);
-                        wordSpan.setAttribute('data-kjv-trans', ' ' + wStringREGEXED);
-                        wordSpan.setAttribute('translation', ' ' + wStringREGEXED);
+                        wordSpan.setAttribute('data-kjv-trans', ' ' + wStringREGEXED);//add the actual translation as an attribute
+                        wordSpan.setAttribute('translation', ' ' + wStringREGEXED);//add the actual translation as an attribute
+                        // If it is a Title to a Psalm (**they are in italics in the original document, ABP in particular)
                         if(italicStart==true){
                             wordSpan.classList.add('em');
                             if(italicEnd==true){
@@ -261,18 +265,24 @@ function parseVerseText(vT, verseSpan) {
                         }
                     }
 
+                    // Add the text to the "SPAN" element
                     wordSpan.innerHTML = wStringREGEXED;
+                    // Add the "SPAN" element with text in it to the current verse
                     versespanAppender([' ', wordSpan]);
                 }
             }
             if (wString.length == 1) {
-                let spacebtwwords = '';
-                if (([".", ",", ":", ";", "?"].includes(wString[0]) == false)) {
-                    spacebtwwords = ' ';
+                let spacebtwwords = ' ';
+                // Check if last string of string is a punctuation that should be followed by a space
+                // if (([".", ",", ":", ";", "?", "]"].includes(wString[0][wString[0].length-1]) == true)) {
+                //     spacebtwwords = ' ';
+                // }
+                if (([".", ",", ":", ";", "?", "]"].includes(wString[0][0]) == true)) {
+                    spacebtwwords = '';
                 }
 
                 if (wString[0].match(/\{\d\}/)) {// ABP word order number
-                    spacebtwwords = '';
+                    spacebtwwords = ' ';
                     wStringREGEXED = wString[0];
                     wStringREGEXED = wStringREGEXED.replace(/\{/g, '<sup>');
                     wStringREGEXED = wStringREGEXED.replace(/\}/g, '</sup>');
