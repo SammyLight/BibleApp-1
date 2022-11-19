@@ -46,6 +46,9 @@
 }
 
 @media screen and (min-device-width: 1025px) {
+    #togglenavbtn {
+        min-width: 44.5px;
+    }    
     #togglenavbtn::before {
         content: '\2261';
         font-size: 75px;
