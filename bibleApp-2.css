@@ -44,9 +44,7 @@
     height: 100%;
     cursor: ew-resize;
 }
-#ppp {
-    border: var(--buttons-border);
-}
+
 @media screen and (min-device-width: 1025px) {
     #togglenavbtn::before {
         content: '\2261';
