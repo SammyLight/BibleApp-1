@@ -53,6 +53,9 @@
         font-size: 75px;
         font-weight: 400;
     }
+    #refnav #app_settings > button{
+        min-width: 45px;
+    }
 }
 @media screen and (max-device-width: 1024px) {
     #togglenavbtn::before {
