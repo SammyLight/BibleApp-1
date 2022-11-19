@@ -119,6 +119,7 @@
         height: calc(100vh - 57px);
     }
     #reference {
+        width: 100%;
         font-size: 1.5em!important;
     }
 }
