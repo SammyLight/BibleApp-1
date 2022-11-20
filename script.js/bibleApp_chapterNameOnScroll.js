@@ -158,8 +158,8 @@ function checkVisible(elm) {
 }
 
 // SHOW MOUSEDOVER VERSE REFERENCE IN REFERENCE INPUT
-main.addEventListener('click', function (e) {
-    // if(!document.activeElement.matches('#reference')){
+main.addEventListener('mouseover', function (e) {
+    if(!document.activeElement.matches('#reference')){
         let hoveredRef;
         if (e.target.matches('.verse')) {
             hoveredRef = e.target.querySelector('code').getAttribute('ref');
@@ -167,5 +167,5 @@ main.addEventListener('click', function (e) {
             hoveredRef = et.querySelector('code').getAttribute('ref');
         }
         if(hoveredRef){reference.value=hoveredRef;}
-    // }
+    }
 });
