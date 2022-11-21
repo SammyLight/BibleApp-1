@@ -6,9 +6,7 @@
         min-width: 44.5px;
     }    
     #togglenavbtn::before {
-        content: '\2261';
         font-size: 75px;
-        font-weight: 400;
     }
     #refnav #app_settings > button {
         min-width: 45px;
@@ -16,9 +14,7 @@
 }
 @media screen and (max-device-width: 1024px) {
     #togglenavbtn::before {
-        content: '\2261';
-        font-size: 50px;
-        font-weight: 400;
+        font-size: 60px;
     }
 }
 @media screen and (max-device-width: 912px) {

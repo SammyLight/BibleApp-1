@@ -342,6 +342,10 @@ code{position: relative; padding-top: 5px;}
     min-width: 40.5px;
     height: 100%;
 }
+#togglenavbtn::before {
+    content: '\2261';
+    font-family: sans-serif;
+}
 #forreference,#forwordsearch,#titlebar_show_searchsettings{
     min-width: 53px;
 }
