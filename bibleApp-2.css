@@ -54,6 +54,10 @@
     #togglenavbtn {
         min-width: 50.3px;
     }
+    #togglenavbtn::before {
+        font-size: xx-large;
+        font-family: auto;
+    }
     #ref_search_versions_holder #refdiv,
     #ref_search_versions_holder #searchdiv {
         display: flex;
