@@ -24,6 +24,9 @@
     #togglenavbtn {
         min-width: 60.5px;
     }
+    #togglenavbtn::before {
+        font-size: 50px;
+    }
     #refnav #app_settings>button {
         font-size: 35.5px;
         overflow: hidden;
