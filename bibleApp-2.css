@@ -6,7 +6,9 @@
         min-width: 44.5px;
     }    
     #togglenavbtn::before {
+        content: '\2261';
         font-size: 75px;
+        font-weight: 400;
     }
     #refnav #app_settings > button {
         min-width: 45px;
@@ -14,7 +16,9 @@
 }
 @media screen and (max-device-width: 1024px) {
     #togglenavbtn::before {
-        font-size: 60px;
+        content: '\2261';
+        font-size: 50px;
+        font-weight: 400;
     }
 }
 @media screen and (max-device-width: 912px) {
@@ -23,9 +27,6 @@
     }
     #togglenavbtn {
         min-width: 60.5px;
-    }
-    #togglenavbtn::before {
-        font-size: 50px;
     }
     #refnav #app_settings>button {
         font-size: 35.5px;
@@ -53,10 +54,6 @@
     }
     #togglenavbtn {
         min-width: 50.3px;
-    }
-    #togglenavbtn::before {
-        font-size: xx-large;
-        font-family: auto;
     }
     #ref_search_versions_holder #refdiv,
     #ref_search_versions_holder #searchdiv {
