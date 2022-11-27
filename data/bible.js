@@ -98,6 +98,7 @@ bible.Data.supportedVersions = {
 	'GW': { name: 'God\'s Word Translation', language: 'en' },
 	'JUB': { name: 'Jubilee Bible 200', language: 'en' },
 	'LEB': { name: 'Lexham English Bible', language: 'en' },
+	'NIV’84': { name: 'New International Translation', language: 'en' },
 	'NET': { name: 'New English Translation', language: 'en' },
 	'WMB': { name: 'World Messianic Bible', language: 'en' },
 	'OPV': { name: 'ترجمه-ی قدام', language: 'fa' },
