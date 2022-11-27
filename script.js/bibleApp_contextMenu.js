@@ -15,7 +15,7 @@ function add_tooltipContextMenu(e) {
     }
     if(e.target.getAttribute('strnum')&&!e.target.matches('.context_menu')){
         rightClickedElm = e.target;
-        firstShadowColorOfElem=getBoxShadowColor(rightClickedElm)
+        firstShadowColorOfElem=getBoxShadowColor(rightClickedElm);
     }
     
     // FOR SHOWING AND HIDING THE RIGHTCLICK MENU
@@ -24,6 +24,7 @@ function add_tooltipContextMenu(e) {
         getCurrentStrongsDef(e);
         clearTimeout(timer1);
         clearTimeout(timer2);
+        let currentEt=e.target;
         if (e.type == 'mouseover') {
             clearTimeout(timer1);
 
@@ -235,8 +236,9 @@ function add_mouseoverContextMenuEventListner() {
     searchPreviewFixed.addEventListener('click', add_tooltipContextMenu_preventDoublick, false);
 
     ppp.addEventListener('mouseover', add_tooltipContextMenu, false);
-    // ppp.addEventListener('click', add_tooltipContextMenu, false);
-    ppp.addEventListener('click', add_tooltipContextMenu_preventDoublick, false);
+
+    // for strongs number breakdown on click
+    // ppp.addEventListener('click', add_tooltipContextMenu_preventDoublick, false);
 }
 
 function remove_mouseoverContextMenuEventListner() {

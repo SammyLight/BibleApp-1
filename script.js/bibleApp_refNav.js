@@ -190,7 +190,7 @@ function hideRefNav(hORs, elm2HideShow, runfunc) {
     let elHS;
     function toShowOnlyOneAtaTime(){
         //To show only one at a time
-        if(context_menu==undefined||elm2HideShow!=context_menu){
+        if(document.querySelector('#context_menu')==null||elm2HideShow!=context_menu){
             let otherActiveButtonsToHide = app_settings.querySelectorAll('.active_button')
             otherActiveButtonsToHide.forEach(o_btns=>{o_btns.click()})}
     }

@@ -140,17 +140,36 @@ function hideTransliteration(stn) {
 }
 
 function highlightAllStrongs(x) {
-    cs = `span[strnum="${x}"]{background-color:transparent;box-shadow:0 -1.05em 0px 0px ${randomColor(200)} inset;border-radius:2px;color:black!important;
-    transition: box-shadow .1s ease-in;`;
-    //CREATE THE INNER-STYLE WITH ID #highlightstrongs IN THE HEAD IF IT DOESN'T EXIST
-    if (!document.querySelector('style#highlightstrongs')) {
-        createNewStyleSheetandRule('highlightstrongs', cs)
+    let allStrNumsInWord=x.trim().split(' ');
+    let alreadyHighlightedStrnum=[];
+    let rc=randomColor(200);
+    allStrNumsInWord.forEach(stnum => {
+        let ruleSelector= `span[strnum].${stnum}`;
+        if (document.querySelector('style#highlightstrongs')&&findCSSRule(highlightstrongs, ruleSelector) != -1) {
+            //first unhighlight the strNums with highlight then
+            addRemoveRuleFromStyleSheet('cs', ruleSelector, highlightstrongs)
+            //get all strongs number that have been highlihgted
+            alreadyHighlightedStrnum.push(stnum)
+            }
+    });
+    if(alreadyHighlightedStrnum.length!=allStrNumsInWord.length){//Not all strNums were formally highlighted
+        highlightArrOfStrNum(allStrNumsInWord)//apply an equal color to all of them
     }
-    //ELSE IF IT ALREADY EXISTS
-    else {
-        let ruleSelector = `span[strnum="${x}"]`
-        addRemoveRuleFromStyleSheet(cs, ruleSelector, highlightstrongs)
+
+    function highlightArrOfStrNum(xxx){
+        xxx.forEach(stnum => {
+            let ruleSelector= `span[strnum].${stnum}`;
+            cs = `span[strnum].${stnum}{background-color:transparent;box-shadow:0 -1.05em 0px 0px ${rc} inset;border-radius:2px;color:black!important;transition: box-shadow .1s ease-in;`;
+
+            //CREATE THE INNER-STYLE WITH ID #highlightstrongs IN THE HEAD IF IT DOESN'T EXIST
+            if (document.querySelector('style#highlightstrongs')) {//IF HIGHLIGHTSTRONGS STYLESHEET ALREADY EXISTS
+                addRemoveRuleFromStyleSheet(cs, ruleSelector, highlightstrongs)
+            } else {//ELSE HIGHLIGHTSTRONGS STYLESHEET DOES NOT ALREADY EXISTS
+                createNewStyleSheetandRule('highlightstrongs', cs)
+            }
+        });
     }
+    console.log(highlightstrongs)
 }
 var clickeElmArray = [];
 let timerstn;
@@ -162,7 +181,7 @@ function removeRecentStrongsFromArray(stn) {
             clickeElmArray.splice(index, 1)
         }
         highlightAllStrongs(stn)
-        if (highlightstrongs) {
+        if (document.querySelector('style#highlightstrongs')) {
             setItemInLocalStorage('strongsHighlightStyleSheet', getAllRulesInStyleSheet(highlightstrongs));
         }
     }, 300);

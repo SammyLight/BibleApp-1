@@ -13,9 +13,9 @@ function getAllRulesInStyleSheet(styleSheet) {
 }
 //STYLE SHEET MODIFIER
 function findCSSRule(mySheet, selector) {
+    mySheet=mySheet.sheet;
     let ruleIndex = -1; // Default to 'not found'
     let theRules = mySheet.cssRules ? mySheet.cssRules : mySheet.rules;
-    // console.log(theRules.length)
     for (i = 0; i < theRules.length; i++) {
         if (theRules[i].selectorText == selector) {
             ruleIndex = i;
@@ -47,13 +47,19 @@ function addRemoveRuleFromStyleSheet(CS_rule, ruleSelector, targetStyleSheet) {
     let highlightStrongsSheet = targetStyleSheet.sheet;
     let allRules = highlightStrongsSheet.cssRules;
     for (let i = 0; i < allRules.length; i++) {
-        if (findCSSRule(highlightStrongsSheet, ruleSelector) == -1) {
-            highlightstrongs.sheet.insertRule(CS_rule, allRules.length - 1);
-        } else {
-            highlightStrongsSheet.deleteRule(findCSSRule(highlightStrongsSheet, ruleSelector));
+        //Add rule if it doesn't exist
+        if (findCSSRule(targetStyleSheet, ruleSelector) == -1) {
+            targetStyleSheet.sheet.insertRule(CS_rule, allRules.length - 1);
+            // console.log('RULE ADDED')
+        }
+        //Remove rule if it already exists
+        else {
+            highlightStrongsSheet.deleteRule(findCSSRule(targetStyleSheet, ruleSelector));
+            //Remove stylesheet if there are no more rules in it
             if (allRules.length == 0) {
                 targetStyleSheet.remove()
             }
+            // console.log('RULE REMOVED')
         }
         break
     }

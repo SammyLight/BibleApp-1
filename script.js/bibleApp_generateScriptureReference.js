@@ -231,13 +231,13 @@ function parseVerseText(vT, verseSpan) {
                     wStringREGEXED = wString[0];
                     
                     if((italicStart==false)&&(/<i>/i.test(wStringREGEXED))){
-                        console.log('emS')
+                        // console.log('emS')
                         italicStart=true;
                         italicEnd=false;
                         wStringREGEXED = wStringREGEXED.replace(/<i>/g, '');
                     }
                     if(/<ii>/i.test(wStringREGEXED)){
-                        console.log('emE')
+                        // console.log('emE')
                         italicEnd=true;
                         wStringREGEXED = wStringREGEXED.replace(/<ii>/g, '');
                     }
@@ -301,13 +301,13 @@ function parseVerseText(vT, verseSpan) {
                     }
                 }
             }
-            if(/<\/i>/i.test(wStringREGEXED)){
-                console.log('emE')
-            }
+            // if(/<\/i>/i.test(wStringREGEXED)){
+            //     console.log('emE')
+            // }
             verseSpan.innerHTML = verseSpan.innerHTML.replace(/<\/sup> /g, '</sup>');
-            if (i == vT.lenth - 1) {
-                console.log(wString)
-            }
+            // if (i == vT.lenth - 1) {
+            //     console.log(wString)
+            // }
         });
         function versespanAppender(arr) {
             if (redWordFRAG) {
@@ -331,10 +331,15 @@ function parseVerseText(vT, verseSpan) {
             }
         }
     } else {
-        vT = vT.replace(/<hi type="bold">/g, '<strong>');
-        vT = vT.replace(/<\/hi>/g, '</strong>');
+        vT = vT.replace(/<hi type="bold">/g, '<span class="b">');
+        vT = vT.replace(/<hi type="italic">/g, '<span class="i">');
+        vT = vT.replace(/<\/hi>/g, '</span>');
+        vT = vT.replace(/<ptitle>/g, '<span class="em">');
+        vT = vT.replace(/<\/ptitle>/g, '</span><hr>');
         // vT = vT.replace(/^""/g, '<span class="red">');
         // vT = vT.replace(/""/g, '</span>');
+        vT = modifyQuotationMarks(vT);
+        vT = vT.replace(/ ,/g, ',');
         verseSpan.innerHTML = vT;
     }
     

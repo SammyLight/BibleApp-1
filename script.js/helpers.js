@@ -498,9 +498,11 @@ function modifyQuotationMarks(txt){
     txt = txt.replace(/(?<!<[^>]*)"([\s.,’])/ig, '”$1');
     txt = txt.replace(/(?<!<[^>]*)([\w\d.,…’])"/ig, '$1”');
     // Modify Closing Quotation Marks 
+    txt = txt.replace(/!"/g, '!”');
     txt = txt.replace(/(?<!<[^>]*)(^|[\b\s“])'/ig, '$1‘');
     txt = txt.replace(/(?<!<[^>]*)'([\d\w…“])/ig, '‘$1');
     txt = txt.replace(/(?<!<[^>]*)'([\s.,”])/ig, '’$1');
     txt = txt.replace(/(?<!<[^>]*)([\w\d.,…”])'/ig, '$1’');
+    txt = txt.replace(/--/g, '—');
     return txt
 }
