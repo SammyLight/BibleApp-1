@@ -492,6 +492,8 @@ function runFuncAfterSetTimeInactivityInElm(elm2Watch, timeoutInMiliseconds = 60
 function modifyQuotationMarks(txt){
     txt = txt.replace(/&nbsp;/ig, ' ');
     // Modify Opening Quotation Marks
+    txt = txt.replace(/(?<!<[^>]*)(.)\.\.\./ig, '$1…');
+    txt = txt.replace(/”…/ig, '“…');
     txt = txt.replace(/(?<!<[^>]*)([\d\w])['‘]([\w…])/ig, '$1’$2');
     txt = txt.replace(/(?<!<[^>]*)(^|[\b\s‘])"/ig, '$1“');
     txt = txt.replace(/(?<!<[^>]*)"([\d\w…‘])/ig, '“$1');
