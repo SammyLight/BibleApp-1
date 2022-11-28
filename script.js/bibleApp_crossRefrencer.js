@@ -1,6 +1,8 @@
-ppp.addEventListener("click", appendCrossReferences);
 bversionName = 'KJV';
-main.addEventListener('mousedown', getCurrentBVN)
+if(document.querySelector('#homepage')){
+    ppp.addEventListener("click", appendCrossReferences);
+    main.addEventListener('mousedown', getCurrentBVN)
+}
 
 function getCurrentBVN(e) {
     let eTarget = e.target;
@@ -91,9 +93,20 @@ function getCrossReference(x) {
     let crf2get;
     if(x.hasAttribute('ref')){
         crf2get = x.getAttribute('ref');
-    } else {
+    }
+    else if(x.matches('.reference')){
+        //refine the reference
+        let bkname=x.value;
+        bkname.replace(/([a-zA-Z])(\d)/ig, '$1 $2'); // Rom1 => Rom 1
+        let bkNchv=bkname.split(/(?<=[a-zA-Z])\s+(?=\d)/ig);// 1 Cor 2:14-16 => ['1 Cor','2:14-16']
+        let bk=bkNchv[0].replace(/i\s/i, '1').replace(/ii\s/, '2').replace(/\s+/, '');
+        crf2get=bk+bkNchv[1];
+        console.log(crf2get)
+    }
+    else {
         crf2get = x.innerText;
     }
+    // Requires that book name not have space: Not Valid: '1 Cor'. Valid: '1Cor'
     crf2get = crf2get.split(' ').join('.').split(':').join('.');
     let bk = crf2get.split('.')[0]
     let chp1 = Number(crf2get.split('.')[1]);
@@ -111,7 +124,6 @@ function getCrossReference(x) {
     let br = '';
     if (crf2get.includes(',')) {
         let vrsGrpsByCommas = crf2get.split(',');
-        console.log(vrsGrpsByCommas)
         let grp1 = vrsGrpsByCommas.shift(); // Will contain a full reference, c.g., Gen 2:16-17
         let vRange1 = verseRange(grp1);
         getVersesInVerseRange(vRange1);
@@ -147,6 +159,9 @@ function getCrossReference(x) {
                 chp2 = chp1;
                 vrs2 = Number(ref_secondHalf[0]);
             }
+        } else {// If it is a single verse
+            vrs1 = Number(crf2get.split('-')[0].split('.')[2]);
+            vrs2 = vrs1;
         }
         return [vrs1,vrs2]
     }
