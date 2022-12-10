@@ -7,7 +7,7 @@
   <link rel="shortcut icon" href="images/favicon.ico">
   <meta charset="utf-8" name="viewport" content= "width=device-width, initial-scale=1.0">
   <script src="https://cdn.ckeditor.com/4.20.0/standard-all/ckeditor.js"></script>
-  <!-- <script src="/ckeditor/ckeditor.js"></script> -->
+  <!-- <script src="ckeditor/ckeditor.js"></script> -->
 <style id="verse_alignement">
     .verse {
       display: block;
@@ -17,16 +17,16 @@
   <link rel="stylesheet" href="bibleApp-2.css">
 </head>
 
-<body>
+<body id="homepage">
   <div id="pagemaster">
 
     <!-- TOP HORIZONTAL BAR -->
     <div id="top_horizontal_bar">
         <div class="buttons" id="top_horizontal_bar_buttons">
-          <button onclick="toggleNav()" class="togglenav" id="togglenavbtn" title="Toggle Nav"></button>
+          <button onclick="toggleNav()" class="togglenav" id="togglenavbtn" title="Toggle Nav"><img src="images/hamburger-menu-svgrepo-com-thicker.svg" alt="☰"></button>
           <div id="ref_search_versions_holder">
             <div id="refdiv">
-              <input class="footersection" id="reference" title="Type Bible Reference"
+              <input class="footersection reference homepage" id="reference" title="Type Bible Reference"
                 placeholder="Type Bible Reference"></input><button onclick="gotoRef()" class="footersection"
                 id="forreference" title="go to reference"><img src="images/scroll-svgrepo-com.svg"></button>
             </div>
@@ -77,8 +77,9 @@
         <button id="searchsettings" onclick="hideRefNav(null, searchPreviewWindowFixed)" title="word(s) search"><img src="images\search-svgrepo-com(2).svg" alt="search"></button>
         </button>
         <button id="open_strongsdefinitionwindow" onclick="hideRefNav(null, strongsdefinitionwindow)" title="Show strongs definition window">Str</button>
-        <button id="cachesettings" onclick="hideRefNav(null, bibleapp_cache)" title="cache settings"><img src="images\settings-svgrepo-com.svg" alt="&#9881;" ></button><!-- &#9881; 🛠-->
-        <button id="sitehome"><a href="https://sammylight.github.io/BibleStudies/" title="Site Home" target="_blank"><img src="images\fireplace-home-svgrepo-com.svg" alt="Site Home"></a></button>
+        <button id="cachesettings" onclick="hideRefNav(null, bibleapp_cache)" title="general settings"><img src="images\settings-svgrepo-com.svg" alt="&#9881;" ></button><!-- &#9881; 🛠-->
+        <button id="available_notes" onclick="appendAllRefsWithNote(), hideRefNav(null, bibleapp_available_notes)" title="Pastor Sam ElYah's Bible Notes"><img src="images\book-pencil-svgrepo-com.svg" alt="&#9881;" ></button><!-- &#9881; 🛠-->
+        <button id="sitehome"><a href="https://lightcityteachingfellowship.github.io/BibleStudies/" title="Site Home" target="_blank"><img src="images\home-svgrepo-com(maroon).svg" alt="Site Home"></a></button>
       </div>
       <div id="bible_nav" class="slideout">
         <div class="bible_nav" name="books" id="bible_books" multiple></div>
@@ -207,6 +208,15 @@
               <button class="increase_fontsize" onclick="changeFontSize('main_font','plus')">+</button>
               </td>
             </tr>
+            <tr>
+              <td>Reference & Search Topbar</td>
+              <td>
+                <button class="decrease_fontsize" onclick="changeFontSize('refnsrch','minus')">-</button>
+              </td>
+              <td>
+              <button class="increase_fontsize" onclick="changeFontSize('refnsrch','plus')">+</button>
+              </td>
+            </tr>
           </table>
         </div>
         
@@ -226,6 +236,9 @@
         <input type="checkbox" id="cache_higlights" name="cache_higlights" value="cache_higlights"><label
           for="cache_higlights" title="Clear highlighted words cache">Forget Highlited Words</label> -->
       </div>
+      <div id="bibleapp_available_notes" class="slideout">
+        bibleapp_available_notes
+      </div>
       <div id="strongsdefinitionwindow" class="slideout">
       </div>
       <div id="resizerdiv">
@@ -240,7 +253,7 @@
       </div>
       <div id="ppp"></div>
         <!-- <div id="search_section">adfadfadsfasdfadsf</div> -->
-      </main>
+    </main>
   </div>
   <div id="searchresultwindow" class="displaynone">
     <div class="relative">

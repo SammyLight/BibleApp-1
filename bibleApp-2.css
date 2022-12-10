@@ -5,21 +5,21 @@
     #togglenavbtn {
         min-width: 44.5px;
     }    
-    #togglenavbtn::before {
+    /* #togglenavbtn::before {
         content: '\2261';
         font-size: 75px;
         font-weight: 400;
-    }
+    } */
     #refnav #app_settings > button {
         min-width: 45px;
     }
 }
 @media screen and (max-device-width: 1024px) {
-    #togglenavbtn::before {
-        content: '\2261';
-        font-size: 50px;
-        font-weight: 400;
-    }
+    /* #togglenavbtn::before { */
+        /* content: '\2261'; */
+        /* font-size: calc(var(--fontsize-refnsearch) * 3); */
+        /* font-weight: 400; */
+    /* } */
 }
 @media screen and (max-device-width: 912px) {
      :root {
@@ -62,16 +62,18 @@
     }
     #refdiv input,
     #searchdiv input {
+        width: 100%;
         flex-grow: 1;
+        /* font-size: 18px; */
+    }
+    #bibleversions_btns button {
+        font-size: 12px;
     }
     #forreference,
     #forwordsearch,
     #titlebar_show_searchsettings {
         display: flex;
         padding: 5px;
-    }
-    #pagemaster {
-        height: calc(100vh - 57px);
     }
     #reference {
         width: 100%;
@@ -96,6 +98,22 @@
         min-width: 40px;
         padding: 3px;
     }
+    
+    #context_menu {
+        right: 10px!important;
+        left: 10px!important;
+        width: calc(100% - 25px)!important;
+        min-width: calc(100vw - 25px)!important;
+        max-width: calc(100vw - 25px)!important;
+    }
+    /* ADDED BY PASTOR SAM ELYAH */
+    #searchPreviewWindowFixed, #strongsdefinitionwindow {
+        min-width: calc(100vw - 56px)!important;
+        max-width: calc(100vw - 56px)!important;
+    }
+    #searchPreviewWindowFixed *, #strongsdefinitionwindow * {
+        max-width: calc(100vw - 56px)!important;
+    }
 }
 @media screen and (max-device-width: 300px) {
     #togglenavbtn {
@@ -119,5 +137,18 @@
     }
     #reference {
         font-size: 1em!important;
+    }
+    /* ADDED BY PASTOR SAM ELYAH */
+    #searchPreviewWindowFixed, #strongsdefinitionwindow {
+        min-width: calc(100vw - 56px)!important;
+        max-width: calc(100vw - 56px)!important;
+    }
+    #searchPreviewWindowFixed *, #strongsdefinitionwindow * {
+        max-width: calc(100vw - 56px)!important;
+    }
+}
+@media screen and (max-device-height: 360px) {
+    #context_menu {
+        min-height: 70vh!important;
     }
 }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>LC BibleApp-ScriptureCompare</title>
+  <link rel="shortcut icon" href="images/favicon.ico">
+  <meta charset="utf-8" name="viewport" content= "width=device-width, initial-scale=1.0">
+  <script src="https://cdn.ckeditor.com/4.20.0/standard-all/ckeditor.js"></script>
+  <!-- <script src="/ckeditor/ckeditor.js"></script> -->
+  <style id="verse_alignement">.verse {display: block;}</style>
+  <link rel="stylesheet" href="bibleApp.css">
+  <link rel="stylesheet" href="bibleApp-2.css">
+</head>
+
+<body id="ppp">
+  <div id="ref_search_versions_holder">
+    <div id="refdiv"><input class="footersection reference" id="reference" title="Type Bible Reference" placeholder="Type Bible Reference"><button onclick="gotoRef()" class="footersection" id="forreference" title="go to reference"><img src="images/scroll-svgrepo-com.svg"></button></div>
+    <div id="searchdiv"><button id="titlebar_show_searchsettings" onclick="toggleClassAndActiveButton(titlebarsearchparameters, 'slideup',this)"><img src="images/settings-gear-svgrepo-com.svg" alt="⚙"></button><input class="footersection" id="wordsearch" title="What to search for" placeholder="Type Words to Search For"><button onclick="runWordSearch()" class="footersection" id="forwordsearch" title="Run Search" disabled=""><img src="images/search-svgrepo-com (2).svg" alt="..."></button></div>
+    <div id="bibleversions_btns"></div>
+  </div>
+  <main id="main" contenteditable="false">
+    <div id="context_menu" class="context_menu slideout"></div>
+    <div id="show_crossref_comments" class="slideout">
+      <button class="buttons" id="verse_crossref_button">TSK</button>
+      <button class="buttons" id="verse_notes_button">Note</button>
+    </div>
+    <div id="ppp"></div>
+  </main>
+
+</body>
+<script src="data/bible.js"></script>
+<script src="script.js/helpers.js"></script>
+<script src="data/bibleApp_reKeyedCrossReference.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_crossRefrencer.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_contextMenu.js"></script>
+<script src="script.js/bibleApp_versionsLoader.js"></script>
+<script src="script.js/bibleApp_generateScriptureReference.js"></script>
+<script src="script.js/bibleApp_transliteration.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_transliteratorGreek.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_refNav.js"></script>
+<script src="script.js/bibleApp_localStorage_cache.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_styles.js" charset="utf-8"></script>
+<script src="script.js/bibleApp.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_gotoRef_Func.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_search.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_chapterNameOnScroll.js" charset="utf-8"></script>
+<script src="data/crossReferences.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_ref_browserHistory.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_versionHighlight.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_localStorage_indexedDB.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_saveComments.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_verseNotes.js" charset="utf-8"></script>
+<script src="script.js/bibleApp_newWindow.js" charset="utf-8"></script>
+<!-- <script>tool_tip.click();</script> -->
+</html>

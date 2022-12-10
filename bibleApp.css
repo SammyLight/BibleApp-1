@@ -1,11 +1,13 @@
 :root {
     --fontsize-main: 15px;
+    --fontsize-refnsearch: 30px;
     --fontsize-scripture-nav: 15px;
     --fontsize-scripture: 13px;
     --fontsize-ref: 8px;
     --fontsize-strongstooltip: 13px;
     --fontsize-title:20px;
     --width-sidebuttons:27px;
+    --heighWidth-refnsrchbtn:58px;
     --width-mainbutton:35px;
     --ref-hlt: #dde3db;
     --ref-img: url(images/background.jpg);
@@ -71,6 +73,10 @@
     font-weight: bold;
     font-size: 0.75em;
 }
+.missing{
+    font-weight:normal;
+    font-size: 0.8em;
+}
 html {
     padding: 0;
     font-size: var(--fontsize-main);
@@ -111,11 +117,12 @@ li li li{
     position: fixed;
     top:0;
     left: 0;
-    height: 100vh;
+    height: 100%;
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: auto 1fr;
     row-gap: 0;
+    border-bottom: 5px solid var(--scroll-thumb-hover-bg-color);
 }
 #ppp code, #context_menu code {
     font-size: var(--fontsize-ref);
@@ -190,7 +197,7 @@ code{position: relative; padding-top: 5px;}
     background: var(--versenote-contextmenu);
 }
 .verse_note #context_menu,
-.verse_note #context_menu .cmtitlebar~span{
+.verse_note #context_menu .cmtitlebar~span {
     font-size: inherit!important;
 }
 .text_content{
@@ -319,13 +326,6 @@ code{position: relative; padding-top: 5px;}
 #refnav .bible_nav *:active {
     background: var(--ref-img);
 }
-#togglenavbtn {
-    min-width: 40.5px;
-    height: 100%;
-}
-#forreference,#forwordsearch,#titlebar_show_searchsettings{
-    min-width: 53px;
-}
 .ref_hlt {
     font-weight: bold;
     font-style: italic;
@@ -350,26 +350,25 @@ code{position: relative; padding-top: 5px;}
     width: 20px;
 }
 button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: var(--fontsize-main);
-    /* font-weight: bolder!important;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
     cursor: pointer;
     border: var(--buttons-border);
     background-color: var(--buttons);
 }
 .buttons {
+    width: auto;
     background: var(--ref-img);
     border-bottom: 2px solid #70707072;
-    display: flex;
-    width: auto;
 }
 #context_menu {
     position: absolute;
     background: var(--whitesmoke);
-    /* border: 1px solid var(--grey); */
-    min-width: 50px;
-    max-width: 300px;
-    max-height: 400px;
+    min-width: 400px;
+    max-width: 600px;
+    max-height: 80vh;
     overflow-y: scroll;
     padding: 5px;
     -webkit-box-shadow: 3px 3px 3.5px 0px var(--shadow-color2), 0 5px 5px 2px var(--shadow-color3), inset 0px 0.5px 0px 0px var(--grey);
@@ -381,9 +380,9 @@ button {
     resize: both;
 }
 #context_menu:hover {
-    -webkit-box-shadow: 1px 1px 3px 0px var(--shadow-ctxtmenu-hover);
-    -moz-box-shadow: 1px 1px 3px 0px var(--shadow-ctxtmenu-hover);
-    box-shadow: 1px 1px 3px 0px var(--shadow-ctxtmenu-hover);
+    -webkit-box-shadow: 5px 5px 15px 0px var(--shadow-ctxtmenu-hover);
+    -moz-box-shadow: 5px 5px 15px 0px var(--shadow-ctxtmenu-hover);
+    box-shadow: 5px 5px 15px 0px var(--shadow-ctxtmenu-hover);
 }
 #context_menu:not([strnum]){
     -webkit-box-shadow: 3px 3px 3.5px 0px var(--shadow-color2), 0 5px 5px 2px var(--shadow-color3), inset 0px 23px 0px 0px var(--grey);
@@ -391,21 +390,29 @@ button {
     box-shadow: 3px 3px 3.5px 0px var(--shadow-color2), 0 5px 5px 2px var(--shadow-color3), inset 0px 23px 0px 0px var(--grey);
 }
 #context_menu>hr+.strngsdefinition>hr:first-child{display: none;}
-#context_menu h2 {font-size:x-large;}
-#context_menu i {font-size:small;}
+#context_menu h2, #context_menu i  {font-size:inherit;}
 #context_menu .strngsdefinition div {display: block;}
-.vmultiple code:hover, #searchPreviewFixed .verse code:hover, .crossrefs>span:hover, #context_menu code:hover {text-decoration: underline;color: var(--blue);cursor: pointer;}
+.vmultiple code:hover, #searchPreviewFixed .verse code:hover, .crossrefs>span:hover, #context_menu code:not(.cmtitlebar code):hover {text-decoration: underline;color: var(--blue);cursor: pointer;}
+#context_menu .cmtitlebar code {display: inline-flex;}
+#context_menu .cmtitlebar code{font-size:inherit}
 #context_menu div{z-index: 2;}
+#context_menu hr:not(:last-child){margin-top:0}
+#context_menu hr:last-child{margin-bottom:0}
+#context_menu .strngsdefinition:last-child hr:last-of-type{display: none;}
 #context_menu .cmtitlebar{
     position: sticky;
     top: 0;
     right: inherit;
     background: var(--ref-img);
-    font-size: small;
+    font-size: 0.8em;
     font-weight: bold;
-    width: 100%;    
-    /* box-shadow: 21px -10px 0px 11px var(--scroll-track-bg-color),
-    -13px -6px 0px 7px var(--scroll-track-bg-color); */
+    width: 100%;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0px 7.5px 10px 0px var(--scroll-track-bg-color)/* ,
+    -13px -6px 0px 7px var(--scroll-track-bg-color) */;
+    z-index: 3;
 }
 #context_menu .cmtitlebar::before{
     position: absolute;
@@ -590,7 +597,7 @@ sup {
     border-left: 0.5px solid var(--black);
 }
 #refnav {
-    height: auto;
+    /* height: auto; */
     overflow-y: hidden;
     font-size: var(--fontsize-main);
 }
@@ -625,7 +632,7 @@ sup {
 .bible_versions_heading{
     box-shadow: 0 0.5px 0 var(--shadow-color);
     background-color: var(--whitesmoke);
-    background-image: var(--ref-img);
+    /* background-image: var(--ref-img); */
     font-style: italic;
     font-weight: bold;
     text-align: center;
@@ -639,12 +646,62 @@ sup {
     height: 100%;
 }
 
+#strongsdefinitionwindow details, details {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: .5em .5em 0;
+    z-index: -10;
+}
+
+#strongsdefinitionwindow summary, summary {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    /* font-weight: bold; */
+    margin: -.5em -.5em 0;
+    padding: .5em;
+    cursor: pointer;
+    z-index: -10;
+    list-style: none;
+}
+#strongsdefinitionwindow summary i, summary i {
+    font-size: 0.7em;
+}
+#strongsdefinitionwindow summaryh2, summaryh2 {
+    font-size: 1em;
+}
+/* #strongsdefinitionwindow summary>div, summary>div {
+    background: url(images/up-arrow-svgrepo-com.svg) center no-repeat;
+} */
+#strongsdefinitionwindow summary>div:first-of-type, summary>div:first-of-type {
+    background: url(images/arrow-up-svgrepo-com.svg) center no-repeat;
+    min-width: 1em;
+    height: 2em;
+    margin: 10px;
+}
+
+#strongsdefinitionwindow details[open], details[open] {
+    /* background-color:#cbff7d24; */
+}
+
+#strongsdefinitionwindow details[open] summary, details[open] summary {
+    /* background-color:#fdff7f25; */
+    border-bottom: 1px solid #aaa;
+    margin-bottom: .5em;
+}
+
+#strongsdefinitionwindow details[open] summary > div:first-of-type,
+details[open] summary > div:first-of-type {
+    background: url(images/arrow-down-svgrepo-com.svg) center no-repeat;
+    /* min-width: 1em; */
+    /* height: 2em; */
+    /* margin: 10px; */
+}
+
 #bible_nav,
 #bible_versions,
-#searchPreviewWindowFixed,
-#strongsdefinitionwindow,
 #bibleapp_cache {
-    max-width: 300px;
+    max-width: 600px;
     height: 100%;
     border-right: 2px solid var(--grey);
     font-size: var(--fontsize-main);
@@ -672,7 +729,7 @@ sup {
 #cache_table td button{min-width: 100%;font-weight: bolder;}
 #hidestrongshighlight {display: none;}
 #strongsdefinitionwindow {
-    min-width: 200px;
+    min-width: 400px;
     font-size: var(--fontsize-scripture);
 }
 #strongsdefinitionwindow::after {
@@ -680,6 +737,11 @@ sup {
     background-color: #ccc;
     position: absolute;
     right: 0;
+}
+#searchPreviewWindowFixed,
+#strongsdefinitionwindow{
+    width: 600px;
+    max-width: 600px;
 }
 #resizerdiv {
     background-color: var(--grey);
@@ -706,6 +768,7 @@ sup {
 .strngsdefinition h2,
 .strngsdefinition h3,
 .strngsdefinition h4 {
+    font-size: inherit;
     display: inline;
     padding-top: 0;
     margin-top: 0;
@@ -722,6 +785,8 @@ sup {
     flex-direction: column;
     overflow-y: hidden;
     font-size: var(--fontsize-scripture);
+    padding-bottom: 7px;
+    margin-bottom: 7px;
 }
 #searchparameters div:last-child {
     display: block;
@@ -845,7 +910,7 @@ span.vmultiple.noted code #verse_notes_button {
 }
 .slideout {
     display: none;
-    margin-left: -500px;
+    margin-left: -900px;
     margin-top: 0;
     -webkit-transition-duration: 0.3s;
     -moz-transition-duration: 0.3s;
@@ -924,20 +989,24 @@ span.vmultiple.noted code #verse_notes_button {
     /* flex: 1 0 50%; */
     /* display: inline-flex; */
 }
-#refdiv *, #searchdiv button {
-    font-size: var(--fontsize-title);
-}
 #refdiv input,
 #searchdiv input{
     width: 100%;
-    font-size: 30px;
+    font-size: var(--fontsize-refnsearch);
     flex-grow: 1;
 }
-
-#searchdiv button,
-#refdiv button {
-    font-size:var(--width-mainbutton);
-    padding: 0;
+#refdiv input{
+    font-size: calc(var(--fontsize-refnsearch)*1.5);
+}
+#refdiv button, #searchdiv button, #togglenavbtn {
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    min-width: calc(var(--fontsize-refnsearch) * 2.5);
+    min-height: calc(var(--fontsize-refnsearch) * 2);
+    font-size: calc(var(--fontsize-refnsearch) * 2);
+    /* width:3em; */
+    /* height:3em; */
 }
 
 /* REFERENCE */
@@ -979,6 +1048,8 @@ span.vmultiple.noted code #verse_notes_button {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight:bold;
+    font-size: calc(var(--fontsize-refnsearch) * 0.9);
 }
 
 /* SEARCH PARAMETERS */
@@ -987,4 +1058,66 @@ span.vmultiple.noted code #verse_notes_button {
 }
 #titlebarsearchparameters > *{
     font-size: 1.75em;
+}
+
+/* AVAILABLE NOTES */
+#bibleapp_available_notes{
+    width: 250px;
+    overflow-y: auto;
+    cursor: pointer;
+    background: white;
+}
+#bibleapp_available_notes em {
+    display: block;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    background: var(--grey);
+    color: var(--white);
+    font-weight: bold;
+}
+#bibleapp_available_notes code {
+    box-sizing: border-box;
+    height: 1.1em;
+    padding-left: 0.1em;
+}
+#bibleapp_available_notes code:hover {
+    color: var(--redwords);
+    font-weight: bold;
+    box-shadow: 0px -25px 0px 0px var(--verse-higlight) inset;
+}
+#bibleapp_available_notes span:not(:first-child) {
+    border-left: 0.15em solid grey;
+    padding-left: 0.1em;
+}
+#bibleapp_available_notes span:hover {
+    border-bottom: 5px solid var(--grey);
+    border-radius: 5px;
+    background: var(--verse-higlight);
+}
+#bibleapp_available_notes b {
+    font-size: 1.2em;
+}
+#bibleapp_available_notes details summary {
+    color: var(--black);
+    background: var(--whitesmoke);
+    font-weight: bold;
+    display:list-item;
+    list-style: inside disclosure-closed;
+}
+#bibleapp_available_notes details[open] summary {
+    list-style: inside disclosure-open;
+}
+/* #bibleapp_available_notes details:hover {
+    background: var(--verse-hover);
+} */
+#bibleapp_available_notes details:hover summary {
+    background: var(--selection);
+}
+#togglenavbtn {
+    font-size: calc(var(--fontsize-refnsearch) * 2.3)!important;
+    font-weight: 400;
+}
+#togglenavbtn img {
+    width: calc(var(--fontsize-refnsearch) * 2)!important;
+    max-width: 60.5px!important;
 }
