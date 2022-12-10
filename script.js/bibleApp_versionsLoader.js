@@ -51,13 +51,11 @@ let availableVersions = {
 // let original,accented,WEB,ESV,LC,YLT,ASV,DARBY,GW,JUB,LEB,NET,WMB,OPV,TPV,NMV,AraSVD,RomCor,MCSB,FreSegond1910,FreJND,FrePGR,CKBOKS;
 // var original='original',accented='accented',WEB='WEB',ESV='ESV',LC='LC',YLT='YLT',ASV='ASV',DARBY='DARBY',GW='GW',JUB='JUB',LEB='LEB',NET='NET',WMB='WMB',OPV='OPV',TPV='TPV',NMV='NMV',AraSVD='AraSVD',RomCor='RomCor',MCSB='MCSB',FreSegond1910='FreSegond1910',FreJND='FreJND',FrePGR='FrePGR',CKBOKS='CKBOKS';
 
+// Populate #bible_versions
 for (key in availableVersions) {
-    // 
-    // 
     bible_versions.innerHTML = bible_versions.innerHTML + `<div><input type="checkbox" id="${key}_version" name="${key}_version" value="${key}"><label for="${key}_version" abreviation="${key}" title="${availableVersions[key].name}">${key}</label></div>`;
 }
 bible_versions.addEventListener('change', function (e) {
-    // console.log(e.target)
     if ((e.target.checked) && (e.target.parentElement.parentElement.matches('#bible_versions'))) {
         loadVersion(e.target.getAttribute('value'));
         localStorage.setItem('loadedBibleVersions', loadedBibleVersions);

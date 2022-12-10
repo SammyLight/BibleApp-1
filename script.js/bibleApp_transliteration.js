@@ -56,26 +56,51 @@ function createTransliterationAttr(x, l) {
 let currentStrongsDef = null;
 
 function getsStrongsDefinition(x) {
+    // console.log(x)
     strongsdefinitionwindow.innerHTML = '';
-    let _text = '';
-    x.forEach(wStrnum => {
-        for (abc = 0; abc < strongsJSONresponse.length; abc++) {
-            if (strongsJSONresponse[abc].number == wStrnum) {
-                let str_xlit = strongsJSONresponse[abc].xlit;
-                let str_lemma = strongsJSONresponse[abc].lemma;
-                let str_definition = strongsJSONresponse[abc].description;
-                _text = _text + `<div class="strngsdefinition"><hr><h2>${wStrnum}</h2>
-                <div><i>Lemma</i>: <h2>${str_lemma}</h2></div>
-                <div><i>Transliteration</i>: <h2>${str_xlit}</h2></div>
-                <div><h2><hr>Definition:</h2></div><hr> ${str_definition}<hr>
-                </div>
-                `
-                strongsdefinitionwindow.innerHTML = _text;
-                currentStrongsDef = _text;
-                break
-            }
-        }
+    _text = '';
+    let openOrclose='';
+    // if(x.length==1){openOrclose='open'}
+    x.forEach((wStrnum,i) => {
+        if(i!=0){openOrclose=''}// only the first detail element will be open
+        let xlit_lemma_definition=getsStrongsLemmanNxLit(wStrnum);
+        let str_xlit = xlit_lemma_definition.xlit;
+        let str_lemma = xlit_lemma_definition.lemma;
+        let str_definition = xlit_lemma_definition.definition;
+        _text = `${_text}
+        <details class="strngsdefinition" ${openOrclose}>
+        <summary>
+            <div class='openCloseIconHolder'></div>
+            <div>
+                <h2>${wStrnum}</h2><br>
+                <i>Lemma</i>: <h2>${str_lemma}</h2><br>
+                <i title='transliteration'>Translit</i>: <h2>${str_xlit}</h2>
+            </div>
+        </summary>
+            <p>${str_definition}</p>
+        </details>`;
     });
+    currentStrongsDef = _text;
+    strongsdefinitionwindow.innerHTML = _text;
+    // console.log(_text)
+    return _text
+}
+
+function getsStrongsLemmanNxLit(wStrnum) {
+    let str_xlit, str_lemma, str_definition;
+    for (abc = 0; abc < strongsJSONresponse.length; abc++) {
+        if (strongsJSONresponse[abc].number == wStrnum) {
+            str_xlit = strongsJSONresponse[abc].xlit;
+            str_lemma = strongsJSONresponse[abc].lemma;
+            str_definition = strongsJSONresponse[abc].description;
+            abc = strongsJSONresponse.length//to end the forloop
+        }
+    }
+    return {
+        xlit: str_xlit,
+        lemma: str_lemma,
+        definition: str_definition
+    }
 }
 
 //TO SHOW TRANSLITERATION OF WORDS
@@ -84,7 +109,8 @@ var transliteratedWords_Array = [];
 function showTransliteration(stn) {
     let allSimilarWords;
     if(/G|H\d+/i.test(stn)&&stn!=='G*'){
-        allSimilarWords = pagemaster.querySelectorAll('.' + stn);
+        allSimilarWords = pagemaster.querySelectorAll('.' + stn + ':not(.vnotestrnum)');
+        // ':not(.vnotestrnum)' so as to exempt strnums in verseNotes
     } else {return}
     // allSimilarWords = pagemaster.querySelectorAll('.' + stn);
     // let allSimilarWords = document.getElementsByClassName(stn);
@@ -131,7 +157,8 @@ function showTransliteration(stn) {
 }
 
 function hideTransliteration(stn) {
-    let allSimilarWords = pagemaster.querySelectorAll('.' + stn);
+    let allSimilarWords = pagemaster.querySelectorAll('.' + stn + ':not(.vnotestrnum)');
+    // ':not(.vnotestrnum)' so as to exempt strnums in verseNotes
     allSimilarWords.forEach(elm => {
         elm.classList.remove('eng2grk');
         elm.innerHTML = '';
@@ -169,7 +196,6 @@ function highlightAllStrongs(x) {
             }
         });
     }
-    console.log(highlightstrongs)
 }
 var clickeElmArray = [];
 let timerstn;

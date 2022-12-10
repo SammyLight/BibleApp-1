@@ -32,7 +32,7 @@ function showVerseNote(e, x) {
         }
         //make verseNote editable by double-clicking anywhere in the verse note
         else if (e.type=='dblclick') {
-            if (e.target!=context_menu&&!elmAhasElmOfClassBasAncestor(e.target, '.context_menu')&&elmAhasElmOfClassBasAncestor(e.target, '.verse_note')) {
+            if ((context_menu && (e.target!=context_menu && !elmAhasElmOfClassBasAncestor(e.target, '.context_menu'))) && elmAhasElmOfClassBasAncestor(e.target, '.verse_note')) {
                 let verseNoteDiv = elmAhasElmOfClassBasAncestor(e.target, '.verse_note');
                 let editBtn = verseNoteDiv.querySelector('.note_edit_button');
                 let saveBtn = verseNoteDiv.querySelector('.note_save_button');
@@ -42,14 +42,15 @@ function showVerseNote(e, x) {
         // ctrl+s for saving currently edited verseNote
         else if (e.ctrlKey && document.activeElement.matches('#noteEditingTarget')) {
             if(e.key==='s'||e.key==='S'){
-            // let code = e.key;
-            // switch (code) {
-            // case 's'://Block Ctrl+s
-            // case 'S'://Block Ctrl+S
-            e.preventDefault();
-            e.stopPropagation();
-            writeToVerseNotesFiles()
-            // break;
+                e.preventDefault();
+                e.stopPropagation();
+                //Get current book, chpt & verseNum from the active verseNote
+                bookName=noteEditingTarget.getAttribute('bk');
+                let cNv=noteEditingTarget.getAttribute('b_cv').split('.')
+                chapternumber=cNv[0];
+                verseNumber=cNv[1];
+                /* MODIFY THE BIBLE NOTES JSON FILE */                 
+                writeToVerseNotesFiles(bookName, chapternumber, verseNumber);
            }
         }
         // stop editing by pressing 'Escape' key 
@@ -65,8 +66,8 @@ function showVerseNote(e, x) {
         }
 }
 
+/* TO GET VERSE NOTE FROM JSON FILE AND APPEND EITHER TO THE VERSENOTE DIV OR TO A NEW HTML PAGE */
 function appendVerseNote(e) {
-    /* TO GET VERSE NOTE FROM JSON FILE AND APPEND EITHER TO THE VERSENOTE DIV OR TO A NEW HTML PAGE */
     let eTarget = e.target;
     //Get reference of clicked verse
     clickedVerseRef = elmAhasElmOfClassBasAncestor(eTarget, '[ref]').getAttribute('ref');
@@ -77,7 +78,8 @@ function appendVerseNote(e) {
     let whereTOappend = undefined;
     whereTOappend = X_hasNoSibling_Y_b4_Z(masterVerseHolder, '.crossrefs', '.vmultiple').elm2appendAfter;
 
-    //If verse_note is not already attached to verse
+    /* CREATE VERSENOTE IF NOT AVAILABLE ELSE JUST TOGGLE IT */
+    //If verse_note is not already attached to verse 
     if (!masterVerseHolder.classList.contains('showing_versenote')) {
         let noteID = 'note' + masterVerseHolder.id.replaceAll(".", "_");
         let chapterHolder = elmAhasElmOfClassBasAncestor(masterVerseHolder, '.chptverses');
@@ -98,7 +100,7 @@ function appendVerseNote(e) {
                 masterVerseHolder.classList.add('showing_versenote');
             } else {
                 let verseNoteDiv = new DocumentFragment();
-
+                
                 let newVerseNote = verse_note.cloneNode(true);
                 newVerseNote.id = noteID;
 
@@ -111,6 +113,9 @@ function appendVerseNote(e) {
                 //Add refrence book_name to the button
                 editBtn.setAttribute('bk', bN);
                 editBtn.setAttribute('b_cv', bCnCv);
+                //Add refrence book_name to the newVerseNote
+                newVerseNote.querySelector('.text_content').setAttribute('bk', bN);
+                newVerseNote.querySelector('.text_content').setAttribute('b_cv', bCnCv);
 
                 //OPEN INDEXED-DATABASE IF NOT OPEN
                 /* function ifNoteAppend() {
@@ -141,6 +146,7 @@ function appendVerseNote(e) {
                 }, 1);
                 //ACTUAL FUNCTION TO GET AND APPEND VERSE NOTE
                 readFromVerseNotesFiles(bN, bC, cV,appendHere);//WORKS WITH JSON BIBLE NOTES
+                console.log('retrieving note')
             }
         }
         else if(e.type=='contextmenu'){ // If it is rightClicked, it is to be opened in a new window
@@ -163,7 +169,9 @@ function appendVerseNote(e) {
             }
         
         }
-    } else {
+    }
+    //Hide verseNote if available on note button click
+    else {
         siblingVersenote = X_hasNoSibling_Y_b4_Z(masterVerseHolder, '.verse_note', '.vmultiple').elmY;
         siblingVersenote.classList.add('slideup');
         setTimeout(() => {
@@ -251,7 +259,7 @@ function generateRefsInNote(txt){
         }
     }
     // Indicate strongs numbers
-    txt = txt.replace(/((H|G)[0-9]+)/g, '<span class="strnum $1" strnum="$1">$1</span>')
+    txt = txt.replace(/((H|G)[0-9]+)/g, '<span class="strnum $1 vnotestrnum" strnum="$1">$1</span>')
     function findAndIndicateScriptureRefs(txt,bkName2find){
         txt = modifyQuotationMarks(txt)
         // Indicate verses

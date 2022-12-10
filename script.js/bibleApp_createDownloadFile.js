@@ -80,7 +80,10 @@ function writeToVerseNotesFiles(bookName, chapternumber, verseNumber) {
         chapternumber = refObj.bC;
         verseNumber = refObj.cV;
     }
-
+    console.log(bookName)
+    console.log(verseNumber)
+    console.log(chapternumber)
+    console.log(bookName + ":" + chapternumber + ":" + verseNumber)
     async function fetchBookNotes() {
         const response = await fetch(`/bible_notes/notes_${bookName}.json`);
         return await response.json()

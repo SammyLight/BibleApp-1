@@ -97,6 +97,10 @@ function changeFontSize(targetgroup, plusMinus) {
         targ = '--fontsize-scripture-nav';
         currentSize = rootStyles.getPropertyValue('--fontsize-scripture-nav');
     }
+    if (targetgroup == 'refnsrch') {
+        targ = '--fontsize-refnsearch';
+        currentSize = rootStyles.getPropertyValue('--fontsize-refnsearch');
+    }
     currentSize = Number(currentSize.split('px')[0].trim())
     if (plusMinus == 'plus') {
         currentSize = (currentSize + 2) + 'px'
@@ -119,6 +123,7 @@ function styleLocalstorageSet() {
         ["--fontsize-strongstooltip", rootStyles.getPropertyValue('--fontsize-strongstooltip')],
         ["--fontsize-scripture-nav", rootStyles.getPropertyValue('--fontsize-scripture-nav')],
         ["--main-font", rootStyles.getPropertyValue('--main-font')],
+        ["--fontsize-refnsearch", rootStyles.getPropertyValue('--fontsize-refnsearch')],
         ["--fontsize-main", rootStyles.getPropertyValue('--fontsize-main')]
     ]
     setItemInLocalStorage('styles_variables', variableArray);

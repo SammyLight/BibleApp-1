@@ -107,12 +107,22 @@ function add_tooltipContextMenu(e) {
                 }
                 let menu_inner;
                 if(originalWord){
+                    let arrOfStrnums=e.target.getAttribute('strnum').split(' ');
+                    let xlitNlemma='',br='';
+                    arrOfStrnums.forEach((sn,i) => {
+                        br='</code>',st='';
+                        if(arrOfStrnums.length>i+1){br=`</code><br><code><div>&#9726;</div> `}// if it is not the last (or only) strnums
+                        if(i==0){st=`<code><div>&#9726;</div> `}
+                        xlitNlemma=`${st}${xlitNlemma}${sn}/${getsStrongsLemmanNxLit(sn).xlit}/${getsStrongsLemmanNxLit(sn).lemma}${br}`
+                    });
                     if (addquotes) {
-                        menu_inner = `${e.target.getAttribute('data-title')}<hr>“${originalWord.trim()}”`;
+                        // menu_inner = `${e.target.getAttribute('data-title')}<br>“${originalWord.trim()}”`;
+                        menu_inner = `${xlitNlemma}<hr>“${originalWord.trim()}”`;
                     } else {
-                        menu_inner = `${e.target.getAttribute('data-title')}<hr>${originalWord.trim()}`;
+                        // menu_inner = `${e.target.getAttribute('data-title')}<br>${originalWord.trim()}`;
+                        menu_inner = `${xlitNlemma}<hr>${originalWord.trim()}`;
                     }
-                    context_menu.innerHTML = menu_inner + '<hr>' + newStrongsDef;
+                    context_menu.innerHTML = `<div class="cmtitlebar">${menu_inner}</div>${newStrongsDef}`;
                 } else if (e.type=='contextmenu'){// For strongs number in verseNote
                     context_menu.innerHTML = newStrongsDef;
                     // context_menu.querySelector('hr').remove();
@@ -152,7 +162,7 @@ function add_tooltipContextMenu(e) {
             let cmH = context_menu.offsetHeight;
             context_menu.style.left = menusX + window.scrollX - extraLeft + "px";
             let target_height = e.target.offsetHeight;
-            if (window.innerWidth - target_left + extraLeft <= 300) {
+            if (window.innerWidth - target_left + extraLeft <= 500) {
                 context_menu.style.right = window.innerWidth - target_right - window.scrollX + "px";
                 context_menu.style.left = '';
             } else {
@@ -186,6 +196,7 @@ function add_tooltipContextMenu(e) {
                 }
             }
         }
+        context_menu.scrollTop = 0;//scroll contextMenu back to top incase it has been srolled
     } else if (context_menu.matches('.slidein') && !(e.target.matches('#context_menu') || elmAhasElmOfClassBasAncestor(e.target, '.context_menu'))) {
         function removeContextMenu() {
             hideRefNav('hide', context_menu, removeCMPevtListner());
@@ -201,7 +212,6 @@ function getCurrentStrongsDef(e) {
     if (strnum = e.target.getAttribute('strnum')) {
         strnum = strnum.split(' ');
         getsStrongsDefinition(strnum);
-        // console.log(strnum)
     }
     if (e.type == 'contextmenu') {
         context_menu.classList.add('rightclicked');
@@ -259,7 +269,7 @@ document.addEventListener('keydown', evt => {
         toolTipOnOff();
         toolTipON = ttip_check.checked;
     }
-    if (evt.key === 'Escape') {
+    if (evt.key === 'Escape' && context_menu) {
         hideRefNav('hide', context_menu);
         context_menu.innerHTML = '';
     }

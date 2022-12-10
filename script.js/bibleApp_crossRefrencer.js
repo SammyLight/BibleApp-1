@@ -52,6 +52,7 @@ function appendCrossReferences(e) {
             refCode = refCode.replace(/(\w)\s([0-9]+)/g, '$1.$2'); //Romans 2:3==>Romans.2:3
             refCode = refCode.replace(/:/g, '.'); //Romans.2:3==>Romans.2.3
             let crossRef = crossReferences_fullName[refCode];
+            currentVerseCrossRefrence=crossRef;
             
             let narr=[]
             crossRef.forEach(cf=>{

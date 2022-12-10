@@ -171,6 +171,7 @@ let versionWithRedWordsArray = [];
 function parseVerseText(vT, verseSpan) {
 
     if (Array.isArray(vT)) {
+        previousVT=vT;
         vTLength = Object(vT).length;
         let redWordFRAG, redWordSpan, startRed, endRed, restartRed, italicStart=false, italicEnd=true;
         let italicElm;
@@ -230,17 +231,8 @@ function parseVerseText(vT, verseSpan) {
                     // The actual translated text
                     wStringREGEXED = wString[0];
                     
-                    if((italicStart==false)&&(/<i>/i.test(wStringREGEXED))){
-                        // console.log('emS')
-                        italicStart=true;
-                        italicEnd=false;
-                        wStringREGEXED = wStringREGEXED.replace(/<i>/g, '');
-                    }
-                    if(/<ii>/i.test(wStringREGEXED)){
-                        // console.log('emE')
-                        italicEnd=true;
-                        wStringREGEXED = wStringREGEXED.replace(/<ii>/g, '');
-                    }
+                    italicsStartnEnd(wStringREGEXED)
+                    
                     wStringREGEXED = wStringREGEXED.replace(/\{/g, '<sup>');
                     wStringREGEXED = wStringREGEXED.replace(/\}/g, '</sup>');
                     wStringREGEXED = wStringREGEXED.replace(/(^"")|(^")/g, '“');
@@ -256,12 +248,14 @@ function parseVerseText(vT, verseSpan) {
                         wordSpan.setAttribute('data-kjv-trans', ' ' + wStringREGEXED);//add the actual translation as an attribute
                         wordSpan.setAttribute('translation', ' ' + wStringREGEXED);//add the actual translation as an attribute
                         // If it is a Title to a Psalm (**they are in italics in the original document, ABP in particular)
-                        if(italicStart==true){
+                        if(italicStart==true && italicEnd==false){
                             wordSpan.classList.add('em');
-                            if(italicEnd==true){
-                                italicStart=false;
-                                wStringREGEXED=wStringREGEXED+'<hr>'
-                            }
+                        }
+                        if(italicStart==true && italicEnd==true){
+                            italicStart=false;
+                            // console.log(wStringREGEXED)
+                            wordSpan.classList.add('em');
+                            wStringREGEXED=wStringREGEXED+'<hr>'
                         }
                     }
 
@@ -274,9 +268,6 @@ function parseVerseText(vT, verseSpan) {
             if (wString.length == 1) {
                 let spacebtwwords = ' ';
                 // Check if last string of string is a punctuation that should be followed by a space
-                // if (([".", ",", ":", ";", "?", "]"].includes(wString[0][wString[0].length-1]) == true)) {
-                //     spacebtwwords = ' ';
-                // }
                 if (([".", ",", ":", ";", "?", "]"].includes(wString[0][0]) == true)) {
                     spacebtwwords = '';
                 }
@@ -286,20 +277,49 @@ function parseVerseText(vT, verseSpan) {
                     wStringREGEXED = wString[0];
                     wStringREGEXED = wStringREGEXED.replace(/\{/g, '<sup>');
                     wStringREGEXED = wStringREGEXED.replace(/\}/g, '</sup>');
+                    // italicsStartnEnd(wStringREGEXED)
                     verseSpan.append(' ');
+                    // if(italicStart==true && italicEnd==false){
+                    //         wordSpan.classList.add('em');
+                    // }
+                    // if(italicStart==true && italicEnd==true){
+                    //     italicStart=false;
+                    //     console.log(wStringREGEXED)
+                    //     wordSpan.classList.add('em');
+                    //     wStringREGEXED=wStringREGEXED+'<hr>'
+                    // }
+
                     verseSpan.innerHTML=verseSpan.innerHTML+wStringREGEXED;
                 } else {
                     wStringREGEXED = wString[0];
+                    //Opening and closing quotations marks
                     wStringREGEXED = wStringREGEXED.replace(/(^"")|(^")/g, '“');
                     wStringREGEXED = wStringREGEXED.replace(/(""$)|"$/g, '”');
+                    italicsStartnEnd(wStringREGEXED)
+                    if(italicStart==true && italicEnd==false){
+                        console.log('italicsStartnEnd')
+                        wordSpan.append(wStringREGEXED);
+                        wordSpan.classList.add('em');
+                    }
+                    if(italicStart==true && italicEnd==true){
+                        italicStart=false;
+                        wStringREGEXED = wStringREGEXED.replace(/<ii>/g, '')
+                        wordSpan.append(wStringREGEXED);
+                        wordSpan.append(document.createElement('hr'));
+                        wordSpan.classList.add('em');
+                        wStringREGEXED=wordSpan;
+                    }
                     if (startRed) {
                         redWordFRAG.append(spacebtwwords);
                         redWordFRAG.append(wStringREGEXED);
+                        // redWordFRAG.innerHTML=redWordFRAG.innerHTML+wStringREGEXED;
                     } else {
                         verseSpan.append(spacebtwwords);
                         verseSpan.append(wStringREGEXED);
+                        // verseSpan.innerHTML=verseSpan.innerHTML+wStringREGEXED;
                     }
                 }
+                
             }
             // if(/<\/i>/i.test(wStringREGEXED)){
             //     console.log('emE')
@@ -309,6 +329,23 @@ function parseVerseText(vT, verseSpan) {
             //     console.log(wString)
             // }
         });
+        function italicsStartnEnd(wStringREGEXED){
+            italicStart
+            italicEnd
+            if((italicStart==false)&&(/<i>/i.test(wStringREGEXED))){
+                // console.log('emS')
+                italicStart=true;
+                italicEnd=false;
+                wStringREGEXED = wStringREGEXED.replace(/<i>/g, '');
+            }
+            if(/<ii>/i.test(wStringREGEXED)){
+                // console.log('emE')
+                // console.log(wStringREGEXED)
+                italicEnd=true;
+                wStringREGEXED = wStringREGEXED.replace(/<ii>/g, '');
+                // console.log(wStringREGEXED)
+            }
+        }
         function versespanAppender(arr) {
             if (redWordFRAG) {
                 arr.forEach(a => {
@@ -331,6 +368,9 @@ function parseVerseText(vT, verseSpan) {
             }
         }
     } else {
+        // console.log(previousVT)
+        // console.log(vT)
+        // if (/'missing'/.test(vT)){console.log(vT)}
         vT = vT.replace(/<hi type="bold">/g, '<span class="b">');
         vT = vT.replace(/<hi type="italic">/g, '<span class="i">');
         vT = vT.replace(/<\/hi>/g, '</span>');

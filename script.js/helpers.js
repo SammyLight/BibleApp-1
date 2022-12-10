@@ -506,5 +506,68 @@ function modifyQuotationMarks(txt){
     txt = txt.replace(/(?<!<[^>]*)'([\s.,”])/ig, '’$1');
     txt = txt.replace(/(?<!<[^>]*)([\w\d.,…”])'/ig, '$1’');
     txt = txt.replace(/--/g, '—');
+    // Remove <br> that comes before block element closing tag
+    txt = txt.replace(/<br>(<\/(p|h\d)>)/ig, '$1');
+    txt = txt.replace(/(?<!<[^>]*)(\s+([.,]))/ig, '$2');
+    txt = txt.replace(/<span contenteditable="false" data-cke-magic-line="\d+" style="height: \d+px; padding: \d+px; margin: \d+px; display: block; z-index: \d+; color: rgb(\d+, \d+, \d+); font-size: \d+px; line-height: 0px; position: absolute; border-top: \d+px dashed rgb(\d+, \d+, \d+); user-select: none; left: \d+px; right: \d+px; top: \d+px;">  \s*↵\s*<\/span>/ig, '');
     return txt
 }
+
+/* FOR CHECKING IF TRANSLATION HAS ANY ISSUE AND WHERE THE ISSUES ARE */
+function findMissingIncompleteChapters(translation){
+    let reportOBJ={};
+    let inCompleteChapters={};
+    // Loop through all bible books
+    bible.Data.allBooks.forEach((bibleBook,bbkIndx) => {
+        let bkchptVdata = bible.Data.verses[bbkIndx];
+        let numOfChptsInBk = window[translation][bibleBook].length;
+        let expectedNumOfChptsInBk = bkchptVdata.length;
+        inCompleteChapters[bbkIndx+'_'+bibleBook]={};
+
+        // Incomplete books
+        if(numOfChptsInBk!=expectedNumOfChptsInBk){
+            console.log('?Bk?: ' + bibleBook + ':' + numOfChptsInBk +' :insteadOf: ' + expectedNumOfChptsInBk)
+        }
+
+        // Complete Books
+        // if book has complete number of chapters, check each chapter to see it has complete number of verses
+        // window[translation][bibleBook][chNumInBk - 1][vNumInChpt - 1]
+        window[translation][bibleBook].forEach((chapt,chpIndx)=>{
+            let numOfVrsInChpt = chapt.length;
+            let expectedNumOfVrsInChpt = bkchptVdata[chpIndx];
+            if(numOfVrsInChpt!=expectedNumOfVrsInChpt){
+                inCompleteChapters[bbkIndx+'_'+bibleBook][chpIndx+1]=numOfVrsInChpt + ' :vs: ' + expectedNumOfVrsInChpt
+                reportOBJ[bbkIndx+'_'+bibleBook]=inCompleteChapters[bbkIndx+'_'+bibleBook];
+            }
+        })
+    });
+    if(Object.keys(reportOBJ).length === 0){
+        return "No Issue With Translation: Correct Number of Chapters in Books and Correct Number of Verses in Chpaters"
+    }else{
+        return reportOBJ
+    }
+}
+
+/* ***************************************************** */
+/* DOWNLOAD MODIFIED JSON FILE */
+/* function downloadFile(text_data, name = "myData", format = "json") {
+  // const blob = new Blob([JSON.stringify(obj, null, 2)], {
+  //     type: "application/json",
+  //   });
+  console.log(name)
+  const blob = new Blob([text_data], {
+      type: "application/octet-stream",
+  });
+  const href = URL.createObjectURL(blob);
+  const a = Object.assign(document.createElement('a'), {
+      href,
+      styles: "display:none",
+      download: `${name}.${format}` // myData.json
+  })
+  document.body.appendChild(a);
+  a.click();
+  URL.revokeObjectURL(href);
+  a.remove(a);
+} */
+/* https://www.youtube.com/watch?v=io2blfAlO6E */
+/* ***************************************************** */

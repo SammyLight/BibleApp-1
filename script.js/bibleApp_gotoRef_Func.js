@@ -11,9 +11,14 @@ let ref_Abrev;
 // }
 ref_Abrev = bible.Data.books;
 //On enter go to reference
-reference.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-        gotoRef()
+document.addEventListener("keypress", function (event) {
+    if(document.activeElement.matches('.reference') && event.key === "Enter") {
+        let focusElm = document.activeElement;
+        if(focusElm.matches('.homepage')){
+            gotoRef(focusElm.value)
+        } else {
+            getCrossReference(focusElm)
+        }
         event.preventDefault();
     }
 });
@@ -108,7 +113,7 @@ function gotoRef(ref_to_get, shouldBrowserHistoryBeUpdated=true) {
         if (ref_.includes(ref_bkname.toUpperCase())) {
             ref_bkname = bible.Data.bookNamesByLanguage.en[ref_indx]
             refb = ref_indx;
-            if (currentBook != refb) {
+            if (/* !currentBook ||  */currentBook != refb) {
                 // document.querySelector(`[value="book_${refb}"]`).click(); //click on book
                 let selected_chapter=document.querySelector(`[value="book_${refb}"]`);
                 getBksChptsNum(selected_chapter)
